@@ -105,3 +105,13 @@ Once the plugin is activated, you'll notice a menu on the left called "Spider FA
 If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products/wordpress-faq-plugin.html), please contact us info@web-dorado.com.  
 
 
+== Screenshots ==		
+1.  Spider FAQ - Frontend view		  
+2. 	Spider FAQ - Themes options	
+3.  Spider FAQ - Expand a question  	
+4.  Spider FAQ - Blue theme  	
+5.  Spider FAQ - Search Form Parameters 	
+6.  Spider FAQ - Green theme	
+
+
+
