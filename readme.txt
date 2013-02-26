@@ -112,6 +112,3 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 4.  Spider FAQ - Blue theme  	
 5.  Spider FAQ - Search Form Parameters 	
 6.  Spider FAQ - Green theme	
-
-
-
