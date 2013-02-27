@@ -1,6 +1,6 @@
 <?php 
 
-function add_spider_ques(){
+function add_ques(){
   global $wpdb;
 	  
 	  
@@ -19,10 +19,10 @@ function add_spider_ques(){
   
 		
 // display function
-html_add_spider_ques($cat_row,$ord_elem);
+html_add_ques($cat_row,$ord_elem);
 }
 
-function show_spider_ques(){
+function show_ques(){
 		  
 	  
   global $wpdb;
@@ -213,7 +213,7 @@ function show_spider_ques(){
 	$query =	"SELECT ".$wpdb->prefix."spider_faq_question.*,".$wpdb->prefix."spider_faq_category.title as cattitle FROM ".$wpdb->prefix."spider_faq_question left join ".$wpdb->prefix."spider_faq_category on  ".$wpdb->prefix."spider_faq_category.id=".$wpdb->prefix."spider_faq_question.category ".$where." ". $order." "." LIMIT ".$limit.",20";
 	$rows = $wpdb->get_results($query);	  
 
-		html_show_spider_ques( $rows, $pageNav,$sort);   	
+		html_show_ques( $rows, $pageNav,$sort);   	
 	
 }
 
@@ -221,7 +221,7 @@ function show_spider_ques(){
 
 
 
-function edit_spider_ques($id){
+function edit_ques($id){
 	global $wpdb;
 	  
 	  $query="SELECT * FROM ".$wpdb->prefix."spider_faq_question WHERE id='".$id."'";
@@ -237,7 +237,7 @@ function edit_spider_ques($id){
 $cat_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_category");
 
 
-    html_edit_spider_ques($row,$cat_row,$ord_elem);
+    html_edit_ques($row,$cat_row,$ord_elem);
 }
 
 
@@ -245,7 +245,7 @@ $cat_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_category"
 
 
 
-function save_spider_ques(){
+function save_ques(){
 
 	global $wpdb;
 	 if(isset($_POST["ordering"])){	 
@@ -328,7 +328,7 @@ $fullarticle='';
     return true;
 }
 
-function apply_spider_ques($id){
+function apply_ques($id){
 
 	global $wpdb;
 	  $corent_ord=$wpdb->get_var('SELECT `ordering` FROM '.$wpdb->prefix.'spider_faq_question WHERE id=\''.$id.'\'');
@@ -435,7 +435,7 @@ $fullarticle='';
 
 
 
-function remove_spider_ques($id){
+function remove_ques($id){
    global $wpdb;
  $sql_remov_tag="DELETE FROM ".$wpdb->prefix."spider_faq_question WHERE id='".$id."'";
  if(!$wpdb->query($sql_remov_tag))
@@ -479,7 +479,7 @@ function remove_spider_ques($id){
 
 
 
-function change_spider_ques( $id ){
+function change_ques( $id ){
   global $wpdb;
   $published=$wpdb->get_var("SELECT published FROM ".$wpdb->prefix."spider_faq_question WHERE `id`=".$id );
   if($published)

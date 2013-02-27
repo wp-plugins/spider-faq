@@ -1,6 +1,6 @@
 <?php 
 
-function add_spider_faq(){
+function add_faq(){
   global $wpdb;
 	  
 	  
@@ -21,10 +21,10 @@ function add_spider_faq(){
   
 		
 // display function
-html_add_spider_faq($theme_row);
+html_add_faq($theme_row);
 }
 
-function show_spider_faq(){
+function show_faq(){
 		  
 	  
   global $wpdb;
@@ -91,7 +91,7 @@ function show_spider_faq(){
 	$query =	"SELECT ".$wpdb->prefix."spider_faq_faq.*,".$wpdb->prefix."spider_faq_theme.title as themetitle FROM ".$wpdb->prefix."spider_faq_faq left join ".$wpdb->prefix."spider_faq_theme on  ".$wpdb->prefix."spider_faq_theme.id=".$wpdb->prefix."spider_faq_faq.category ".$where." ". $order." "." LIMIT ".$limit.",20";
 	$rows = $wpdb->get_results($query);	
 
-		html_show_spider_faq( $rows, $pageNav,$sort);   	
+		html_show_faq( $rows, $pageNav,$sort);   	
 	
 }
 
@@ -99,7 +99,7 @@ function show_spider_faq(){
 
 
 
-function edit_spider_faq($id){
+function edit_faq($id){
 	global $wpdb;
 	  
 	  $query="SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='".$id."'";
@@ -108,7 +108,7 @@ function edit_spider_faq($id){
 $theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme");
 
 
-    html_edit_spider_faq($row,$theme_row);
+    html_edit_faq($row,$theme_row);
 }
 
 
@@ -116,7 +116,7 @@ $theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme")
 
 
 
-function save_spider_faq(){
+function save_faq(){
 
 	global $wpdb;
 	$save_or_no= $wpdb->insert($wpdb->prefix.'spider_faq_faq', array(
@@ -155,7 +155,7 @@ function save_spider_faq(){
     return true;
 }
 
-function apply_spider_faq(){
+function apply_faq(){
 
 	global $wpdb;
 	
@@ -197,7 +197,7 @@ function apply_spider_faq(){
 
 
 
-function remove_spider_faq($id){
+function remove_faq($id){
    global $wpdb;
  $sql_remov_tag="DELETE FROM ".$wpdb->prefix."spider_faq_faq WHERE id='".$id."'";
  if(!$wpdb->query($sql_remov_tag))

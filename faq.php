@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Spider FAQ
-Plugin URI: http://web-dorado.com/products/wordpress-faq-plugin.html
-Version: 1.0
+Plugin URI: http://web-dorado.com/
+Version: 1.0.1
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -102,21 +102,21 @@ $s+=count($rows[$cat->term_id]);
 		
 	$stls=$wpdb->get_row("SELECT * FROM ".$wpdb->prefix."spider_faq_theme WHERE id=".$faq->theme);
 		
-	 front_end_faq ($rows,$cats,$standcats,$stls,$faq,$s);		
+return	 front_end_faq ($rows,$cats,$standcats,$stls,$faq,$s);		
 	}
 
 	
-	add_action( 'wp_enqueue_scripts', 'faq_add_my_stylesheet' );
+	add_action( 'wp_enqueue_scripts', 'prefix_add_my_stylesheet' );
 
     /**
      * Enqueue plugin style-file
      */
-    function faq_add_my_stylesheet() {
+    function prefix_add_my_stylesheet() {
         // Respects SSL, Style.css is relative to the current file
 		
 			 
-        wp_register_style( 'faq-style', plugins_url('elements/style.css', __FILE__) );
-             wp_enqueue_style( 'faq-style' );
+        wp_register_style( 'prefix-style', plugins_url('elements/style.css', __FILE__) );
+             wp_enqueue_style( 'prefix-style' );
 
 		
         wp_enqueue_script( 'jquery' );
@@ -138,6 +138,7 @@ $s+=count($rows[$cat->term_id]);
 
 		
 function front_end_faq($rows,$cats,$standcats,$stl,$faq,$s) {
+ob_start();	
 global $wpdb;
 global $many_faqs;
 
@@ -341,7 +342,7 @@ if($faq->expand=='1')
 ?>
 <script>
 
-$(window).load(function(){ iiiiiiiiiii=<?php echo $many_faqs ?>; $('.post_exp')[0].click();  faq_changeexp<?php echo $faq->id ?>();}) 
+$(window).load(function(){ iiiiiiiiiii=<?php echo $many_faqs ?>; $('.post_exp')[0].click();  changeexp<?php echo $faq->id ?>();}) 
 
 </script>
 <?php
@@ -428,7 +429,7 @@ border-color:<?php echo '#'.$stl->abcolor ?>;
 background-size: <?php echo $stl->abgsize ?>;
 border-radius:<?php echo $stl->abradius.'px' ?>;
 min-height:60px;
-padding: 4px 0;
+padding:0 4px;
 }
 	
 .post_content_wrapper #imgbefore<?php echo $faq->id ?> img{
@@ -582,7 +583,10 @@ color:<?php echo '#'.$stl->rmhovercolor ?> !important; ;
 }
 </style>
 
-
+	
+<script>
+var many_myfaq=<?php echo $many_faqs ?>;	
+</script>
 	
 	
 
@@ -590,7 +594,7 @@ color:<?php echo '#'.$stl->rmhovercolor ?> !important; ;
 <script>
 var change = true;
 
-function faq_changesrc<?php echo $faq->id ?>(x)
+function changesrc<?php echo $faq->id ?>(x)
 {
 if (document.getElementById('stl<?php echo $faq->id ?>'+x))
 {
@@ -620,7 +624,7 @@ setTimeout("change=true",400);
 
 
 var changeall = true;
-function faq_changeexp<?php echo $faq->id ?>()
+function changeexp<?php echo $faq->id ?>()
 {
 
 for (i=0; i<<?php echo $s ?>; i++)
@@ -637,7 +641,7 @@ document.getElementById('stl<?php echo $faq->id ?>'+i).style.marginLeft="<?php e
 }
 
 
-function faq_changecoll<?php echo $faq->id ?>()
+function changecoll<?php echo $faq->id ?>()
 {
 if(changeall) {
 changeall = false;
@@ -694,8 +698,8 @@ $a=true;
 if($a)
 {
 echo '<div class="expcoll" id="expcol'.$faq->id. '">
-     <a  class="post_exp" id="post_expcol'.$faq->id. '"><span onclick=" iiiiiiiiiii='.$many_faqs.'; faq_changeexp'.$faq->id.'()">'.__("Expand All","faq").' </span></a><span>|</span>
-     <a  class="post_coll" id="post_expcol'.$faq->id. '"><span onclick="jjjjjjjjjjj='.$many_faqs.'; faq_changecoll'.$faq->id.'()">'.__("Collapse All","faq").'</span></a></div>';
+     <a  class="post_exp" id="post_expcol'.$faq->id. '"><span onclick=" iiiiiiiiiii='.$many_faqs.'; changeexp'.$faq->id.'()">'.__("Expand All","faq").' </span></a><span>|</span>
+     <a  class="post_coll" id="post_expcol'.$faq->id. '"><span onclick="jjjjjjjjjjj='.$many_faqs.'; changecoll'.$faq->id.'()">'.__("Collapse All","faq").'</span></a></div>';
 }
 
 
@@ -730,7 +734,7 @@ $p=1;
 
 	echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
 				  <div class="post_right" id="post_right'.$faq->id.'">
-					  <a href="#" class="post_ajax_title"><span onclick="faq_changesrc'.$faq->id.'('.$n.')"><h2 class="post_title" id="post_title'.$faq->id.'" style="'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
+					  <a href="#" class="post_ajax_title"><span onclick="changesrc'.$faq->id.'('.$n.')"><h2 class="post_title" id="post_title'.$faq->id.'" style="'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
 					  '?><?php if ($stl->tchangeimage1!=""){ echo'<div class="tchangeimg" id="tchangeimg'.$faq->id.'"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" /></div>'  ?><?php } echo '<div class="ttext" id="ttext'.$faq->id.'">'.$p.'. '.$row->title.'</div></h2></span></a>
 				    </div>
 			    </div>';
@@ -790,8 +794,8 @@ $a=true;
 if($a)
 {	
 echo '<div class="expcoll" id="expcol'.$faq->id. '">
-     <a  class="post_exp" id="post_expcol'.$faq->id. '"><span onclick="iiiiiiiiiii='.$many_faqs.'; faq_changeexp'.$faq->id.'()">'.__("Expand All","faq").' </span></a><span>|</span>
-     <a  class="post_coll" id="post_expcol'.$faq->id. '"><span onclick="jjjjjjjjjjj='.$many_faqs.'; faq_changecoll'.$faq->id.'()">'.__("Collapse All","faq").'</span></a></div>';
+     <a  class="post_exp" id="post_expcol'.$faq->id. '"><span onclick="iiiiiiiiiii='.$many_faqs.'; changeexp'.$faq->id.'()">'.__("Expand All","faq").' </span></a><span>|</span>
+     <a  class="post_coll" id="post_expcol'.$faq->id. '"><span onclick="jjjjjjjjjjj='.$many_faqs.'; changecoll'.$faq->id.'()">'.__("Collapse All","faq").'</span></a></div>';
 }	
 	
 	
@@ -837,7 +841,7 @@ $row->fulltext='';
 
 	echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
 				  <div class="post_right" id="post_right'.$faq->id.'">
-					  <a href="#" class="post_ajax_title"><span onclick="faq_changesrc'.$faq->id.'('.$k.')"><h2 class="post_title" id="post_title'.$faq->id.'" style="'?><?php if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">
+					  <a href="#" class="post_ajax_title"><span onclick="changesrc'.$faq->id.'('.$k.')"><h2 class="post_title" id="post_title'.$faq->id.'" style="'?><?php if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">
 					  '?><?php if ($stl->tchangeimage1!=""){ echo'<div class="tchangeimg" id="tchangeimg'.$faq->id.'"><img src="'.$stl->tchangeimage1.'" id="stl'.$faq->id.$k.'" /></div>'  ?><?php } echo '<div class="ttext" id="ttext'.$faq->id.'">'.$row->post_title.'</div></h2></span></a>
 				    </div>
 			    </div>';
@@ -883,7 +887,7 @@ echo 'There are no questions in this category';
 $many_faqs++;
 ?>
 		</ul>		
-	  </div></div>	  	
+	  </div></div></div>	  	
 
 <script type="text/javascript">
 	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -896,9 +900,13 @@ $many_faqs++;
 		pageTracker._trackPageview();
 	} catch(err) {}
 </script>
-</body>1
+</body>
 
 <?php
+$content=ob_get_contents();
+		ob_end_clean();
+	
+		return $content;
 }
 //// add editor new mce button
 add_filter('mce_external_plugins', "Spider_Faq_register");
@@ -943,7 +951,7 @@ function Spider_Faq_options_panel(){
   $page_theme=add_submenu_page( 'Spider_Faq', 'Themes', 'Themes', 'manage_options', 'Spider_Faq_Themes', 'Spider_Faq_Themes');
    add_submenu_page( 'Spider_Faq', 'Licensing', 'Licensing', 'manage_options', 'Spider_FAQ_Licensing', 'Spider_FAQ_Licensing');
 
-  add_submenu_page( 'Spider_Faq', 'Uninstall Spider_Faq ', 'Uninstall Spider FAQ', 'manage_options', 'Uninstall_Spider_FAQ', 'Uninstall_Spider_Faq');
+  add_submenu_page( 'Spider_Faq', 'Uninstall Spider_Faq ', 'Uninstall  FAQ', 'manage_options', 'Uninstall_Spider_FAQ', 'Uninstall_Spider_Faq');
 	add_action('admin_print_styles-' . $page_theme, 'sp_faq_admin_styles_scripts');
   }
   
@@ -997,8 +1005,8 @@ standard themes and give possibility to edit the themes of the Spider FAQ. </p>
 
 require_once("nav_function/nav_html_func.php");
 
-add_filter('admin_head','faq_ShowTinyMCE');
-function faq_ShowTinyMCE() {
+add_filter('admin_head','ShowTinyMCE1');
+function ShowTinyMCE1() {
 	// conditions here
 	wp_enqueue_script( 'common' );
 	wp_enqueue_script( 'jquery-color' );
@@ -1041,13 +1049,13 @@ global $wpdb;
 	
 	switch($task){
 	case 'Spider_Faq':
-		show_spider_faq();
+		show_faq();
 		break;
 		
 
 	
 	case 'add_Spider_Faq':
-		add_spider_faq();
+		add_faq();
 		break;
 	
 	
@@ -1055,14 +1063,14 @@ global $wpdb;
 	if($id)
 	{	
 	
-	apply_spider_faq($id);
+	apply_faq($id);
 		
 	}
 	else
 	{
-		save_spider_faq();
+		save_faq();
 	}
-		show_spider_faq();
+		show_faq();
 		break;
 			
 	case 'apply':
@@ -1070,34 +1078,34 @@ global $wpdb;
 		if($id)	
 		{
 			
-			apply_spider_faq($id);
+			apply_faq($id);
 		}
 		else
 		{
 			
-			save_spider_faq();
+			save_faq();
 			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_faq");
 		}
 		
-		edit_spider_faq($id);
+		edit_faq($id);
 		break;	
 		
 
 		
 	case 'edit_Spider_Faq':
        
-	   edit_spider_faq($id);
+	   edit_faq($id);
 		break;	
 
 	
 	case 'remove_Spider_Faq':
-		remove_spider_faq($id);
-		show_spider_faq();
+		remove_faq($id);
+		show_faq();
 		break;
 			
 		
 			default:
-			show_spider_faq();
+			show_faq();
 			break;
 	}
 }
@@ -1130,13 +1138,13 @@ global $wpdb;
 	
 	
 	
-switch($task){
+	switch($task){
 	case 'Spider_Faq_Questions':
-		show_spider_ques();
+		show_ques();
 		break;
 		case "unpublish_Spider_Faq_Questions":
-		change_spider_ques($id);		
-		show_spider_ques();
+		change_ques($id);		
+		show_ques();
 		
 		break;
 	
@@ -1144,57 +1152,57 @@ switch($task){
 
 	
 	case 'add_Spider_Faq_Questions':
-		add_spider_ques();
+		add_ques();
 		break;
 	
 	
 	case 'save':
 	if($id)
 	{		
-	apply_spider_ques($id);
+	apply_ques($id);
 		
 	}
 	else
 	{
-		save_spider_ques();
+		save_ques();
 	}
-		show_spider_ques();
+		show_ques();
 		break;
 			
 	case 'apply':	
 		if($id)	
 		{
 			
-			apply_spider_ques($id);
+			apply_ques($id);
 		}
 		else
 		{
 			
-			save_spider_ques();
+			save_ques();
 			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_question");
 		}
 		
-		edit_spider_ques($id);
+		edit_ques($id);
 		break;	
 		
 
 		
 	case 'edit_Spider_Faq_Questions':
 	
-        edit_spider_ques($id);
+        edit_ques($id);
    	
     		break;	
 	
 
 	
 	case 'remove_Spider_Faq_Questions':
-		remove_spider_ques($id);
-		show_spider_ques();
+		remove_ques($id);
+		show_ques();
 		break;
 			
 	
 			default:
-			show_spider_ques();
+			show_ques();
 			break;
 	}
 }
@@ -1229,17 +1237,17 @@ global $wpdb;
 	
 	switch($task){
 	case 'Spider_Faq_Categories':
-		show_spider_cat();
+		show_cat();
 		break;
 		case "unpublish_Spider_Faq_Categories":
-		change_spider_cat($id);		
-		show_spider_cat();
+		change_cat($id);		
+		show_cat();
 		
 		break;
 	
 	
 	case 'add_Spider_Faq_Categories':
-		add_spider_cat();
+		add_cat();
 		break;
 	
 	
@@ -1247,37 +1255,37 @@ global $wpdb;
 	if($id)
 	{	
 	
-	apply_spider_cat($id);
+	apply_cat($id);
 		
 	}
 	else
 	{
-		save_spider_cat();
+		save_cat();
 	}
-		show_spider_cat();
+		show_cat();
 		break;
 			
 	case 'apply':	
 		if($id)	
 		{
 			
-			apply_spider_cat($id);
+			apply_cat($id);
 		}
 		else
 		{
 			
-			save_spider_cat();
+			save_cat();
 			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_category");
 		}
 		
-		edit_spider_cat($id);
+		edit_cat($id);
 		break;	
 		
 
 		
 	case 'edit_Spider_Faq_Categories':
 		
-        edit_spider_cat($id);
+        edit_cat($id);
 		
 			
     		break;	
@@ -1286,15 +1294,15 @@ global $wpdb;
 
 	
 	case 'remove_Spider_Faq_Categories':
-		remove_spider_cat($id);
-		show_spider_cat();
+		remove_cat($id);
+		show_cat();
 		break;
 			
 	
 		
 		
 			default:
-			show_spider_cat();
+			show_cat();
 			break;
 	}
 }
@@ -1330,14 +1338,65 @@ global $wpdb;
 	
 	switch($task){
 	case 'Spider_Faq_Themes':
-		show_spider_theme();
+		show_theme();
 		break;
 		
 
 	
+	case 'add_Spider_Faq_Themes':
+		add_theme();
+		break;
 	
+	
+	case 'save':
+	if($id)
+	{		
+	apply_theme($id);
+		
+	}
+	else
+	{
+		save_theme();
+	}
+		show_theme();
+		break;
+			
+	case 'apply':	
+		if($id)	
+		{
+			
+			apply_theme($id);
+		}
+		else
+		{
+			
+			save_theme();
+			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_theme");
+		}
+		
+		edit_theme($id);
+		break;	
+		
+
+
+		
+	case 'edit_Spider_Faq_Themes':
+	
+        edit_theme($id);
+    				
+    		break;	
+	
+
+
+	
+	case 'remove_Spider_Faq_Themes':
+		remove_theme($id);
+		show_theme();
+		break;
+			
+
 			default:
-			show_spider_theme();
+			show_theme();
 			break;
 	}
 }

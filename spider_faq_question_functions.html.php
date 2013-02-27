@@ -1,5 +1,5 @@
 <?php   
-function html_add_spider_ques($cat_row,$ord_elem){
+function html_add_ques($cat_row,$ord_elem){
 	
 	
 	
@@ -30,7 +30,12 @@ function submitbutton(pressbutton)
 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            
+            <td colspan="7" align="right" style="font-size:16px;">
+              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+ 			 </td>
    			</tr>
 
   <tr>
@@ -45,6 +50,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
 <form action="admin.php?page=Spider_Faq_Questions" method="post" name="adminForm" id="adminForm">
 
 <table class="admintable">
+
 <tr>
 <td width="100" align="right" class="key">
 Question:
@@ -158,7 +164,7 @@ value="<?php echo $row->id; ?>" />
 
 
 
-function 	html_show_spider_ques($rows, $pageNav,$sort){
+function 	html_show_ques($rows, $pageNav,$sort){
 	global $wpdb;
 	?>
     <script language="javascript">
@@ -201,9 +207,14 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 	<tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-           
+            <td colspan="7" align="right" style="font-size:16px;">
+              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+ 			 </td>
    			</tr>
-
+	
     <tr>
     <td style="width:80px">
     <?php echo "<h2>".'Questions'. "</h2>"; ?>
@@ -315,7 +326,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
 	
 	
 	
- function html_edit_spider_ques($row,$cat_row,$ord_elem){
+ function html_edit_ques($row,$cat_row,$ord_elem){
  
  	
 ?>
@@ -343,9 +354,13 @@ function submitbutton(pressbutton)
 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            
+            <td colspan="7" align="right" style="font-size:16px;">
+              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+ 			 </td>
    			</tr>
-
   <tr>
   <td width="100%"><h2>Question - <?php echo stripslashes($row->title) ?></h2></td>
   <td align="right"><input type="button" onclick="submitbutton('save')" value="Save" class="button-secondary action"> </td>  

@@ -1,12 +1,12 @@
 <?php 
 
-function add_spider_cat(){
+function add_cat(){
 	
 // display function
-html_add_spider_cat();
+html_add_cat();
 }
 
-function show_spider_cat(){
+function show_cat(){
 		  
 	  
   global $wpdb;
@@ -72,7 +72,7 @@ function show_spider_cat(){
 	
 	$query = "SELECT * FROM ".$wpdb->prefix."spider_faq_category".$where." ". $order." "." LIMIT ".$limit.",20";
 	$rows = $wpdb->get_results($query);	   
-		html_show_spider_cat( $rows, $pageNav,$sort);   	
+		html_show_cat( $rows, $pageNav,$sort);   	
 	
 }
 
@@ -80,13 +80,13 @@ function show_spider_cat(){
 
 
 
-function edit_spider_cat($id){
+function edit_cat($id){
 	global $wpdb;
 	  
 	  $query="SELECT * FROM ".$wpdb->prefix."spider_faq_category WHERE id='".$id."'";
 	   $row=$wpdb->get_row($query);
 
-    html_edit_spider_cat($row);
+    html_edit_cat($row);
 }
 
 
@@ -94,7 +94,7 @@ function edit_spider_cat($id){
 
 
 
-function save_spider_cat(){
+function save_cat(){
 
 	global $wpdb;
 	$save_or_no= $wpdb->insert($wpdb->prefix.'spider_faq_category', array(
@@ -129,7 +129,7 @@ function save_spider_cat(){
     return true;
 }
 
-function apply_spider_cat(){
+function apply_cat(){
 
 	global $wpdb;
 	
@@ -167,7 +167,7 @@ function apply_spider_cat(){
 
 
 
-function remove_spider_cat($id){
+function remove_cat($id){
    global $wpdb;
  $sql_remov_tag="DELETE FROM ".$wpdb->prefix."spider_faq_category WHERE id='".$id."'";
  if(!$wpdb->query($sql_remov_tag))
@@ -186,7 +186,7 @@ function remove_spider_cat($id){
 
 
 
-function change_spider_cat( $id ){
+function change_cat( $id ){
   global $wpdb;
   $published=$wpdb->get_var("SELECT published FROM ".$wpdb->prefix."spider_faq_category WHERE `id`=".$id );
   if($published)

@@ -1,5 +1,5 @@
 <?php   
-function html_add_spider_faq($theme_row){
+function html_add_faq($theme_row){
 	
 		
 	
@@ -383,10 +383,15 @@ function submitbutton(pressbutton)
 
 <table width="95%">
   <tbody>
-<tr>
+ <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create FAQs. You can add unlimited number of FAQs. <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            
+            <td colspan="7" align="right" style="font-size:16px;">
+              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+ 			 </td>
    			</tr>
   <tr>
   <td width="100%"><h2>Add FAQ</h2></td>
@@ -421,13 +426,17 @@ Title:
 	{
 		
 		$theme_select.='<option value="'.$theme->id.'"';
+		
 		 if (strlen($theme->title)<30){
 		 $theme_title=$theme->title;
 		 }
 		 else{
 		 $theme_title=substr_replace($theme->title,"...",30);
 		 }
-		$theme_select.='>'.$theme_title.'</option>';
+		 if ($theme->id!="1")
+		$theme_select.='disabled >'.$theme_title.'</option>';
+		else
+		$theme_select.=' >'.$theme_title.'</option>';
 	}
 	echo $theme_select;
 ?>
@@ -570,7 +579,7 @@ value="<?php echo $row->id; ?>" />
 
 
 
-function 	html_show_spider_faq($rows, $pageNav,$sort){
+function 	html_show_faq($rows, $pageNav,$sort){
 	global $wpdb;
 	?>
     <script language="javascript">
@@ -610,10 +619,16 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 	</script>
     <form method="post"  onkeypress="doNothing()" action="admin.php?page=Spider_Faq" id="admin_form" name="admin_form">
 	<table cellspacing="10" width="100%">
-	<tr>
+	
+	 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create FAQs. You can add unlimited number of FAQs. <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-           
+            <td colspan="7" align="right" style="font-size:16px;">
+              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+ 			 </td>
    			</tr>
     <tr>
     <td style="width:80px">
@@ -725,7 +740,7 @@ This section allows you to create FAQs. You can add unlimited number of FAQs. <a
 	
 	
 	
- function html_edit_spider_faq($row,$theme_row){
+ function html_edit_faq($row,$theme_row){
 global  $wpdb;
 	
 ?>
@@ -1109,10 +1124,15 @@ function submitbutton(pressbutton)
 
 <table width="95%">
   <tbody>
-<tr>
+ <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create FAQs. You can add unlimited number of FAQs. <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            
+            <td colspan="7" align="right" style="font-size:16px;">
+              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+ 			 </td>
    			</tr>
   <tr>
   <td width="100%"><h2>FAQ - <?php echo stripslashes($row->title) ?></h2></td>
@@ -1155,7 +1175,11 @@ Title:
 		 else{
 		 $theme_title=substr_replace($theme->title,"...",30);
 		 }
-		$theme_select.='>'.$theme_title.'</option>';
+		
+		 if ($theme->id!="1")
+		$theme_select.='disabled >'.$theme_title.'</option>';
+		else
+		$theme_select.=' >'.$theme_title.'</option>';
 	}
 	echo $theme_select;
 ?>
