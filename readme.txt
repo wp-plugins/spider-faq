@@ -1,4 +1,4 @@
-=== Spider FAQ ===  
+=== WordPress FAQ ===  
 Contributors: webdorado  
 Donate link: http://web-dorado.com/products/wordpress-faq-plugin.html
 Tags: faq, spider faq, faq plugin, wordpress faq  
