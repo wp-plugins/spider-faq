@@ -2,7 +2,7 @@
 /*
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/
-Version: 1.0.1
+Version: 1.0.2
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -735,7 +735,7 @@ $p=1;
 	echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
 				  <div class="post_right" id="post_right'.$faq->id.'">
 					  <a href="#" class="post_ajax_title"><span onclick="changesrc'.$faq->id.'('.$n.')"><h2 class="post_title" id="post_title'.$faq->id.'" style="'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
-					  '?><?php if ($stl->tchangeimage1!=""){ echo'<div class="tchangeimg" id="tchangeimg'.$faq->id.'"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" /></div>'  ?><?php } echo '<div class="ttext" id="ttext'.$faq->id.'">'.$p.'. '.$row->title.'</div></h2></span></a>
+					  '?><?php if ($stl->tchangeimage1!=""){ echo'<div class="tchangeimg" id="tchangeimg'.$faq->id.'"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" /></div>'  ?><?php } echo '<div class="ttext" id="ttext'.$faq->id.'">'.$p.'. '.stripslashes($row->title).'</div></h2></span></a>
 				    </div>
 			    </div>';
 			if (strlen($row->fullarticle)>1){
@@ -842,7 +842,7 @@ $row->fulltext='';
 	echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
 				  <div class="post_right" id="post_right'.$faq->id.'">
 					  <a href="#" class="post_ajax_title"><span onclick="changesrc'.$faq->id.'('.$k.')"><h2 class="post_title" id="post_title'.$faq->id.'" style="'?><?php if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">
-					  '?><?php if ($stl->tchangeimage1!=""){ echo'<div class="tchangeimg" id="tchangeimg'.$faq->id.'"><img src="'.$stl->tchangeimage1.'" id="stl'.$faq->id.$k.'" /></div>'  ?><?php } echo '<div class="ttext" id="ttext'.$faq->id.'">'.$row->post_title.'</div></h2></span></a>
+					  '?><?php if ($stl->tchangeimage1!=""){ echo'<div class="tchangeimg" id="tchangeimg'.$faq->id.'"><img src="'.$stl->tchangeimage1.'" id="stl'.$faq->id.$k.'" /></div>'  ?><?php } echo '<div class="ttext" id="ttext'.$faq->id.'">'.stripslashes($row->post_title).'</div></h2></span></a>
 				    </div>
 			    </div>';
 			if (strlen($row->fulltext)>1){
