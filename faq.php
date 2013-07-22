@@ -2,7 +2,7 @@
 /*
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/
-Version: 1.0.2
+Version: 1.0.3
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -120,9 +120,6 @@ return	 front_end_faq ($rows,$cats,$standcats,$stls,$faq,$s);
 
 		
         wp_enqueue_script( 'jquery' );
-		
-		 	 wp_register_script( 'effects.core.packed', plugins_url('elements/effects.core.packed.js', __FILE__) );
-        wp_enqueue_script( 'effects.core.packed' );
 		
 		
 		
