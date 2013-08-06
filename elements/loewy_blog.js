@@ -152,11 +152,8 @@ function URLDecode (encodedString) {
 			var animate_loading = function(e){
 				if ($(".loading_bar", e).length) {
 					$(".loading_bar", e).animate({left:180}, {
-<<<<<<< HEAD
-						queue:false, duration:600,  complete:function(){
-=======
-						queue:false, duration:600, complete:function(){
->>>>>>> SpiderFAQWordPressFree/master
+
+					queue:false, duration:600, complete:function(){
 							$(this).css({left:-170});
 							window.setTimeout(function(){
 								animate_loading(e);
@@ -254,11 +251,8 @@ function URLDecode (encodedString) {
 								li.removeClass("selected");
 								
 								$(".post_content", li).animate({height:"hide"}, {
-<<<<<<< HEAD
-									queue:false, duration:400,  complete:function(){
-=======
-									queue:false, duration:400, complete:function(){
->>>>>>> SpiderFAQWordPressFree/master
+
+								queue:false, duration:400, complete:function(){
 										posts_waiting = false;
 										li.removeClass("post_content_opened");
 										
