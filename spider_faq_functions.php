@@ -1,6 +1,6 @@
 <?php 
 
-function add_faq(){
+function add_spider_faq(){
   global $wpdb;
 	  
 	  
@@ -21,10 +21,10 @@ function add_faq(){
   
 		
 // display function
-html_add_faq($theme_row);
+html_add_spider_faq($theme_row);
 }
 
-function show_faq(){
+function show_spider_faq(){
 		  
 	  
   global $wpdb;
@@ -91,7 +91,7 @@ function show_faq(){
 	$query =	"SELECT ".$wpdb->prefix."spider_faq_faq.*,".$wpdb->prefix."spider_faq_theme.title as themetitle FROM ".$wpdb->prefix."spider_faq_faq left join ".$wpdb->prefix."spider_faq_theme on  ".$wpdb->prefix."spider_faq_theme.id=".$wpdb->prefix."spider_faq_faq.category ".$where." ". $order." "." LIMIT ".$limit.",20";
 	$rows = $wpdb->get_results($query);	
 
-		html_show_faq( $rows, $pageNav,$sort);   	
+		html_show_spider_faq( $rows, $pageNav,$sort);   	
 	
 }
 
@@ -99,16 +99,14 @@ function show_faq(){
 
 
 
-function edit_faq($id){
-	global $wpdb;
-	  
-	  $query="SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='".$id."'";
-	   $row=$wpdb->get_row($query);
-	   
+function edit_spider_faq($id){
+	global $wpdb;	  
+	  $query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='%d'",$id);
+	   $row=$wpdb->get_row($query);	   
 $theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme");
 
 
-    html_edit_faq($row,$theme_row);
+    html_edit_spider_faq($row,$theme_row);
 }
 
 
@@ -116,18 +114,22 @@ $theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme")
 
 
 
-function save_faq(){
-
+function save_spider_faq(){
 	global $wpdb;
 	$save_or_no= $wpdb->insert($wpdb->prefix.'spider_faq_faq', array(
 		'id'	=> NULL,
-        'title'     => $_POST["title"],
+        'title'     => stripslashes($_POST["title"]),
 		'theme'   => $_POST["theme_search"],
         'category'   => $_POST["params"],
 		'standcategory'   => $_POST["contcats"],
-		'standcat'				 =>$_POST["standcat"],
-		'show_searchform'				 =>$_POST["show_searchform"],
+		'standcat'			=>$_POST["standcat"],
+		'show_searchform'	  =>$_POST["show_searchform"],
 		'expand'				 =>$_POST["expand"],
+		'numbertext'				 =>$_POST["faq_numbertext"],
+		'like'				            =>$_POST["faq_like"],
+		'hits'				                 =>$_POST["faq_hits"],
+		'date'				                     =>$_POST["faq_date"],
+		'user'				                         =>$_POST["faq_user"],
                 ),
 				array(
 				'%d',
@@ -135,6 +137,11 @@ function save_faq(){
 				'%s',
 				'%s',	
 				'%s',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
 				'%d',
 				'%d',
 				'%d',
@@ -155,20 +162,25 @@ function save_faq(){
     return true;
 }
 
-function apply_faq(){
+function apply_spider_faq(){
 
 	global $wpdb;
 	
 	
 	 $save_or_no= $wpdb->update($wpdb->prefix.'spider_faq_faq', array(
         
-          'title'     => $_POST["title"],
+          'title'     => stripslashes($_POST["title"]),
 		'theme'   => $_POST["theme_search"],
         'category'   => $_POST["params"],
 		'standcategory'   => $_POST["contcats"],
 		'standcat'				 =>$_POST["standcat"],
 		'show_searchform'				 =>$_POST["show_searchform"],
 		'expand'				 =>$_POST["expand"],
+		'numbertext'				 =>$_POST["faq_numbertext"],
+		'like'				            =>$_POST["faq_like"],
+		'hits'				                 =>$_POST["faq_hits"],
+		'date'				                     =>$_POST["faq_date"],
+		'user'				                         =>$_POST["faq_user"],
                 ),
 				 array('id'=>$_POST["id"]),
 				 
@@ -178,6 +190,11 @@ function apply_faq(){
 				'%s',
 				'%s',
 				'%s',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
 				'%d',
 				'%d',
 				'%d',
@@ -197,9 +214,9 @@ function apply_faq(){
 
 
 
-function remove_faq($id){
+function remove_spider_faq($id){
    global $wpdb;
- $sql_remov_tag="DELETE FROM ".$wpdb->prefix."spider_faq_faq WHERE id='".$id."'";
+ $sql_remov_tag=$wpdb->prepare("DELETE FROM ".$wpdb->prefix."spider_faq_faq WHERE id='%d'",$id);
  if(!$wpdb->query($sql_remov_tag))
  {
 	  ?>
@@ -218,7 +235,7 @@ function remove_faq($id){
 
 function change_ques( $id ){
   global $wpdb;
-  $published=$wpdb->get_var("SELECT published FROM ".$wpdb->prefix."spider_faq_question WHERE `id`=".$id );
+  $published=$wpdb->get_var($wpdb->prepare("SELECT published FROM ".$wpdb->prefix."spider_faq_question WHERE `id`='%d'",$id ));
   if($published)
    $published=0;
   else

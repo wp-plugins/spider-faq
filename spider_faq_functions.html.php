@@ -1,5 +1,5 @@
 <?php   
-function html_add_faq($theme_row){
+function html_add_spider_faq($theme_row){
 	
 		
 	
@@ -383,10 +383,10 @@ function submitbutton(pressbutton)
 
 <table width="95%">
   <tbody>
- <tr>
+<tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create FAQs. You can add unlimited number of FAQs. <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
+             <td colspan="7" align="right" style="font-size:16px;">
               <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
             <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
             Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
@@ -412,37 +412,9 @@ This section allows you to create FAQs. You can add unlimited number of FAQs. <a
 Title:
 </td>
 <td>
-<input class="text_area" type="text" name="title" id="title" size="50"  maxlength="250" value="<?php echo $row->title;?>" />
+<input class="text_area" type="text" name="title" id="title" size="50"  maxlength="250" value="<?php echo $row->title;?>">
 </td>
 </tr>
-
-
-<tr>
-<td align="right" class="key" style="width:180px">Theme:</td>
-<td>
-<?php
-	$theme_select.='<select style=" text-align:left;" name="theme_search" id="theme_search" class="inputbox" onchange="change_select();">';
-	foreach($theme_row as $theme)
-	{
-		
-		$theme_select.='<option value="'.$theme->id.'"';
-		
-		 if (strlen($theme->title)<30){
-		 $theme_title=$theme->title;
-		 }
-		 else{
-		 $theme_title=substr_replace($theme->title,"...",30);
-		 }
-		 if ($theme->id!="1")
-		$theme_select.='disabled >'.$theme_title.'</option>';
-		else
-		$theme_select.=' >'.$theme_title.'</option>';
-	}
-	echo $theme_select;
-?>
-</td>
-</tr>
-
 </table>
 
 
@@ -560,6 +532,66 @@ Expand All Answers After The Page Is Loaded:
 </td>
 </tr>
 
+                    <tr>
+				<td  width="182px" align="right" class="key">
+                		Category Numbering: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_numbertext" id="faq_numbertext"  type="radio" value="0" >
+				  <span>No</span>
+				        <input name="faq_numbertext" id="faq_numbertext"  type="radio" value="1" checked="checked">
+						<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+                     <td  width="182px" align="right" class="key">
+                		Like: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_like" id="faq_like"  type="radio" value="0" >
+				  <span>No</span>
+				        <input name="faq_like" id="faq_like"  type="radio" value="1" checked="checked">
+						<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+				<td  width="182px" align="right" class="key">
+                		Hits: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_hits" id="faq_hits"  type="radio" value="0" >
+				  <span>No</span>
+				        <input name="faq_hits" id="faq_hits"  type="radio" value="1" checked="checked">
+						<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+				<td  width="182px" align="right" class="key">
+                		Date: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_date" id="faq_date"  type="radio" value="0"  >
+				  <span>No</span>
+				        <input name="faq_date" id="faq_date"  type="radio" value="1" checked="checked">
+						<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+				<td  width="182px" align="right" class="key">
+                		User: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_user" id="faq_user"  type="radio" value="0"  >
+				  <span>No</span>
+				        <input name="faq_user" id="faq_user"  type="radio" value="1" checked="checked">
+						<span>Yes</span>
+
+				</td>
+				</tr>
 </table>
 <input type="hidden" name="id"
 value="<?php echo $row->id; ?>" />
@@ -579,7 +611,7 @@ value="<?php echo $row->id; ?>" />
 
 
 
-function 	html_show_faq($rows, $pageNav,$sort){
+function 	html_show_spider_faq($rows, $pageNav,$sort){
 	global $wpdb;
 	?>
     <script language="javascript">
@@ -619,8 +651,7 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 	</script>
     <form method="post"  onkeypress="doNothing()" action="admin.php?page=Spider_Faq" id="admin_form" name="admin_form">
 	<table cellspacing="10" width="100%">
-	
-	 <tr>
+	<tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create FAQs. You can add unlimited number of FAQs. <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
             <td colspan="7" align="right" style="font-size:16px;">
@@ -740,9 +771,8 @@ This section allows you to create FAQs. You can add unlimited number of FAQs. <a
 	
 	
 	
- function html_edit_faq($row,$theme_row){
+ function html_edit_spider_faq($row,$theme_row){
 global  $wpdb;
-	
 ?>
 <script type="text/javascript">
 
@@ -1124,10 +1154,10 @@ function submitbutton(pressbutton)
 
 <table width="95%">
   <tbody>
- <tr>
+<tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create FAQs. You can add unlimited number of FAQs. <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-5.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
+             <td colspan="7" align="right" style="font-size:16px;">
               <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
             <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
             Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1152,37 +1182,6 @@ Title:
 </td>
 <td>
 <input class="text_area" type="text" name="title" id="title"  value="<?php echo $row->title;?>" />
-</td>
-</tr>
-
-
-
-
-<tr>
-<td align="right"  class="key" width="180px">Theme:</td>
-<td>
-<?php
-	$theme_select.='<select style=" text-align:left;" name="theme_search" id="theme_search" class="inputbox" onchange="change_select();">';
-	foreach($theme_row as $theme)
-	{
-		
-		$theme_select.='<option value="'.$theme->id.'"';
-		if($row->theme==$theme->id)
-		$theme_select.='selected="selected"';
-		 if (strlen($theme->title)<30){
-		 $theme_title=$theme->title;
-		 }
-		 else{
-		 $theme_title=substr_replace($theme->title,"...",30);
-		 }
-		
-		 if ($theme->id!="1")
-		$theme_select.='disabled >'.$theme_title.'</option>';
-		else
-		$theme_select.=' >'.$theme_title.'</option>';
-	}
-	echo $theme_select;
-?>
 </td>
 </tr>
 </table>
@@ -1246,7 +1245,7 @@ $value=$row->category;
 	foreach($cats_id as $id)
 	{
 	
-		$query ="SELECT * FROM ".$wpdb->prefix."spider_faq_category WHERE id=".$id;
+		$query =$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_category WHERE id='%d'",$id);
 		
 		$cats[] = $wpdb->get_results($query);
 	
@@ -1320,7 +1319,7 @@ $value1=$row->standcategory;
 	foreach($cats_id1 as $catid)
 	{
 	
-		$query ="SELECT * FROM ".$wpdb->prefix."terms WHERE term_id=".$catid;
+		$query =$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."terms WHERE term_id='%d'",$catid);
 		
 		$cats1[] = $wpdb->get_row($query);
 	
@@ -1393,7 +1392,66 @@ Expand All Answers After The Page Is Loaded:
 <input type="radio" name="expand"  value="1"  <?php if($row->expand==1) echo 'checked="checked"'?> id="expand1"><label for="expand1">Yes</label>
 </td>
 </tr>
+<tr>
+				<td  width="182px" align="right" class="key">
+                	Category Numbering: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_numbertext" id="faq_numbertext"  type="radio" value="0" <?php if($row->numbertext==0) echo 'checked="checked"';?> >     
+				  <span>No</span>
+				        <input name="faq_numbertext" id="faq_numbertext"  type="radio" value="1" <?php if($row->numbertext==1) echo 'checked="checked"';?>>
+						<span>Yes</span>
 
+				</td>
+				</tr>
+				<tr>
+                     <td  width="182px" align="right" class="key">
+                		Like: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_like" id="faq_like"  type="radio" value="0" <?php if($row->like==0) echo 'checked="checked"';?>>
+				  <span>No</span>
+				        <input name="faq_like" id="faq_like"  type="radio" value="1" <?php if($row->like==1) echo 'checked="checked"';?>>
+						<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+				<td  width="182px" align="right" class="key">
+                		Hits: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_hits" id="faq_hits"  type="radio" value="0"  <?php if($row->hits==0) echo 'checked="checked"';?>>
+				  <span>No</span>
+				        <input name="faq_hits" id="faq_hits"  type="radio" value="1"  <?php if($row->hits==1) echo 'checked="checked"';?>>
+						<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+				<td  width="182px" align="right" class="key">
+                		Date: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_date" id="faq_date"  type="radio" value="0" <?php if($row->date==0) echo 'checked="checked"';?>>
+				  <span>No</span>
+				    <input name="faq_date" id="faq_date"  type="radio" value="1" <?php if($row->date==1) echo 'checked="checked"';?>>
+					<span>Yes</span>
+
+				</td>
+				</tr>
+				<tr>
+				<td  width="182px" align="right" class="key">
+                		User: 
+                	</td>
+				<td style="width:100px; vertical-align:top;">
+				  <input name="faq_user" id="faq_user"  type="radio" value="0" <?php if($row->user==0) echo 'checked="checked"';?> >
+				  <span>No</span>
+				        <input name="faq_user" id="faq_user"  type="radio" value="1" <?php if($row->user==1) echo 'checked="checked"';?>>
+						<span>Yes</span>
+
+				</td>
+				</tr>
 </table>
 
 

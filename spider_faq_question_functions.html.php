@@ -1,10 +1,9 @@
 <?php   
-function html_add_ques($cat_row,$ord_elem){
-	
-	
+function html_add_spider_ques($cat_row,$ord_elem){
 	
 ?>
 <script type="text/javascript">
+
 function submitbutton(pressbutton) 
 {
 	if(!document.getElementById('title').value){
@@ -19,23 +18,16 @@ function submitbutton(pressbutton)
 }
 
 
-
 </script>
 
-
-
-
+  <p>Your browser does not support iframes.</p>
+</iframe>
 <table width="95%">
   <tbody>
 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
-              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
-            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
-            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
- 			 </td>
+            
    			</tr>
 
   <tr>
@@ -50,7 +42,6 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
 <form action="admin.php?page=Spider_Faq_Questions" method="post" name="adminForm" id="adminForm">
 
 <table class="admintable">
-
 <tr>
 <td width="100" align="right" class="key">
 Question:
@@ -81,9 +72,6 @@ Question:
 ?>
 </td>
 </tr>
-
-
-
 <tr>
 <td width="100" align="right" class="key">
 Answer:
@@ -98,10 +86,57 @@ Answer:
 
 </td>
 </tr>
-
+<tr>
+<td width="100px" align="right" class="key">
+Created by:
+</td>
+<?php 
+global $wpdb;
+$user_id=wp_get_current_user();
+ ?>
+<td>
+<input name="user_name" class="text_area" value="<?php if(isset($_POST['user_name']) && esc_html($_POST['user_name'])!="" )echo  $row->user_name; else echo  $user_id->display_name;?>" id="user_name" type="text">
+<a href="<?php echo add_query_arg(array('action' => 'wpusers', 'TB_iframe' => '1', 'width' => '650', 'height' => '500'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Track" onclick="return false;" style="margin-bottom:5px;">
+Select user
+</a>
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key">
+Calendar:
+</td>
+<td>
+<input name="date" id="date" class="text_area" value="<?php echo date('d-m-Y');?>" type="text"> 
+<img src="<?php echo plugins_url( '',__FILE__); ?>/upload/ikon/calendar.png" onclick="return showCalendar('date','%d-%m-%Y');" >
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key" >
+Like:
+</td>
+<td>
+<input name="like" class="text_area" value="" type="text" style="width: 100px;">
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key">
+Unlike:
+</td>
+<td>
+<input name="unlike" class="text_area" value="" type="text" style="width: 100px;">
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key">
+Hits:
+</td>
+<td>
+<input name="hits" class="text_area" value="" type="text" style="width: 100px;">
+</td>
+</tr>
 
 <tr>
-<td width="100" align="right" class="key">
+<td width="100px" align="right" class="key">
 Order:
 </td>
 <td>
@@ -164,10 +199,11 @@ value="<?php echo $row->id; ?>" />
 
 
 
-function 	html_show_ques($rows, $pageNav,$sort){
+function 	html_show_spider_ques($rows, $pageNav,$sort){
 	global $wpdb;
 	?>
     <script language="javascript">
+	
 	function ordering(name,as_or_desc)
 	{
 		document.getElementById('asc_or_desc').value=as_or_desc;		
@@ -207,14 +243,9 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 	<tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
-              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
-            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
-            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
- 			 </td>
+           
    			</tr>
-	
+
     <tr>
     <td style="width:80px">
     <?php echo "<h2>".'Questions'. "</h2>"; ?>
@@ -227,7 +258,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
     </tr>
     </table>
     <?php
-	if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=$_POST['search_events_by_title']; }else{$serch_value="";}} 
+	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_html($_POST['search_events_by_title']); }else{$serch_value="";}} 
 	$serch_fields='<div class="alignleft actions" style="width:180px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
         <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
@@ -282,8 +313,8 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
  </tbody>
  </table>
  <input type="hidden" name="oreder_move" id="oreder_move" value="" />
- <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc'];?>"  />
- <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];?>"  />
+ <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_html($_POST['asc_or_desc']);?>"  />
+ <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_html($_POST['order_by']);?>"  />
  <input type="hidden" name="saveorder" id="saveorder" value="" />
 
  <?php
@@ -326,7 +357,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
 	
 	
 	
- function html_edit_ques($row,$cat_row,$ord_elem){
+ function html_edit_spider_ques($row,$cat_row,$ord_elem){
  
  	
 ?>
@@ -354,13 +385,9 @@ function submitbutton(pressbutton)
 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
-              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
-            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
-            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
- 			 </td>
+            
    			</tr>
+
   <tr>
   <td width="100%"><h2>Question - <?php echo stripslashes($row->title) ?></h2></td>
   <td align="right"><input type="button" onclick="submitbutton('save')" value="Save" class="button-secondary action"> </td>  
@@ -429,8 +456,50 @@ $row->text=$row->article;
 
 </td>
 </tr>
-
-
+<tr>
+<td width="100px" align="right" class="key">
+Created by:
+</td>
+<td>
+<input name="user_name" class="text_area" value="<?php echo $row->user_name; ?>" id="user_name" type="text">
+<a href="<?php echo add_query_arg(array('action' => 'wpusers', 'TB_iframe' => '1', 'width' => '650', 'height' => '500'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Track" onclick="return false;" style="margin-bottom:5px;">
+Select user
+</a>
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key">
+Calendar:
+</td>
+<td>
+<input name="date" id="date" class="text_area" value="<?php echo $row->date;?>" type="text"> 
+<img src="<?php echo plugins_url( '',__FILE__); ?>/upload/ikon/calendar.png" onclick="return showCalendar('date','%d-%m-%Y');" >
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key" >
+Like:
+</td>
+<td>
+<input name="like" class="text_area" value="<?php echo $row->like;?>" type="text" style="width: 100px;">
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key">
+Unlike:
+</td>
+<td>
+<input name="unlike" class="text_area" value="<?php echo $row->unlike;?>" type="text" style="width: 100px;">
+</td>
+</tr>
+<tr>
+<td width="100px" align="right" class="key">
+Hits:
+</td>
+<td>
+<input name="hits" class="text_area" value="<?php echo $row->hits;?>" type="text" style="width: 100px;">
+</td>
+</tr>
 <tr>
 <td width="100" align="right" class="key">
 Order:

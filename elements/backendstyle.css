@@ -23,19 +23,19 @@
 	
 	
 .divfieldset {
-	float: left;
+	
 margin-left: 8px;
 	
 }
 
 .divfieldset.divfieldset  {
-	float: left;
+	
 margin-left: 10px;
 	
 }
 
 
-#themeparams{ width: 1200px; }
+#themeparams{ width: 1180px; }
 #themeparams fieldset{
 	border: 2px solid #4f9bc6 ;/*#CCA383 1462a5*/
 	width: 90%;

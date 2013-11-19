@@ -1,6 +1,6 @@
 <?php 
 
-function show_theme(){
+function show_spider_theme(){
 		  
 
 ?>
@@ -14,7 +14,7 @@ function show_theme(){
 This section allows you to create/edit themes for the FAQs.<br /> This feature is disabled for
 the non-commercial version. <a href="http://web-dorado.com/step-4-adding-themes/spider-faq-wordpress-guide-step-4-1.html" target="_blank" style="color:blue; text-decoration:none;">More...</a>
 <br />
-Here are some examples of 17 standard templates included in the commercial version.<a href="http://wpdemo.web-dorado.com/spider-faq/" target="_blank" style="color:blue; text-decoration:none;">Demo</a></td>
+Here are some examples of 22 standard templates included in the commercial version.<a href="http://wpdemo.web-dorado.com/spider-faq/" target="_blank" style="color:blue; text-decoration:none;">Demo</a></td>
             <td colspan="7" align="right" style="font-size:16px;">
               <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
             <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com/files" width="215"><br>
@@ -25,18 +25,7 @@ Here are some examples of 17 standard templates included in the commercial versi
             </table>
 
 <br /><br />
-<img src="<?php echo plugins_url('images/white_theme.png',__FILE__) ?>" width="900px" />
+<img src="<?php echo plugins_url('images/FAQ01.jpg',__FILE__) ?>" width="900px" />
 <?php
 }
 ?>
-
-
-
-
-
-
-
-
-
-
-

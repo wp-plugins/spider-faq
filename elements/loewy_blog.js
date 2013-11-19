@@ -40,7 +40,6 @@ function URLDecode (encodedString) {
   }
   return output;
 }
-
 (function($){
 	function getPageScroll() {
 		var xScroll, yScroll;
@@ -126,6 +125,7 @@ function URLDecode (encodedString) {
 	}
 		
 	$().ready(function(){
+		
 		//menu
 		$(".header_nav").each(function(){
 			$(">ul>li", this).each(function(){
@@ -152,8 +152,7 @@ function URLDecode (encodedString) {
 			var animate_loading = function(e){
 				if ($(".loading_bar", e).length) {
 					$(".loading_bar", e).animate({left:180}, {
-
-					queue:false, duration:600, complete:function(){
+						queue:false, duration:600,  complete:function(){
 							$(this).css({left:-170});
 							window.setTimeout(function(){
 								animate_loading(e);
@@ -251,8 +250,7 @@ function URLDecode (encodedString) {
 								li.removeClass("selected");
 								
 								$(".post_content", li).animate({height:"hide"}, {
-
-								queue:false, duration:400, complete:function(){
+									queue:false, duration:400, complete:function(){
 										posts_waiting = false;
 										li.removeClass("post_content_opened");
 										
@@ -321,6 +319,34 @@ function URLDecode (encodedString) {
 		
 		
 		
+		$("a.more-link", this).each(function(){
+				var self = this;
+				var li = $($(this).parents("li")[0]);
+				
+				$(".post_content_more").hide();
+				
+				$(this).bind("click", function(){
+					
+				$(this).hide();
+					
+				  posts_waiting = true;
+					var href = $(this).attr("href");
+					if (href != "") {
+						
+							if (li.is(".post_content_opened")) {
+								
+								$(".post_content_more", li).animate({height:"show"}, {
+									queue:false, duration:100,  complete:function(){
+										posts_waiting = false;
+										
+									}
+								});
+							
+						} 
+					}
+					return false;
+				});
+			});
 		
 		
 		
@@ -357,6 +383,7 @@ function URLDecode (encodedString) {
 			
 
 		$("a.post_exp", this).each(function(){
+		
 				var self = this;
 				
 	
@@ -375,6 +402,7 @@ function URLDecode (encodedString) {
 			});
 		
 			});
+	//		
 			
 			
 
@@ -506,4 +534,183 @@ function alternate(id){
      }      
    }
  }
-}			
+}
+function post_like(m,n,k)
+	{   var theme_id=k;
+        var question_id = m;
+	    var faq_id=n;
+        var datas = "post_like="+question_id+"&"+"post_show_hits="+faq_id+"&"+"pltheme_id="+theme_id;
+		jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_post_like",		
+        data: datas,  
+        success: function(html){  
+            jQuery("#post_like_hits_div"+question_id).html(html);
+			
+        }  
+    });
+	}
+function post_unlike(m,n,k)
+	{   var theme_id=k;
+        var question_id = m;
+	    var faq_id=n;
+        var datas = "post_like="+question_id+"&"+"post_show_hits="+faq_id+"&"+"punltheme_id="+theme_id;
+		
+		jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_post_unlike",  
+        data: datas,  
+        success: function(html){  
+            jQuery("#post_like_hits_div"+question_id).html(html);
+			
+        }  
+    });
+	}
+function like(m,n,k)
+    {   
+     	var theme_id=k;
+        var question_id = m;
+	    var faq_id=n;
+        var datas = "like="+question_id+"&"+"show_hits="+faq_id+"&"+"ltheme_id="+theme_id;
+		
+		jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_like",  
+        data: datas,  
+        success: function(html){  
+            jQuery("#like_hits_div"+question_id).html(html);
+			
+        }  
+    });
+	
+		  
+	}
+
+function unlike(m,n,k)	
+
+		{ var theme_id=k;
+          var question_id = m;
+		  var faq_id=n;
+          var datas = "unlike="+question_id+"&"+"show_hits="+faq_id+"&"+"unltheme_id="+theme_id;
+		
+		jQuery.ajax({  
+        type: "POST",  
+		url: ajax_url + "=wp_unlike",        
+        data: datas,  
+        success: function(html){  
+           jQuery("#like_hits_div"+question_id).html(html);			
+        }  
+    });
+
+		}
+function hits(m,n,k)	
+
+		{
+		var theme_id=k;
+		var question_id = m;
+		var faq_id=n;
+		if(jQuery("#post_content"+question_id).css( "display" )=="none")
+        {
+		var datas = "hits="+question_id+"&"+"faq_hit_id="+faq_id;
+		jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_hits",		
+        data: datas,  
+        success: function(html){  
+            jQuery("#hits"+question_id).html(html);
+			
+		
+        }  
+    });
+        }
+		}	
+	
+  function post_hits(m,n,k)
+       {
+		var question_id = m;
+		 var post_faq_id=n;
+		if(jQuery("#post_content"+question_id).css( "display" )=="none")
+        {
+		var datas = "post_hits="+question_id+"&"+"post_faq_id="+post_faq_id;
+		jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_post_hits",		
+        data: datas,  
+        success: function(html){  
+            jQuery("#post_hits"+question_id).html(html);
+		
+        }  
+    });
+        }
+		}
+		  
+		
+  function expand_hits(tiv,m,k,q,w)
+  {
+     var faq_id=m;
+     var datas="faq_id="+faq_id+"&"+"tiv="+tiv;
+	 jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_expand_hits",				
+        data: datas,  
+        success: function(html){
+        var tox=html;		
+        var myarr = tox.split(".");
+        var hits="Hits: ";		
+   for(var i=0;i<=(myarr.length)-2;i++)
+       {  
+	     var k=myarr[i];
+		  var hit=k.split(",");
+		   var ch=hits+hit[1];
+		    edit_title(tiv,hit[0],faq_id,q,w);
+		            jQuery("#hits"+hit[0]).html(ch);
+	   }	
+      }   
+    }); 
+  }
+   
+  function expand_post_hits(tiv,m,k,q,w)
+   {
+     var faq_id=m;
+      var datas="faq_post_id="+faq_id+"&"+"post_tiv="+tiv;
+		jQuery.ajax({  
+        type: "POST",  
+        url: ajax_url + "=wp_expand_post_hits",		
+        data: datas,  
+        success: function(html){
+        var tox=html;		
+        var myarr = tox.split(".");
+        var hits="Hits: ";		
+      for(var i=0;i<=(myarr.length)-2;i++)
+        {
+          var k=myarr[i];
+		    var hit=k.split(",");
+		      var ch=hits+hit[1];
+			    edit_title(tiv,hit[0],faq_id,q,w);
+		       jQuery("#post_hits"+hit[0]).html(ch);
+
+		}		
+       }  
+    });   
+   }
+   
+   function edit_title(q,m,n,j,i){
+    var k="#"+i;
+	var l="#"+j;
+	if(q==1)
+	{
+	if(jQuery("#post_content"+m).css( "display" )=="none")
+	{
+	jQuery('#post_span'+m+n).find("h2").css("background-color",k);
+	jQuery('#post_span'+m+n).find("h2").css("border-color",l);
+	}
+	else
+	{
+	jQuery('#post_span'+m+n).find("h2").css({"border-color":k,"background-color":l});
+	}
+	}
+	else
+	{
+	jQuery('#post_span'+m+n).find("h2").css({"border-color":k,"background-color":l});
+	}
+	} 

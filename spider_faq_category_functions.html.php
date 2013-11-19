@@ -1,5 +1,5 @@
 <?php   
-function html_add_cat(){
+function html_add_spider_cat(){
 	
 	
 	
@@ -27,15 +27,10 @@ function submitbutton(pressbutton)
 
 <table width="95%">
   <tbody>
-      <tr>
+ <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create categories of questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
-              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
-            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
-            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
- 			 </td>
+           
    			</tr>
   <tr>
   <td width="100%"><h2>Add Category</h2></td>
@@ -131,7 +126,7 @@ value="<?php echo $row->id; ?>" />
 
 
 
-function 	html_show_cat($rows, $pageNav,$sort){
+function 	html_show_spider_cat($rows, $pageNav,$sort){
 	global $wpdb;
 	?>
     <script language="javascript">
@@ -162,15 +157,10 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 	</script>
     <form method="post"  onkeypress="doNothing()" action="admin.php?page=Spider_Faq_Categories" id="admin_form" name="admin_form">
 	<table cellspacing="10" width="100%">
-	   <tr>
+	 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create categories of questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
-              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
-            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
-            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
- 			 </td>
+           
    			</tr>
     <tr>
     <td style="width:80px">
@@ -184,7 +174,7 @@ This section allows you to create categories of questions <a href="http://web-do
     </tr>
     </table>
     <?php
-	if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=$_POST['search_events_by_title']; }else{$serch_value="";}} 
+	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_html($_POST['search_events_by_title']); }else{$serch_value="";}} 
 	$serch_fields='<div class="alignleft actions" style="width:180px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
         <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
@@ -228,8 +218,8 @@ This section allows you to create categories of questions <a href="http://web-do
  </tbody>
  </table>
  <input type="hidden" name="oreder_move" id="oreder_move" value="" />
- <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc'];?>"  />
- <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];?>"  />
+ <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_html($_POST['asc_or_desc']);?>"  />
+ <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_html($_POST['order_by']);?>"  />
  <input type="hidden" name="saveorder" id="saveorder" value="" />
 
  <?php
@@ -272,7 +262,7 @@ This section allows you to create categories of questions <a href="http://web-do
 	
 	
 	
- function html_edit_cat($row){
+ function html_edit_spider_cat($row){
  
  	
 ?>
@@ -297,15 +287,10 @@ function submitbutton(pressbutton)
 
 <table width="95%">
   <tbody>
-  <tr>
+ <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
 This section allows you to create categories of questions <a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">More...</a></td>
-            <td colspan="7" align="right" style="font-size:16px;">
-              <a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
-            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com" width="215"><br>
-            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
- 			 </td>
+           
    			</tr>
   <tr>
   <td width="100%"><h2>Category - <?php echo stripslashes($row->title) ?></h2></td>

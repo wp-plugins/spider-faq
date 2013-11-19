@@ -3,8 +3,8 @@ Contributors: webdorado
 Donate link: http://web-dorado.com/products/wordpress-faq-plugin.html
 Tags: faq, spider faq, faq plugin, wordpress faq  
 Requires at least: 3.0  
-Tested up to: 3.5  
-Stable tag: 1.0.4
+Tested up to: 3.7.1  
+Stable tag: 1.1
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
   
@@ -14,20 +14,22 @@ The Spider FAQ WordPress plugin is for creating an FAQ (Frequently Asked Questio
   
 ###Spider  [WordPress FAQ](http://web-dorado.com/products/wordpress-faq-plugin.html)  
   
-Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can significantly decrease the amount of user inquiries on various issues. The Spider FAQ plugin is highly customizable and is one of the best FAQ tools that can be found in WordPress plugin directory. It offers a big number of built-in themes, as well as allows creating new themes from scratch. FAQs usually contain questions/answers on various topics and generally, especially when the number of questions is big enough, it is necessary to somehow organize them to make it easier for the users to navigate and locate the answers they had been seeking for. For that very reason, Spider FAQ allows creating different categories to be able to organize the questions accordingly. It is also possible to include standard categories (e.g. an existing post category) into the set of FAQ categories.  
-###If you want to customize the design of the FAQ, you can buy the commercial version [ here.](http://web-dorado.com/products/wordpress-faq-plugin.html) Color, font, size and design of each element of the FAQ are customizable in the commercial version.        
+Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can significantly decrease the amount of user inquiries on various issues. The Spider FAQ plugin is highly customizable and is one of the best FAQ tools that can be found in WordPress plugin directory.FAQs usually contain a large amount of questions/answers on various topics. When the number of questions is big enough, it is necessary to organize them for the easier navigation and user-friendliness. For that very reason, Spider FAQ allows creating different categories to be able to organize the questions accordingly, including searching possibility for even simpler use. In addition, standard categories (e.g. an existing post category) can also be included in the set of FAQ categories. The commercial version of FAQ includes 22 built-in themes, as well as option of creating new themes from scratch. 
+###If you want to customize the design of the FAQ, you can buy the commercial version [ here.](http://web-dorado.com/products/wordpress-faq-plugin.html) . The color, font, dimensions and appearance of each element of the FAQ are customizable in the commercial version.        
   
 = Features of Features of Spider WordPress FAQ:=  
 = Possibility to make the following customizations: =  
   
-* The order and organization of the FAQ section is customizablelog.  
+* You can fully customize the order and organization of the FAQ section   
 * The FAQs can be provided with images.  
-* Existing categories can be used for FAQs  
+* Existing categories can be used for FAQs 
+* Possibility of adding date and username
+* Like, Unlike buttons and Hits 
 * The FAQ section is searchable  
 * Full image and HTML support for each FAQ  
 * WYSIWYG editor for FAQs  
 * Button for expanding/collapsing all the questions  
-* Search Engine Friendly URLs  
+* SEO-friendly plugin
 * A wide range of customizable parameters for each feature of the FAQ section (category parameters, question parameters, answer parameters, search box parameters, etc.)  
   
   

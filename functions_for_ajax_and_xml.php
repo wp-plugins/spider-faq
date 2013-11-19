@@ -548,7 +548,7 @@ global $wpdb;
 			<div id="spider_faq_panel" class="panel current">
                 <table>
               	  <tr>
-               		 <td style="height:100px; width:100px; vertical-align:top;">
+               		 <td style="height:50px; width:100px; vertical-align:top;">
                 		Select a FAQ 
                 	</td>
                 	<td style="vertical-align:top">
@@ -563,6 +563,8 @@ global $wpdb;
 </select>
  </td>
                 </tr>
+				
+
                 </table>
                 </div>
         </div>
@@ -584,10 +586,18 @@ function insert_Spider_FAQ() {
 	else
 	{
 	   var tagtext;
-	   tagtext='[Spider_FAQ id="'+document.getElementById('Spider_Faqname').value+'"]';
+	   tagtext='[Spider_FAQ id="'+document.getElementById('Spider_Faqname').value+'" ]';
+				
+				
 	   window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, tagtext);
 	   tinyMCEPopup.editor.execCommand('mceRepaint');
-	   tinyMCEPopup.close();		
+	   tinyMCEPopup.close();
+                  
+                    
+                
+				
+        
+	  
 	}
 	
 }
