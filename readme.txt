@@ -23,12 +23,12 @@ Spider FAQ allows you to provide the users with a well-designed and informative 
 * You can fully customize the order and organization of the FAQ section   
 * The FAQs can be provided with images.  
 * Existing categories can be used for FAQs 
-* Possibility of adding date and username
-* Like, Unlike buttons and Hits 
+* Possibility of adding date and username in FAQ
+* Like, Unlike buttons and Hits for FAQ
 * The FAQ section is searchable  
 * Full image and HTML support for each FAQ  
 * WYSIWYG editor for FAQs  
-* Button for expanding/collapsing all the questions  
+* Button for expanding/collapsing all the questions for FAQ
 * SEO-friendly plugin
 * A wide range of customizable parameters for each feature of the FAQ section (category parameters, question parameters, answer parameters, search box parameters, etc.)  
   
@@ -101,9 +101,9 @@ After downloading the [Spider Wordpress FAQ](http://web-dorado.com/products/word
 3.  Choose the 'Upload' option  
 4.  Click **Choose file** (**Browse**) and select the Spider FAQ zip file.  
 5.  Click **Install Now** button.  
-6.  Once it is complete, activate the plugin.  
+6.  Once it is complete, activate the FAQ plugin.  
   
-Once the plugin is activated, you'll notice a menu on the left called "Spider FAQ".  
+Once the FAQ plugin is activated, you'll notice a menu on the left called "Spider FAQ".  
 If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products/wordpress-faq-plugin.html), please contact us info@web-dorado.com.  
 
 
@@ -126,14 +126,14 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 -	PHP 5.x    
 -	MySQL 5.x  
 
-1.2 Perform a new installation.   
+1.2 Perform a new installation of Spider FAQ.   
     
 1.	Log in to the administrator panel to install the Spider FAQ.    
 2.	Go to Plugins Add > New > Upload to install the Spider FAQ.    
 3.	Click **Choose file** and select the [Spider FAQ](http://wordpress.org/extend/plugins/spider-faq/) zip file to install the Spider FAQ. 		
 4.	Click the **Install Now** button to install the Spider FAQ.	
 5.	Click the **Activate Plugin** to activate the Spider FAQ.	
-6.	If the installation succeeded you will see the message in the picture. If any problem occurs, please contact us info@web-dorado.com and we will try to help you with the issues with the Spider FAQ.	
+6.	If the installation of Spider FAQ succeeded you will see the message in the picture. If any problem occurs, please contact us info@web-dorado.com and we will try to help you with the issues with the Spider FAQ.	
 
 
 == Spider FAQ Step by step guide Step 2 ==        
@@ -162,13 +162,13 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 3.2  Click on the New button on the upper right hand of the screen.	
 
-3.3  Title. Add a question.	
+3.3  Title. Add a question for FAQ section.	
 
-3.4  Category. Choose a category for the question from the list.		
+3.4  Category. Choose a category for the question from the list for FAQ section.		
 
-3.5  Answer. Add the answer to the question. 	
+3.5  Answer. Add the answer to the question for FAQ section. 	
 
-3.6  Order. Select the order of the question. 	
+3.6  Order. Select the order of the question for FAQ section. 	
 
 3.7  Published. Choose whether to publish the question or not.	
 
@@ -179,9 +179,9 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 -	From the navigation bar on the leftselect FAQ > Themes.		
 
--	Click on the Add a Theme button on the upper right hand of the screen or choose a theme from the list of built-in themes. There are 17themes available. If you change the parameters of the default theme, there is a Reset Theme button in the General Parameters section for resetting the parameters of the default theme to their original values.		
+-	Click on the Add a Theme button on the upper right hand of the screen or choose a theme for FAQ from the list of built-in themes. There are 17themes available for FAQ. If you change the parameters of the default theme, there is a Reset Theme button in the General Parameters section for resetting the parameters of the default theme for FAQ to their original values.		
  
-4.1  General Parameters		
+4.1  General Parameters	for FAQ
 
 4.1.1  Theme Title.Add a title for the theme.	
 
@@ -189,7 +189,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 	
 -	Color. Choose a solid background color for the FAQ section.	
 
--	Image. Select a background image.	
+-	Image. Select a background image for FAQ section.	
 
 -	Transparent. The background of the FAQ section will be transparent (empty).	
 
@@ -207,9 +207,9 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.2.1  Background.Choose whether to have a background or not. If yes, select a background color and choose whether to apply gradient or not. If you choose to apply gradient, you will also need to select the gradient direction (from top to bottom, from left to right, or centered) and the two extreme points of the linear color gradient.  
 
-4.2.2  Text color.Choose the color of the title text.  
+4.2.2  Text color.Choose the color of the title text for FAQ section.  
 
-4.2.3  Font size. Define the font size of the title text.  
+4.2.3  Font size. Define the font size of the title text for FAQ section.  
 
 4.2.4  Margin. Specify the spaces (top, right, bottom, and left) outside the title box border, between the border and other elements surrounding the box(e.g. “10 5 15 20”).   
 
@@ -227,7 +227,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.2.10  Background.Choose whether to have a background or not. If yes, select a background color and choose whether to apply gradient or not. If you choose to apply gradient, you will also need to select the gradient direction (from top to bottom, from left to right, or centered) and the two extreme points of the linear color gradient.   
 
-4.2.11  Text color.Choose the color of the description text.  
+4.2.11  Text color.Choose the color of the description text for FAQ section.  
 
 4.2.12  Font Size. Define the font size of the description text.  
 
@@ -245,7 +245,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.3  Question Parameters  
 
-4.3.1  Space between Questions.Specify the space between questions in pixels.  
+4.3.1  Space between Questions.Specify the space between questions in pixels for the FAQ.  
 
 4.3.2  Margin (left). Define the left margin(outside the border) for the questions section.  
 
@@ -253,7 +253,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.3.4  Width. Define the width of the question area.  
 
-4.3.5  Font Size. Define the font size of the questions text.  
+4.3.5  Font Size. Define the font size of the questions text for FAQ section.  
 
 4.3.6  Text Width. Define the width of the questiontext block (percentage).  
 
@@ -261,7 +261,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.3.8  Text Color. Choose the color of the question text.  
 
-4.3.9  Background.Choose a background type for the question boxes.  
+4.3.9  Background.Choose a background type for the question boxes for FAQ section.  
 
 -	Color. Select a background color and choose whether to apply gradient or not. If you choose to apply gradient, you will also need to select the gradient direction (from top to bottom, from left to right, or centered) and the two extreme points of the linear color gradient. Moreover, choose what color the background appears when the mouse is hovered over the question box.  
 
@@ -269,7 +269,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.3.10  Background Size.Specify what area of the question box the background covers.  
 
-4.3.11  Border Style.Choose the style of the question box border from the list.   
+4.3.11  Border Style.Choose the style of the question box border from the list in FAQ section.   
 
 4.3.12  Border Width.Define the width of the border.  
 
@@ -277,17 +277,17 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.3.14  Border Corner Radius.Define the corner radius of the border.This option is for making the corners of the border round. Its value signifies the radius of the circle that fits in the corner of the box border. If you do not want to round the corners at all, you need to type in ‘0’ or leave the field blank.   
 
-4.3.15  Bullet image (Collapsed). This field allows selecting a bullet image for the questions, which is displayed when the question is collapsed.  
+4.3.15  Bullet image (Collapsed). This field allows selecting a bullet image for the questions, which is displayed when the question is collapsed in FAQ section.  
 
-4.3.16  Image Margin (left). Define the left margin of the bullet image.  
+4.3.16  Image Margin (left). Define the left margin of the bullet image in FAQ section.  
 
-4.3.17  Bullet Image(Expanded)This field allows selecting a bullet image for the questions, which is displayed when the question is expanded.  
+4.3.17  Bullet Image(Expanded)This field allows selecting a bullet image for the questions, which is displayed when the question is expanded in FAQ section.  
 
-4.3.18  Image Margin (left). Define the left margin of the bullet image.  
+4.3.18  Image Margin (left). Define the left margin of the bullet image in FAQ section.  
 
 4.4  Answer  parameters  
 
-4.4.1  Width. Define the width of the answer box.  
+4.4.1  Width. Define the width of the answer box for FAQ section.  
 
 4.4.2  Padding. Specify the spaces (top, right, bottom, and left) inside the answer box border, between the border and the text (e.g. “10 5 15 20”).  
 
@@ -295,7 +295,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.4.4  Text color. Choose the color of the text.  
 
-4.4.5  Background.Choose a background type for the answer boxes.  
+4.4.5  Background.Choose a background type for the answer boxes for FAQ section.  
 
 -	Color. Select a background color.  
 
@@ -303,9 +303,9 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.4.6  Background Color.Choose the background color.  
 
-4.4.7  Background Size. Specify what area of the question box the background covers.  
+4.4.7  Background Size. Specify what area of the question box the background covers in FAQ section.  
 
-4.4.8  Border Style.Choose the style of the border from the list.   
+4.4.8  Border Style.Choose the style of the border from the list in FAQ section.   
 
 4.4.9  Border Width. Define the width of the border.  
 
@@ -313,7 +313,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.4.11  Border Corner Radius.Define the corner radius of the border.This option is for making the corners of the border round. Its value signifies the radius of the circle that fits in the corner of the box border. If you do not want to round the corners at all, you need to type in ‘0’ or leave the field blank.   
 
-4.4.12  Image (before text).Here you can upload an image that will appear at the top of the answer.  
+4.4.12  Image (before text).Here you can upload an image that will appear at the top of the answer in FAQ section.  
 
 4.4.13  Image width. Define the width of the image.  
 
@@ -321,7 +321,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.4.15  Image margin.Specify the spaces (top, right, bottom, and left) outside the image border, between the border and other elements surrounding the image (e.g. “10 5”, where 10 stands for top and bottom margins, and 5 stands for right and left margins).  
 
-4.4.16  Image (after text).Here you can upload an image that will appear at the bottom of the answer.  
+4.4.16  Image (after text).Here you can upload an image that will appear at the bottom of the answer in FAQ section.  
 
 4.4.17  Image width. Define the width of the image.  
 
@@ -335,13 +335,13 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 =Search Box Parameters=  
 
-4.5.2  Width. Define the width of the search box.  
+4.5.2  Width. Define the width of the search box for FAQ section.  
 
-4.5.3  Height. Define the height of the search box.  
+4.5.3  Height. Define the height of the search box for FAQ section.  
 
 4.5.4  Background.Choose whether to have a background or not. If yes, select a background color.  
 
-4.5.5  Border Style.Choose the style of the border from the list.   
+4.5.5  Border Style.Choose the style of the border from the list for the FAQ.   
 
 4.5.6  Border Width. Specify the width of the border.  
 
@@ -353,13 +353,13 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 =Search/Reset Button Parameters=   
 
-4.5.10  Width.Specify the width of the Searchbutton and Reset button.  
+4.5.10  Width.Specify the width of the Searchbutton and Reset button for FAQ section.  
 
 4.5.11  Height.Specify the height of the Search button and Reset button.  
 
 4.5.12  Background.Choose whether to have a background or not. If yes, select a background color.  
 
-4.5.13  Border Style.Choose the border style of the buttons from the list.   
+4.5.13  Border Style.Choose the border style of the buttons from the list for FAQ section.   
 
 4.5.14  Border Width.Define the border width of the buttons.  
 
@@ -369,21 +369,21 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 4.5.17  Text Font Weight.Specify the font weight of the button labels (e.g. bold).  
 
-4.5.18  Text Color.Choose the text color of the button labels.  
+4.5.18  Text Color.Choose the text color of the button labels in FAQ section.  
 
 4.6  Expand/Collapse Parameters  
 
 4.6.1  Color. Choose the color of Expand/Collapselinks.  
 
-4.6.2  Hover color. Choose the colorof Expand/Collapse linkswhen hovered.  
+4.6.2  Hover color. Choose the colorof Expand/Collapse linkswhen hovered for FAQ section.  
 
-4.6.3  Font size. Define the text font size of the Expand/Collapse links.  
+4.6.3  Font size. Define the text font size of the Expand/Collapse links for FAQ section.  
 
 4.6.4  Margin.Specify the spaces (top, right, bottom, and left) outside the Expand/Collapse links area, between the area and other elements surrounding it(e.g. “10 0”, which means that top and bottom margins are 10px, and right and left margins are 0px).  
 
 4.7  “Read More” Button Parameters  
 
-4.7.1  Color. Choose the color of the “Read More”button.  
+4.7.1  Color. Choose the color of the “Read More”button for FAQ section.  
 
 4.7.2  Hover Color. Choose the color of the “Read More” button on hover.  
 
@@ -395,7 +395,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 5.1  From the navigation bar on the left select FAQ>FAQs	
 
-5.2  On the top right hand of the screen click on the Add an FAQbutton.	
+5.2  On the top right hand of the screen click on the Add an FAQ button.	
 
 5.3  Title. Specify a title for the FAQ section.	
 
@@ -405,7 +405,7 @@ If any problem occurs with Spider [Wordpress FAQ](http://web-dorado.com/products
 
 5.6  Select category. Choose a category from the list. 	
 
-5.7  Show Search Form.Choose whether to show the search form or not.	
+5.7  Show Search Form.Choose whether to show the search form or not in FAQ section.	
 
 5.8  Expand All Answers After The Page Is Loaded. Choose whether to expand all answers after the page is loaded.	
 
