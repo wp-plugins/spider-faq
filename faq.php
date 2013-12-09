@@ -1391,6 +1391,18 @@ margin:0px;
 font-size:<?php echo $stl->afontsize.'px' ?>!important;
 }
 
+#atext<?php echo $faq->id ?> a{
+color:#1982d1 !important;
+}
+
+#atext<?php echo $faq->id ?> a:hover{
+color:#1982d1 !important;
+}
+
+a{
+color:#1982d1 ;
+}
+
 #atext<?php echo $faq->id ?>{
 padding:<?php echo $stl->amargin ?>;
 font-size:<?php echo $stl->afontsize.'px' ?>;
