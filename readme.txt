@@ -1,7 +1,7 @@
 === WordPress FAQ ===  
 Contributors: webdorado  
 Donate link: http://web-dorado.com/products/wordpress-faq-plugin.html
-Tags: FAQ, FAQ Plugin, FAQs,wordpress faq, questions, answer, answers, helpdesk, help desk, help, frequently asked questions, support faq, faq builder, faq manager, FAQ listing, faq page, FAQ widget  
+Tags: FAQ, FAQ Plugin, FAQs,wordpress faq, questions, answer, answers, helpdesk, help desk, help, frequently asked questions, support faq, faq page, FAQ widget
 Requires at least: 3.0  
 Tested up to: 3.7.1  
 Stable tag: 1.1.1
