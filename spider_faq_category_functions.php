@@ -6,10 +6,10 @@ function add_spider_cat(){
 html_add_spider_cat();
 }
 
-function show_spider_cat(){
-		  
-	  
+function show_spider_cat(){	  
   global $wpdb;
+  $where = "";
+  $order = "ORDER BY id";
 	$sort["default_style"]="manage-column column-autor sortable desc";
 	
 	if(isset($_POST['page_number']))
@@ -194,22 +194,21 @@ function change_spider_cat( $id ){
   else
    $published=1;
   $savedd=$wpdb->update($wpdb->prefix.'spider_faq_category', array(
-			'published'    =>$published,
+			  'published'    =>$published,
               ), 
               array('id'=>$id),
 			  array(  '%d' )
 			  );
-	if($save_or_no)
+	if(!$savedd)
 	{
-		?>
+    ?>
 	<div class="error"><p><strong><?php _e('Error. Please install plugin again'); ?></strong></p></div>
 	<?php
-		return false;
+     return false;
 	}
 	?>
 	<div class="updated"><p><strong><?php _e('Item Saved'); ?></strong></p></div>
-	<?php
-	
+	<?php	
     return true;
 }
 ?>

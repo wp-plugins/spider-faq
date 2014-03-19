@@ -1,6 +1,6 @@
 <?php   
 function html_add_spider_ques($cat_row,$ord_elem){
-	
+global $wpdb;	
 ?>
 <script type="text/javascript">
 
@@ -20,8 +20,7 @@ function submitbutton(pressbutton)
 
 </script>
 
-  <p>Your browser does not support iframes.</p>
-</iframe>
+
 <table width="95%">
   <tbody>
 <tr>
@@ -47,7 +46,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
 Question:
 </td>
 <td>
-<input class="text_area" type="text" name="title" id="title" size="50" maxlength="250" value="<?php echo $row->title;?>" />
+<input class="text_area" type="text" name="title" id="title" size="50" maxlength="250" value="" />
 </td>
 </tr>
 
@@ -55,7 +54,7 @@ Question:
 <td align="right" class="key">Category:</td>
 <td>
 <?php
-	$cat_select.='<select style=" text-align:left;" name="cat_search" id="cat_search" class="inputbox" onchange="change_select();">';
+	$cat_select ='<select style=" text-align:left;" name="cat_search" id="cat_search" class="inputbox" onchange="change_select();">';
 	foreach($cat_row as $catt)
 	{
 		 if (strlen($catt->title)<30){
@@ -79,7 +78,7 @@ Answer:
 <td>
 
 <div id="main_editor"><div  style=" width:600px; text-align:left" id="poststuff">
-<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea"><?php the_editor("","content","title" ); ?>
+<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea"><?php  wp_editor("","content","title" ); ?>
 </div>
 </div>
 </div>
@@ -91,11 +90,11 @@ Answer:
 Created by:
 </td>
 <?php 
-global $wpdb;
+
 $user_id=wp_get_current_user();
  ?>
 <td>
-<input name="user_name" class="text_area" value="<?php if(isset($_POST['user_name']) && esc_html($_POST['user_name'])!="" )echo  $row->user_name; else echo  $user_id->display_name;?>" id="user_name" type="text">
+<input name="user_name" class="text_area" value="<?php  echo  $user_id->display_name;?>" id="user_name" type="text">
 <a href="<?php echo add_query_arg(array('action' => 'wpusers', 'TB_iframe' => '1', 'width' => '650', 'height' => '500'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Track" onclick="return false;" style="margin-bottom:5px;">
 Select user
 </a>
@@ -142,7 +141,7 @@ Order:
 <td>
 <select name="ordering"  >
 <?php
-$count_ord=count($ord_elem);
+$count_ord=count($ord_elem); var_dump($ord_elem);
 
  
 for($i=0;$i<$count_ord;$i++)
@@ -159,7 +158,7 @@ for($i=0;$i<$count_ord;$i++)
 <?php 
 }
 ?>
-<option value="<?php echo  $ord_elem[$i-1]->ordering+1; ?>" selected="selected"><?php echo  $ord_elem[$i-1]->ordering+1; ?> Last</option>
+<option value="<?php if($count_ord !=0)  echo  $ord_elem[$i-1]->ordering+1; else echo 1; ?>" selected="selected"><?php if($count_ord !=0) echo  $ord_elem[$i-1]->ordering+1;else echo 1; ?> Last</option>
 </select>
 
 </td>
@@ -184,12 +183,10 @@ for($i=0;$i<$count_ord;$i++)
 </tr>
 </table>
 <input type="hidden" name="id"
-value="<?php echo $row->id; ?>" />
+value="" />
 <input type="hidden" name="task" value="" />
 </form>
 <?php
-
-
 }
 
 
@@ -201,6 +198,10 @@ value="<?php echo $row->id; ?>" />
 
 function 	html_show_spider_ques($rows, $pageNav,$sort){
 	global $wpdb;
+	$serch_value = "";
+	if(!isset($sort["sortid_by"]))$sort["sortid_by"] = "";
+	if(!isset($sort["custom_style"]))$sort["custom_style"] = "manage-column column-title";
+	if(!isset($sort["1_or_2"]))$sort["1_or_2"] = "1";
 	?>
     <script language="javascript">
 	
@@ -239,6 +240,11 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 }
 	</script>
     <form method="post"  onkeypress="doNothing()" action="admin.php?page=Spider_Faq_Questions" id="admin_form" name="admin_form">
+	 <div style="display:block;width:95%;text-align:right"><a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com/files" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+			</div>
 	<table cellspacing="10" width="100%">
 	<tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-3.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
@@ -251,7 +257,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
     <?php echo "<h2>".'Questions'. "</h2>"; ?>
     </td>
     <td  style="width:90px; text-align:right;"><p class="submit" style="padding:0px; text-align:left"><input type="button" value="Add a Question" name="custom_parametrs" onclick="window.location.href='admin.php?page=Spider_Faq_Questions&task=add_Spider_Faq_Questions'" /></p></td>
-<td style="text-align:right;font-size:16px;padding:20px; padding-right:50px">
+<td style="text-align:right;font-size:16px;padding:20px; padding-right:30px">
 
 	</td>
 
@@ -259,11 +265,11 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
     </table>
     <?php
 	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_html($_POST['search_events_by_title']); }else{$serch_value="";}} 
-	$serch_fields='<div class="alignleft actions" style="width:180px;">
+	$serch_fields='<div class="alignleft actions" style="width:204px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
-        <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
+        <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()" style="width: 205px; height: 27px;">
     </div>
-	<div class="alignleft actions">
+	<div class="alignleft actions" style="padding: 0px 8px 0 0;" >
    		<input type="button" value="Search" onclick="document.getElementById(\'page_number\').value=\'1\'; document.getElementById(\'serch_or_not\').value=\'search\';
 		 document.getElementById(\'admin_form\').submit();" class="button-secondary action">
 		 <input type="button" value="Reset" onclick="window.location.href=\'admin.php?page=Spider_Faq_Questions\'" class="button-secondary action">
@@ -274,11 +280,11 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
   <table class="wp-list-table widefat fixed pages" style="width:95%">
  <thead>
  <TR>
-   <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:30px" ><a href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span class="sorting-indicator"></span></a></th>
- <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Question</span><span class="sorting-indicator"></span></a></th>
-<th scope="col" id="category" class="<?php if($sort["sortid_by"]=="category") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('category',<?php if($sort["sortid_by"]=="category") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Category</span><span class="sorting-indicator"></span></a></th>
-<th scope="col" id="ordering" class="<?php if($sort["sortid_by"]=="ordering") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:95px" ><a style="display:inline" href="javascript:ordering('ordering',<?php if($sort["sortid_by"]=="ordering") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Order</span><span class="sorting-indicator"></span></a><div><a style="display:inline" href="javascript:saveorder(1, 'saveorder')" title="Save Order"><img onclick="saveorder(1, 'saveorder')" src="<?php echo plugins_url("images/filesave.png",__FILE__) ?>" alt="Save Order"></a></div></th>
-  <th scope="col" id="published"  class="<?php if($sort["sortid_by"]=="published") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:100px" ><a href="javascript:ordering('published',<?php if($sort["sortid_by"]=="published") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Published</span><span class="sorting-indicator"></span></a></th>
+   <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"];  ?>" style="width:30px;padding: 2px 11px 2px 0px;" ><a style="padding: 8px 4px 7px 10px;" href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span style="margin-top:6px; margin-left:4px" class="sorting-indicator"></span></a></th>
+ <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"]; ?>" style="width:250px" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Question</span><span class="sorting-indicator"></span></a></th>
+<th scope="col" id="category" class="<?php if($sort["sortid_by"]=="category") echo $sort["custom_style"];  ?>" style="width:200px" ><a href="javascript:ordering('category',<?php if($sort["sortid_by"]=="category") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Category</span><span class="sorting-indicator"></span></a></th>
+<th scope="col" id="ordering" class="<?php if($sort["sortid_by"]=="ordering") echo $sort["custom_style"]; ?>" style="width:95px;text-align:right" ><a style="display:inline-block" href="javascript:ordering('ordering',<?php if($sort["sortid_by"]=="ordering") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Order</span><span class="sorting-indicator"></span></a><span><a style="display:inline-block" href="javascript:saveorder(1, 'saveorder')" title="Save Order"><img onclick="saveorder(1, 'saveorder')" src="<?php echo plugins_url("images/filesave.png",__FILE__) ?>" alt="Save Order"></a></span></th>
+  <th scope="col" id="published"  class="<?php if($sort["sortid_by"]=="published") echo $sort["custom_style"];  ?>" style="width:100px" ><a href="javascript:ordering('published',<?php if($sort["sortid_by"]=="published") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Published</span><span class="sorting-indicator"></span></a></th>
  <th style="width:80px">Edit</th>
  <th style="width:80px">Delete</th>
  </TR>
@@ -304,7 +310,7 @@ This section allows you to create questions <a href="http://web-dorado.com/spide
          <td><?php echo $rows[$i]->id; ?></td>
          <td><a  href="admin.php?page=Spider_Faq_Questions&task=edit_Spider_Faq_Questions&id=<?php echo $rows[$i]->id?>"><?php echo $rows[$i]->title; ?></a></td>
          <td><?php if ($rows[$i]->cattitle=='') echo 'Uncategorised'; else echo $rows[$i]->cattitle; ?></td>
-         <td ><?php echo  $move_up.$move_down; ?><input type="text" name="order_<?php echo $rows[$i]->id; ?>" style="width:40px" value="<?php echo $rows[$i]->ordering; ?>" /></td>
+         <td style="text-align:right;padding-right:19px" ><?php echo  $move_up.$move_down; ?><input type="text" name="order_<?php echo $rows[$i]->id; ?>" style="width:27px" value="<?php echo $rows[$i]->ordering; ?>" /></td>
          <td><a  href="admin.php?page=Spider_Faq_Questions&task=unpublish_Spider_Faq_Questions&id=<?php echo $rows[$i]->id?>"<?php if(!$rows[$i]->published){ ?> style="color:#C00;" <?php }?> ><?php if($rows[$i]->published)echo "Yes"; else echo "No"; ?></a></td>
          <td ><a  href="admin.php?page=Spider_Faq_Questions&task=edit_Spider_Faq_Questions&id=<?php echo $rows[$i]->id?>">Edit</a></td>    
 		 <td><a href="javascript:confirmation('admin.php?page=Spider_Faq_Questions&task=remove_Spider_Faq_Questions&id=<?php echo $rows[$i]->id ?>','<?php if($rows[$i]->title!="") echo addslashes($rows[$i]->title); else echo "" ?>')">Delete</a> </td>
@@ -416,7 +422,7 @@ Question:
 <td align="right"  class="key">Category:</td>
 <td>
 <?php
-	$cat_select.='<select style=" text-align:left;" name="cat_search" id="cat_search" class="inputbox" onchange="change_select();">';
+	$cat_select='<select style=" text-align:left;" name="cat_search" id="cat_search" class="inputbox" onchange="change_select();">';
 	foreach($cat_row as $catt)
 	{
 		
@@ -449,7 +455,7 @@ else
 $row->text=$row->article;
 ?>
 <div id="main_editor"><div  style=" width:600px; text-align:left" id="poststuff">
-<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea"><?php the_editor(stripslashes($row->text),"content","title" ); ?>
+<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea"><?php wp_editor(stripslashes($row->text),"content","title" ); ?>
 </div>
 </div>
 </div>

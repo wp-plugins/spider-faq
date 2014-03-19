@@ -101,7 +101,7 @@ This section allows you to create/edit themes for the FAQs <a href="http://web-d
 Theme Title:
 </td>
 <td>
-<input type="text" name="title" id="title" size="20"  value="<?php echo $row->title;?>" />
+<input type="text" name="title" id="title" size="20"  value="" />
 </td>
 </tr>
 
@@ -150,7 +150,7 @@ function show_(x)
 Background Color:
 </td>
 <td>
-<input  type="text" name="bgcolor" id="bgcolor" value="<?php echo $row->bgcolor; ?>" class="color">
+<input  type="text" name="bgcolor" id="bgcolor" value="" class="color">
 </td>
 
 
@@ -172,10 +172,10 @@ document.getElementById('bg').parentNode.childNodes[6].setAttribute('style','dis
 Background Image:
 </td>
  <td> 
-                     <input type="text" value="<?php if($row->bgimage )echo htmlspecialchars($row->bgimage); ?>" name="bgimage" id="post_image1" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="1" href="#" />Select</a><br />
+                     <input type="text" value="" name="bgimage" id="post_image1" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="1" href="#" />Select</a><br />
                    <a href="javascript:removeImage1();">Remove Image</a><br />
                              <div style="height:150px;">
-                <img style=" display:<?php if($row->bgimage=='') echo 'none'; else echo 'block' ?>" height="150" width="180" id="imagebox1" src="<?php echo $row->bgimage ?>" />     
+                <img style="display:block" height="150" width="180" id="imagebox1" src="" />     
                                                  </div>     
                                     <script type="text/javascript">    
                   function removeImage1()
@@ -218,7 +218,7 @@ document.getElementById('bg').parentNode.childNodes[8].setAttribute('style','dis
 Width:
 </td>
 <td>
-<input size="20"  type="text" name="width" id="width" value="<?php if($row->width=="") echo '600'; else echo $row->width; ?>" />
+<input size="20"  type="text" name="width" id="width" value="600" />
 </td>
 </tr>
 				
@@ -239,7 +239,7 @@ Width:
 Space Between Questions:
 </td>
 <td>
-<input size="20"  type="text" name="paddingbq" id="paddingbq" value="<?php echo htmlspecialchars($row->paddingbq); ?>" />
+<input size="20"  type="text" name="paddingbq" id="paddingbq" value="" />
 </td>
 </tr>
 				
@@ -250,7 +250,7 @@ Space Between Questions:
 Margin (left):
 </td>
 <td width="170px">
-<input size="20"  type="text" name="marginleft" id="marginleft" value="<?php echo htmlspecialchars($row->marginleft); ?>" />
+<input size="20"  type="text" name="marginleft" id="marginleft" value="" />
 </td>
 </tr>				
 				
@@ -259,7 +259,7 @@ Margin (left):
 Height:
 </td>
 <td>
-<input size="20"  type="text" name="theight" id="theight" value="<?php if($row->theight=="") echo '40'; else echo htmlspecialchars($row->theight); ?>" />
+<input size="20"  type="text" name="theight" id="theight" value="40" />
 </td>
 </tr>
 				
@@ -268,7 +268,7 @@ Height:
 Width:
 </td>
 <td>
-<input size="20"  type="text" name="twidth"  id="twidth" value="<?php if($row->twidth=="") echo '540'; else echo htmlspecialchars($row->twidth); ?>" />
+<input size="20"  type="text" name="twidth"  id="twidth" value="540" />
 </td>
 </tr>				
 								
@@ -278,7 +278,7 @@ Width:
 Font Size:
 </td>
 <td>
-<input size="20"  type="text" name="tfontsize" id="tfontsize" value="<?php if($row->tfontsize=="") echo '18'; else echo htmlspecialchars($row->tfontsize); ?>" />
+<input size="20"  type="text" name="tfontsize" id="tfontsize" value="18" />
 </td>
 </tr>
 
@@ -287,7 +287,7 @@ Font Size:
 Text Width:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="ttxtwidth" id="ttxtwidth" value="<?php   echo htmlspecialchars($row->ttxtwidth); ?>" />%
+<input size="20"  type="text" name="ttxtwidth" id="ttxtwidth" value="" />%
 </td>
 </tr>
 				
@@ -296,7 +296,7 @@ Text Width:
 Padding (left):
 </td>
 <td width="170px">
-<input size="20"  type="text" name="ttxtpleft" id="ttxtpleft" value="<?php   echo htmlspecialchars($row->ttxtpleft); ?>" />
+<input size="20"  type="text" name="ttxtpleft" id="ttxtpleft" value="" />
 </td>
 </tr>
 				
@@ -306,7 +306,7 @@ Padding (left):
 Text Color:
 </td>
 <td>
-<input type="text" name="tcolor" id="tcolor" value="<?php if($row->tcolor=="") echo '000000'; else echo $row->tcolor; ?>" class="color">
+<input type="text" name="tcolor" id="tcolor" value="000000" class="color">
 </td>
 </tr>				
 				
@@ -413,7 +413,7 @@ document.getElementById('titlebg').parentNode.childNodes[17].setAttribute('style
 Background Color:
 </td>
 <td>
-<input type="text" name="tbgcolor" id="tbgcolor" value="<?php echo $row->tbgcolor; ?>" class="color">
+<input type="text" name="tbgcolor" id="tbgcolor" value="" class="color">
 </td>
 					
 					<script type="text/javascript">
@@ -442,10 +442,10 @@ Background Image:
 </td>
 
 <td>  
-                     <input type="text" value="<?php if($row->tbgimage ) echo htmlspecialchars($row->tbgimage); ?>" name="tbgimage" id="post_image2" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="2" href="#" />Select</a><br />
+                     <input type="text" value="" name="tbgimage" id="post_image2" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="2" href="#" />Select</a><br />
                    <a href="javascript:removeImage2();">Remove Image</a><br />
                                <div style="height:150px;">
-                <img style=" display:<?php if($row->tbgimage=='') echo 'none'; else echo 'block' ?>; width:150px" id="imagebox2" src="<?php echo $row->tbgimage ?>" />     
+                <img style=" display:block; width:150px" id="imagebox2" src="" />     
                                                  </div>     
                                     <script type="text/javascript">    
                   function removeImage2()
@@ -506,8 +506,8 @@ document.getElementById('titlebg').parentNode.childNodes[23].setAttribute('style
 Background Color:
 </td>
 <td >
-From <input size="5" type="text" name="gradcolor1" id="gradcolor1" value="<?php echo $row->gradcolor1; ?>" class="color">
-To <input size="5" type="text" name="gradcolor2" id="gradcolor2" value="<?php echo $row->gradcolor2; ?>" class="color">
+From <input size="5" type="text" name="gradcolor1" id="gradcolor1" value="" class="color">
+To <input size="5" type="text" name="gradcolor2" id="gradcolor2" value="" class="color">
 </td>
 				<script type="text/javascript">
         
@@ -536,7 +536,7 @@ document.getElementById('titlebg').parentNode.childNodes[25].setAttribute('style
 Background Hover Color:
 </td>
 <td>
-<input type="text" name="tbghovercolor" id="tbghovercolor" value="<?php echo $row->tbghovercolor; ?>" class="color">
+<input type="text" name="tbghovercolor" id="tbghovercolor" value="" class="color">
 </td>
 		<script type="text/javascript">			
 			titlebg1=document.getElementById("titlebg1").checked;
@@ -555,7 +555,7 @@ document.getElementById('titlebg').parentNode.childNodes[27].setAttribute('style
 Background-size:
 </td>
 <td>
-<input size="20"  type="text" name="tbgsize" id="tbgsize" value="<?php echo htmlspecialchars($row->tbgsize); ?>" />
+<input size="20"  type="text" name="tbgsize" id="tbgsize" value="" />
 </td>
 <script type="text/javascript">			
 			titlebg0=document.getElementById("titlebg0").checked;
@@ -576,15 +576,15 @@ Border Style:
 </td>
 <td width="170px">
 <select name="tbstyle" id="tbstyle">					 
-<option    value="solid"   <?php if($row->tbstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->tbstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->tbstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->tbstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->tbstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->tbstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->tbstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->tbstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->tbstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted" >Dotted</option>
+<option    value="dashed" >Dashed</option>		
+<option    value="double"  >Double</option>
+<option    value="groove" >Groove</option>		
+<option    value="ridge" >Ridge</option>
+<option    value="inset" >Inset</option>	
+<option    value="outset" >Outset</option>	
+<option    value="none" >None</option>				
 </select>
 </td>
 </tr>
@@ -594,15 +594,15 @@ Border Top Style:
 </td>
 <td width="170px">
 <select name="tbtopstyle" id="tbtopstyle">					 
-<option    value="solid"   <?php if($row->tbtopstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->tbtopstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->tbtopstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->tbtopstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->tbtopstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->tbtopstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->tbtopstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->tbtopstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->tbtopstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"  selected="selected">Solid</option>	 
+<option    value="dotted" >Dotted</option>
+<option    value="dashed">Dashed</option>		
+<option    value="double"  >Double</option>
+<option    value="groove"  >Groove</option>		
+<option    value="ridge"  >Ridge</option>
+<option    value="inset"    >Inset</option>	
+<option    value="outset"   >Outset</option>	
+<option    value="none"    >None</option>				
 </select>
 </td>
 </tr>
@@ -612,15 +612,15 @@ Border Right Style:
 </td>
 <td width="170px">
 <select name="tbrightstyle" id="tbrightstyle">					 
-<option    value="solid"   <?php if($row->tbrightstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->tbrightstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->tbrightstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->tbrightstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->tbrightstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->tbrightstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->tbrightstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->tbrightstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->tbrightstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"  selected="selected">Solid</option>	 
+<option    value="dotted" >Dotted</option>
+<option    value="dashed" >Dashed</option>		
+<option    value="double" >Double</option>
+<option    value="groove" >Groove</option>		
+<option    value="ridge"  >Ridge</option>
+<option    value="inset"  >Inset</option>	
+<option    value="outset" >Outset</option>	
+<option    value="none"  >None</option>				
 </select>
 </td>
 </tr>								
@@ -629,7 +629,7 @@ Border Right Style:
 Border Width:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="tbwidth" id="tbwidth" value="<?php echo htmlspecialchars($row->tbwidth); ?>" />
+<input size="20"  type="text" name="tbwidth" id="tbwidth" value="" />
 </td>
 </tr>
 				
@@ -638,7 +638,7 @@ Border Width:
 Border Color:
 </td>
 <td>
-<input type="text" name="tbcolor" id="tbcolor" value="<?php echo $row->tbcolor; ?>" class="color">
+<input type="text" name="tbcolor" id="tbcolor" value="" class="color">
 </td>
 </tr>
 				
@@ -647,7 +647,7 @@ Border Color:
 Border Corner Radius:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="tbradius" id="tbradius" value="<?php echo htmlspecialchars($row->tbradius); ?>" />
+<input size="20"  type="text" name="tbradius" id="tbradius" value="" />
 </td>
 </tr>	
  <tr>
@@ -655,24 +655,24 @@ Border Corner Radius:
 Numbering:
 </td>
 <td width="170px">	
-<input type="radio" name="numbering"  value="0" <?php if($row->numbering==0) echo 'checked="checked"'?> onchange="numbfontcol(0)"  id="numberingno"><label for="numbering">No</label>	 
-<input type="radio" name="numbering"  value="1" <?php if($row->numbering==1) echo 'checked="checked"'?> onchange="numbfontcol(1)" id="numberingyes"><label for="numbering">Yes</label>
+<input type="radio" name="numbering"  value="0"  onchange="numbfontcol(0)"  id="numberingno"><label for="numbering">No</label>	 
+<input type="radio" name="numbering"  value="1"  checked="checked" onchange="numbfontcol(1)" id="numberingyes"><label for="numbering">Yes</label>
 </td>
 </tr>
-<tr id="numbfont" <?php if($row->numbering==0) echo 'style="display:none"';else echo 'style="display:table-row;"';?>    >
+<tr id="numbfont" style="display:table-row" >
 <td width="180px" >
 Numbering Font Size:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="numberfnts" id="numberfnts" value="<?php echo htmlspecialchars($row->numberfnts); ?>" />
+<input size="20"  type="text" name="numberfnts" id="numberfnts" value="" />
 </td>
 </tr>
-<tr id="numbcol" <?php if($row->numbering==0) echo 'style="display:none"';else echo 'style="display:table-row;"';?>  >
+<tr id="numbcol" style="display:table-row">
 <td width="180px" >
 Numbering Color:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="numbercl" id="numbercl" value="<?php echo htmlspecialchars($row->numbercl); ?>" class="color"/>
+<input size="20"  type="text" name="numbercl" id="numbercl" value="" class="color"/>
 </td>
 </tr>				
 <tr>
@@ -680,10 +680,10 @@ Numbering Color:
 Bullet Image (Collapsed):
 </td>
 <td>  
-                     <input type="text" value="<?php if($row->tchangeimage1 )echo htmlspecialchars($row->tchangeimage1); ?>" name="tchangeimage1" id="post_image3" class="text_input" style="width:121px; margin-bottom:4px; "/><a class="button lu_upload_button" id="3" href="#" />Select</a><br />
+                     <input type="text" value="" name="tchangeimage1" id="post_image3" class="text_input" style="width:121px; margin-bottom:4px; "/><a class="button lu_upload_button" id="3" href="#" />Select</a><br />
                    <a href="javascript:removeImage3();">Remove Image</a><br />
                                <div style="height:50px;">
-                <img style=" display:<?php if($row->tchangeimage1=='') echo 'none'; else echo 'block' ?>"  id="imagebox3" src="<?php echo $row->tchangeimage1 ?>" />     
+                <img style="display:block"  id="imagebox3" src="" />     
                                                  </div>     
                                     <script type="text/javascript"> 
 function numbfontcol(m)
@@ -716,7 +716,7 @@ document.getElementById("numbcol").style.display="none";
 Image Margin (left):
 </td>
 <td>
-<input size="20"  type="text" name="marginlimage1" id="marginlimage1" value="<?php echo htmlspecialchars($row->marginlimage1); ?>" />
+<input size="20"  type="text" name="marginlimage1" id="marginlimage1" value="" />
 </td>
 </tr>
 				
@@ -725,10 +725,10 @@ Image Margin (left):
 Bullet Image (Expanded):
 </td>
 <td>  
-                     <input type="text" value="<?php if($row->tchangeimage2 )echo htmlspecialchars($row->tchangeimage2); ?>" name="tchangeimage2" id="post_image4" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="4" href="#" />Select</a><br />
+                     <input type="text" value="" name="tchangeimage2" id="post_image4" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="4" href="#" />Select</a><br />
                    <a href="javascript:removeImage4();">Remove Image</a><br />
                                <div style="height:50px;">
-                <img style=" display:<?php if($row->tchangeimage2=='') echo 'none'; else echo 'block' ?>"  id="imagebox4" src="<?php echo $row->tchangeimage2 ?>" />     
+                <img style="display:block"  id="imagebox4" src="" />     
                                                  </div>     
                                     <script type="text/javascript">    
                   function removeImage4()
@@ -747,7 +747,7 @@ Bullet Image (Expanded):
 Image Margin (left):
 </td>
 <td>
-<input size="20"  type="text" name="marginlimage2" id="marginlimage2" value="<?php echo htmlspecialchars($row->marginlimage2); ?>" />
+<input size="20"  type="text" name="marginlimage2" id="marginlimage2" value="" />
 </td>
 </tr>
  <tr>
@@ -755,8 +755,8 @@ Image Margin (left):
 Image Position:
 </td>
 <td width="170px">	
-<input type="radio" name="imgpos"  value="0" <?php if($row->imgpos==0) echo 'checked="checked"'?>  id="imgposleft"><label for="imgpos">Left</label>	 
-<input type="radio" name="imgpos"  value="1" <?php if($row->imgpos==1) echo 'checked="checked"'?>  id="imgposright"><label for="imgpos">Right</label>
+<input type="radio" name="imgpos"  value="0" checked="checked" id="imgposleft"><label for="imgpos">Left</label>	 
+<input type="radio" name="imgpos"  value="1"   id="imgposright"><label for="imgpos">Right</label>
 </td>
 </tr>
 </table>
@@ -772,7 +772,7 @@ Image Position:
 Background Color:
 </td>
 <td>
-<input type="text" name="sboxbgcolor" id="sboxbgcolor" value="<?php  echo $row->sboxbgcolor; ?>" class="color">
+<input type="text" name="sboxbgcolor" id="sboxbgcolor" value="" class="color">
 </td>
 </tr>
 </table>
@@ -788,7 +788,7 @@ Background Color:
 Color:
 </td>
 <td>
-<input type="text" name="expcolcolor" id="expcolcolor" value="<?php if($row->expcolcolor=="") echo '000000'; else echo $row->expcolcolor; ?>" class="color">
+<input type="text" name="expcolcolor" id="expcolcolor" value="000000" class="color">
  </td>
 </tr>
 				
@@ -797,7 +797,7 @@ Color:
 Hover Color:
 </td>
 <td>
-<input type="text" name="expcolhovercolor" id="expcolhovercolor" value="<?php if($row->expcolhovercolor=="") echo 'CCCCCC'; else echo $row->expcolhovercolor; ?>" class="color">
+<input type="text" name="expcolhovercolor" id="expcolhovercolor" value="CCCCCC" class="color">
 </td>
 </tr>
 				
@@ -806,7 +806,7 @@ Hover Color:
 Font Size:
 </td>
 <td>
-<input type="text" name="expcolfontsize" id="expcolfontsize" value="<?php if($row->expcolfontsize=="") echo '14'; else echo $row->expcolfontsize; ?>">
+<input type="text" name="expcolfontsize" id="expcolfontsize" value="14">
 </td>
 </tr>
 				
@@ -815,7 +815,7 @@ Font Size:
 Margin:
 </td>
 <td>
-<input type="text" name="expcolmargin" id="expcolmargin" value="<?php echo $row->expcolmargin; ?>">
+<input type="text" name="expcolmargin" id="expcolmargin" value="">
 </td>
 </tr>
 
@@ -824,7 +824,7 @@ Margin:
 </div>
 
 <div class="divfieldset">
-<fieldset style="width:430px;" ><legend>Read More Button Parameters </legend>     
+<fieldset style="width:430px;"><legend>Read More Button Parameters </legend>     
 <table class="admintable">	
 
 
@@ -833,7 +833,7 @@ Margin:
 Color:
 </td>
 <td>
-<input type="text" name="rmcolor" id="rmcolor" value="<?php echo $row->rmcolor; ?>" class="color">
+<input type="text" name="rmcolor" id="rmcolor" value="" class="color">
 </td>
 </tr>
 				
@@ -842,7 +842,7 @@ Color:
 Hover Color:
 </td>
 <td>
-<input type="text" name="rmhovercolor" id="rmhovercolor" value="<?php echo $row->rmhovercolor; ?>" class="color">
+<input type="text" name="rmhovercolor" id="rmhovercolor" value="" class="color">
 </td>
 </tr>
 				
@@ -851,7 +851,7 @@ Hover Color:
 Font Size:
 </td>
 <td>
-<input type="text" name="rmfontsize" id="rmfontsize" value="<?php echo $row->rmfontsize; ?>">
+<input type="text" name="rmfontsize" id="rmfontsize" value="">
 </td>
 </tr>			
 	          </table>
@@ -865,7 +865,7 @@ Font Size:
 
   <tr>
 <td>
-<div style="font-size:14px; font-weight:bold;"><?php echo Title; ?></div>
+<div style="font-size:14px; font-weight:bold;"></div>
 </td> 
 </tr>
 
@@ -964,7 +964,7 @@ document.getElementById('ctbg').parentNode.childNodes[4].setAttribute('style','d
 Background Color:
 </td>
 <td width="170px">
-<input type="text" name="ctbgcolor" id="ctbgcolor"  value="<?php echo $row->ctbgcolor; ?>" class="color">
+<input type="text" name="ctbgcolor" id="ctbgcolor"  value="" class="color">
 </td>
 					<script type="text/javascript">
         
@@ -992,9 +992,9 @@ Gradient Direction:
 </td>
 <td>
 <select name="ctgradtype" id="ctgradtype">					 
-<option    value="top"    <?php if($row->ctgradtype=="top") echo 'selected="selected"'?>>Top/Bottom</option>	 
-<option    value="left"    <?php if($row->ctgradtype=="left") echo 'selected="selected"'?>>Left/Right</option>
-<option    value="circle"    <?php if($row->ctgradtype=="circle") echo 'selected="selected"'?>>Center</option>						
+<option    value="top" selected="selected">Top/Bottom</option>	 
+<option    value="left"  >Left/Right</option>
+<option    value="circle"  >Center</option>						
 </select>					
 </td>
 
@@ -1023,8 +1023,8 @@ document.getElementById('ctbg').parentNode.childNodes[8].setAttribute('style','d
 Background Color:
 </td>
 <td >
-From <input size="5" type="text" name="ctgradcolor1" id="ctgradcolor1" value="<?php echo $row->ctgradcolor1; ?>" class="color">
-To <input size="5" type="text" name="ctgradcolor2" id="ctgradcolor2" value="<?php echo $row->ctgradcolor2; ?>" class="color">
+From <input size="5" type="text" name="ctgradcolor1" id="ctgradcolor1" value="" class="color">
+To <input size="5" type="text" name="ctgradcolor2" id="ctgradcolor2" value="" class="color">
 </td>
 				<script type="text/javascript">
            
@@ -1053,7 +1053,7 @@ document.getElementById('ctbg').parentNode.childNodes[10].setAttribute('style','
 Text Color:
 </td>
 <td>
-<input type="text" name="cttxtcolor" id="cttxtcolor" value="<?php if($row->cttxtcolor=="") echo '000000'; else echo $row->cttxtcolor; ?>" class="color">
+<input type="text" name="cttxtcolor" id="cttxtcolor" value="000000" class="color">
 </td>
 </tr>
 				 
@@ -1062,7 +1062,7 @@ Text Color:
 Font Size:
 </td>
 <td>
-<input size="20"  type="text" name="ctfontsize" id="ctfontsize" value="<?php if($row->ctfontsize=="") echo '20'; else echo htmlspecialchars($row->ctfontsize); ?>" />
+<input size="20"  type="text" name="ctfontsize" id="ctfontsize" value="20" />
 </td>
 </tr>
 
@@ -1071,7 +1071,7 @@ Font Size:
 Margin:
 </td>
 <td width="170px">
-<input type="text" name="ctmargin" id="ctmargin" size="20" value="<?php echo htmlspecialchars($row->ctmargin); ?>" />
+<input type="text" name="ctmargin" id="ctmargin" size="20" value="" />
 </td>
 </tr>
 				
@@ -1080,7 +1080,7 @@ Margin:
 Padding:
 </td>
 <td>
-<input type="text" name="ctpadding" id="ctpadding" size="20" value="<?php echo htmlspecialchars($row->ctpadding); ?>" />
+<input type="text" name="ctpadding" id="ctpadding" size="20" value="" />
 </td>
 </tr>
 				
@@ -1091,15 +1091,15 @@ Border Style:
 </td>
 <td width="170px">
 <select name="ctbstyle" id="ctbstyle">					 
-<option    value="solid"   <?php if($row->ctbstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->ctbstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->ctbstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->ctbstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->ctbstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->ctbstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->ctbstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->ctbstyle=="outset") echo 'selected="selected"'?>>Outset</option>
-<option    value="none"    <?php if($row->ctbstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"    >Dashed</option>		
+<option    value="double"    >Double</option>
+<option    value="groove"    >Groove</option>		
+<option    value="ridge"     >Ridge</option>
+<option    value="inset"   >Inset</option>	
+<option    value="outset"   >Outset</option>
+<option    value="none"    >None</option>				
 </select>
 </td>
 </tr>
@@ -1110,7 +1110,7 @@ Border Style:
 Border Width:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="ctbwidth" id="ctbwidth" value="<?php echo htmlspecialchars($row->ctbwidth); ?>" />
+<input size="20"  type="text" name="ctbwidth" id="ctbwidth" value="" />
 </td>
 </tr>
 				
@@ -1119,7 +1119,7 @@ Border Width:
 Border Color:
 </td>
 <td>
-<input type="text" name="ctbcolor" id="ctbcolor" value="<?php echo $row->ctbcolor; ?>" class="color">
+<input type="text" name="ctbcolor" id="ctbcolor" value="" class="color">
 </td>
 </tr>
 				
@@ -1128,13 +1128,13 @@ Border Color:
 Border Corner Radius:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="ctbradius" id="ctbradius" value="<?php echo htmlspecialchars($row->ctbradius); ?>" />
+<input size="20"  type="text" name="ctbradius" id="ctbradius" value="" />
 </td>
 </tr>	
 
 <tr>
 <td>
-<div style="font-size:14px; font-weight:bold; margin-top:8px;"><?php echo Description; ?></div>
+<div style="font-size:14px; font-weight:bold; margin-top:8px;"></div>
 </td> 
 </tr>
 
@@ -1236,7 +1236,7 @@ document.getElementById('cdbg').parentNode.childNodes[32].setAttribute('style','
 Background Color:
 </td>
 <td width="170px">
-<input type="text" name="cdbgcolor" id="cdbgcolor"  value="<?php echo $row->cdbgcolor; ?>" class="color">
+<input type="text" name="cdbgcolor" id="cdbgcolor"  value="" class="color">
 </td>
 					<script type="text/javascript">
         
@@ -1264,9 +1264,9 @@ Gradient Direction:
 </td>
 <td>
 <select name="cdgradtype" id="cdgradtype">					 
-<option    value="top"    <?php if($row->cdgradtype=="top") echo 'selected="selected"'?>>Top/Bottom</option>	 
-<option    value="left"    <?php if($row->cdgradtype=="left") echo 'selected="selected"'?>>Left/Right</option>
-<option    value="circle"    <?php if($row->cdgradtype=="circle") echo 'selected="selected"'?>>Center</option>						
+<option    value="top" selected="selected">Top/Bottom</option>	 
+<option    value="left"    >Left/Right</option>
+<option    value="circle"    >Center</option>						
 </select>					
 </td>
 
@@ -1295,8 +1295,8 @@ document.getElementById('cdbg').parentNode.childNodes[36].setAttribute('style','
 Background Color:
 </td>
 <td >
-From <input size="5" type="text" name="cdgradcolor1" id="cdgradcolor1" value="<?php echo $row->cdgradcolor1; ?>" class="color">
-To <input size="5" type="text" name="cdgradcolor2" id="cdgradcolor2" value="<?php echo $row->cdgradcolor2; ?>" class="color">
+From <input size="5" type="text" name="cdgradcolor1" id="cdgradcolor1" value="" class="color">
+To <input size="5" type="text" name="cdgradcolor2" id="cdgradcolor2" value="" class="color">
 </td>
 <script type="text/javascript">
            
@@ -1325,7 +1325,7 @@ document.getElementById('cdbg').parentNode.childNodes[38].setAttribute('style','
 Text Color:
 </td>
 <td>
-<input type="text" name="cdtxtcolor" id="cdtxtcolor" value="<?php if($row->cdtxtcolor=="") echo '000000'; else echo $row->cdtxtcolor; ?>" class="color">
+<input type="text" name="cdtxtcolor" id="cdtxtcolor" value="000000" class="color">
 </td>
 </tr>
 				 
@@ -1334,7 +1334,7 @@ Text Color:
 Font Size:
 </td>
 <td>
-<input size="20"  type="text" name="cdfontsize" id="cdfontsize" value="<?php echo htmlspecialchars($row->cdfontsize); ?>" />
+<input size="20"  type="text" name="cdfontsize" id="cdfontsize" value="" />
 </td>
 </tr>
 				
@@ -1343,7 +1343,7 @@ Font Size:
 Margin:
 </td>
 <td>
-<input size="20"  type="text" name="cdmargin" id="cdmargin" value="<?php echo htmlspecialchars($row->cdmargin); ?>" />
+<input size="20"  type="text" name="cdmargin" id="cdmargin" value="" />
 </tr>
 
 <tr>
@@ -1351,7 +1351,7 @@ Margin:
 Padding:
 </td>
 <td width="170px">
-<input type="text" name="cdpadding" id="cdpadding" size="20" value="<?php echo htmlspecialchars($row->cdpadding); ?>" />
+<input type="text" name="cdpadding" id="cdpadding" size="20" value="" />
 </td>
 </tr>
 
@@ -1361,15 +1361,15 @@ Border Style:
 </td>
 <td width="170px">
 <select name="cdbstyle" id="cdbstyle">					 
-<option    value="solid"   <?php if($row->cdbstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->cdbstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->cdbstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->cdbstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->cdbstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->cdbstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->cdbstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->cdbstyle=="outset") echo 'selected="selected"'?>>Outset</option>
-<option    value="none"    <?php if($row->cdbstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted" >Dotted</option>
+<option    value="dashed" >Dashed</option>		
+<option    value="double" >Double</option>
+<option    value="groove" >Groove</option>		
+<option    value="ridge"  >Ridge</option>
+<option    value="inset"  >Inset</option>	
+<option    value="outset" >Outset</option>
+<option    value="none" >None</option>				
 </select>
 </td>
 </tr>
@@ -1380,7 +1380,7 @@ Border Style:
 Border Width:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="cdbwidth" id="cdbwidth" value="<?php echo htmlspecialchars($row->cdbwidth); ?>" />
+<input size="20"  type="text" name="cdbwidth" id="cdbwidth" value="" />
 </td>
 </tr>
 				
@@ -1389,7 +1389,7 @@ Border Width:
 Border Color:
 </td>
 <td>
-<input type="text" name="cdbcolor" id="cdbcolor" value="<?php echo $row->cdbcolor; ?>" class="color">
+<input type="text" name="cdbcolor" id="cdbcolor" value="" class="color">
 </td>
 </tr>
 				
@@ -1398,7 +1398,7 @@ Border Color:
 Border Corner Radius:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="cdbradius" id="cdbradius" value="<?php echo htmlspecialchars($row->cdbradius); ?>" />
+<input size="20"  type="text" name="cdbradius" id="cdbradius" value="" />
 </td>
 </tr>	
 			
@@ -1416,7 +1416,7 @@ Border Corner Radius:
 Width:
 </td>
 <td>
-<input size="20"  type="text" name="awidth" id="awidth"  value="<?php if($row->awidth=="") echo '540'; else echo htmlspecialchars($row->awidth); ?>" />
+<input size="20"  type="text" name="awidth" id="awidth"  value="540" />
 </td>
 </tr>		
 				
@@ -1425,7 +1425,7 @@ Width:
  Padding:
 </td>
 <td>
-<input size="20"  type="text" name="apadd" id="apadd" value="<?php echo htmlspecialchars($row->apadd); ?>" />
+<input size="20"  type="text" name="apadd" id="apadd" value="" />
 </td>
 </tr>								
 <tr>
@@ -1433,7 +1433,7 @@ Width:
 Font Size:
 </td>
 <td>
-<input size="20"  type="text" name="afontsize" id="afontsize" value="<?php if($row->afontsize=="") echo '16'; else echo htmlspecialchars($row->afontsize); ?>" />
+<input size="20"  type="text" name="afontsize" id="afontsize" value="16" />
 </td>
 </tr>
 				
@@ -1442,7 +1442,7 @@ Font Size:
 Text Color:
 </td>
 <td>
-<input type="text" name="atxtcolor" id="atxtcolor" value="<?php if($row->atxtcolor=="") echo '000000'; else echo $row->atxtcolor; ?>" class="color">
+<input type="text" name="atxtcolor" id="atxtcolor" value="000000" class="color">
 </td>
 </tr>
 
@@ -1484,7 +1484,7 @@ function abg_(x)
 Background Color:
 </td>
 <td>
-<input type="text" name="abgcolor" id="abgcolor" value="<?php if($row->abgcolor=="") echo 'CCCCCC'; else echo $row->abgcolor; ?>" class="color">
+<input type="text" name="abgcolor" id="abgcolor" value="CCCCCC" class="color">
 </td>
 		
 					<script type="text/javascript">
@@ -1507,10 +1507,10 @@ document.getElementById('abg').parentNode.childNodes[9].setAttribute('style','di
 Background Image:
 </td>
 <td>  
-                     <input type="text" value="<?php if($row->abgimage )echo htmlspecialchars($row->abgimage); ?>" name="abgimage" id="post_image5" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="5" href="#" />Select</a><br />
+                     <input type="text" value="" name="abgimage" id="post_image5" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="5" href="#" />Select</a><br />
                    <a href="javascript:removeImage5();">Remove Image</a><br />
                                <div style="height:150px;">
-                <img style=" display:<?php if($row->abgimage=='') echo 'none'; else echo 'block' ?>; width:160px"  id="imagebox5" src="<?php echo $row->abgimage ?>" />     
+                <img style="display:block;width:160px"  id="imagebox5" src="" />     
                                                  </div>     
                                     <script type="text/javascript">    
                   function removeImage5()
@@ -1542,7 +1542,7 @@ document.getElementById('abg').parentNode.childNodes[11].setAttribute('style','d
 Background-size:
 </td>
 <td>
-<input size="20"  type="text" name="abgsize" id="abgsize" value="<?php echo htmlspecialchars($row->abgsize); ?>" />
+<input size="20"  type="text" name="abgsize" id="abgsize" value="" />
 </td>
 <script type="text/javascript">
         
@@ -1562,15 +1562,15 @@ Border Style:
 </td>
 <td width="170px">
 <select name="abstyle" id="abstyle">					 
-<option    value="solid"   <?php if($row->abstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->abstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->abstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->abstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->abstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->abstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->abstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->abstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->abstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"    >Dashed</option>		
+<option    value="double"   >Double</option>
+<option    value="groove"  >Groove</option>		
+<option    value="ridge"    >Ridge</option>
+<option    value="inset"  >Inset</option>	
+<option    value="outset"   >Outset</option>	
+<option    value="none"  >None</option>				
 </select>                
 </td>
 </tr>
@@ -1580,15 +1580,15 @@ Border Right Style:
 </td>
 <td width="170px">
 <select name="abrightstyle" id="abrightstyle">					 
-<option    value="solid"   <?php if($row->abrightstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->abrightstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->abrightstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->abrightstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->abrightstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->abrightstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->abrightstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->abrightstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->abrightstyle=="none" || $row->ctbstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"   >Dotted</option>
+<option    value="dashed"  >Dashed</option>		
+<option    value="double"  >Double</option>
+<option    value="groove"  >Groove</option>		
+<option    value="ridge"   >Ridge</option>
+<option    value="inset"  >Inset</option>	
+<option    value="outset" >Outset</option>	
+<option    value="none"  >None</option>				
 </select>                
 </td>
 </tr>								
@@ -1597,7 +1597,7 @@ Border Right Style:
 Border Width:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="abwidth" id="abwidth" value="<?php echo htmlspecialchars($row->abwidth); ?>" />
+<input size="20"  type="text" name="abwidth" id="abwidth" value="" />
 </td>
 </tr>
 				
@@ -1606,7 +1606,7 @@ Border Width:
 Border Color:
 </td>
 <td>
-<input type="text" name="abcolor" id="abcolor" value="<?php echo $row->abcolor; ?>" class="color">
+<input type="text" name="abcolor" id="abcolor" value="" class="color">
 </td>
 </tr>
 				
@@ -1615,7 +1615,7 @@ Border Color:
 Border Corner Radius:
 </td>
 <td width="170px">
-<input size="20"  type="text" name="abradius" id="abradius" value="<?php echo htmlspecialchars($row->abradius); ?>" />
+<input size="20"  type="text" name="abradius" id="abradius" value="" />
 </td>
 </tr>				
 <tr>
@@ -1623,7 +1623,7 @@ Border Corner Radius:
 Content Padding:
 </td>
 <td>
-<input size="20"  type="text" name="amargin" id="amargin" value="<?php echo htmlspecialchars($row->amargin); ?>" />
+<input size="20"  type="text" name="amargin" id="amargin" value="" />
 </td>
 </tr>
 <tr>
@@ -1631,7 +1631,7 @@ Content Padding:
 Content Width:
 </td>
 <td>
-<input size="20"  type="text" name="answidth" id="answidth" value="<?php echo htmlspecialchars($row->answidth); ?>" />
+<input size="20"  type="text" name="answidth" id="answidth" value="" />
 </td>
 </tr>
 <tr>
@@ -1639,7 +1639,7 @@ Content Width:
 Padding (left):
 </td>
 <td>
-<input size="20"  type="text" name="ansmarginleft" id="ansmarginleft" value="<?php echo htmlspecialchars($row->ansmarginleft); ?>" />
+<input size="20"  type="text" name="ansmarginleft" id="ansmarginleft" value="" />
 </td>
 </tr>
 <tr>
@@ -1647,8 +1647,8 @@ Padding (left):
 Icon Color:
 </td>
 <td width="170px">	
-<input type="radio" name="ikncol"  value="0" <?php if($row->ikncol==0) echo 'checked="checked"'?>  id="ikncolb"><label for="ikncol">Black</label>	 
-<input type="radio" name="ikncol"  value="1" <?php if($row->ikncol==1) echo 'checked="checked"'?>  id="ikncolw"><label for="ikncol">White</label>
+<input type="radio" name="ikncol"  value="0" checked="checked" id="ikncolb"><label for="ikncol">Black</label>	 
+<input type="radio" name="ikncol"  value="1"  id="ikncolw"><label for="ikncol">White</label>
 </td>
 </tr>	
 <tr>
@@ -1656,7 +1656,7 @@ Icon Color:
 Data Width:
 </td>
 <td>
-<input size="20"  type="text" name="dwidth" id="dwidth" value="<?php echo htmlspecialchars($row->dwidth); ?>" />
+<input size="20"  type="text" name="dwidth" id="dwidth" value="" />
 </td>
 </tr>
 <tr>
@@ -1664,7 +1664,7 @@ Data Width:
 Data Height:
 </td>
 <td>
-<input size="20"  type="text" name="dheight" id="dheight" value="<?php echo htmlspecialchars($row->dheight); ?>" />
+<input size="20"  type="text" name="dheight" id="dheight" value="" />
 </td>
 </tr>				
 <tr>
@@ -1672,7 +1672,7 @@ Data Height:
 Data Margin (left):
 </td>
 <td>
-<input size="20"  type="text" name="dmarginleft" id="dmarginleft" value="<?php echo htmlspecialchars($row->dmarginleft); ?>" />
+<input size="20"  type="text" name="dmarginleft" id="dmarginleft" value="" />
 </td>
 </tr>
 <tr>
@@ -1680,7 +1680,7 @@ Data Margin (left):
 Data Text Color:
 </td>
 <td>
-<input size="20"  type="text" name="dtextcolor" id="dtextcolor" value="<?php echo htmlspecialchars($row->dtextcolor); ?>" class="color" />
+<input size="20"  type="text" name="dtextcolor" id="dtextcolor" value="" class="color" />
 </td>
 </tr>
 <tr>
@@ -1688,7 +1688,7 @@ Data Text Color:
 Data Background Color:
 </td>
 <td>
-<input size="20"  type="text" name="dbackgroundcolor" id="dbackgroundcolor" value="<?php echo htmlspecialchars($row->dbackgroundcolor); ?>" class="color" />
+<input size="20"  type="text" name="dbackgroundcolor" id="dbackgroundcolor" value="" class="color" />
 </td>
 </tr>
 <tr>
@@ -1697,15 +1697,15 @@ Data Border Style:
 </td>
 <td width="170px">
 <select name="dborderstyle" id="dborderstyle">					 
-<option    value="solid"   <?php if($row->dborderstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->dborderstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->dborderstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->dborderstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->dborderstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->dborderstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->dborderstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->dborderstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->dborderstyle=="none" || $row->dborderstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected" >Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"    >Dashed</option>		
+<option    value="double"   >Double</option>
+<option    value="groove"   >Groove</option>		
+<option    value="ridge"    >Ridge</option>
+<option    value="inset"   >Inset</option>	
+<option    value="outset" >Outset</option>	
+<option    value="none"  >None</option>				
 </select>
 </td>
 </tr>
@@ -1714,7 +1714,7 @@ Data Border Style:
 Data Border Width:
 </td>
 <td>
-<input size="20"  type="text" name="dborderwidth" id="dborderwidth" value="<?php echo htmlspecialchars($row->dborderwidth); ?>" />
+<input size="20"  type="text" name="dborderwidth" id="dborderwidth" value="" />
 </td>
 </tr>
 <tr>
@@ -1722,7 +1722,7 @@ Data Border Width:
 Data Border Color:
 </td>
 <td>
-<input size="20"  type="text" name="dbordercolor" id="dbordercolor" value="<?php echo htmlspecialchars($row->dbordercolor); ?>" class="color"  />
+<input size="20"  type="text" name="dbordercolor" id="dbordercolor" value="" class="color"  />
 </td>
 </tr>
 <tr>
@@ -1730,7 +1730,7 @@ Data Border Color:
 Data Border Corner Radius:
 </td>
 <td>
-<input size="20"  type="text" name="dbordercornerradius" id="dbordercornerradius" value="<?php echo htmlspecialchars($row->dbordercornerradius); ?>" />
+<input size="20"  type="text" name="dbordercornerradius" id="dbordercornerradius" value="" />
 </td>
 </tr>
 <tr>
@@ -1739,15 +1739,15 @@ Data Border Top Style:
 </td>
 <td width="170px">
 <select name="dbordertopstyle" id="dbordertopstyle">					 
-<option    value="solid"   <?php if($row->dbordertopstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->dbordertopstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->dbordertopstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->dbordertopstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->dbordertopstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->dbordertopstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->dbordertopstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->dbordertopstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->dbordertopstyle=="none" || $row->dbordertopstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected" >Solid</option>	 
+<option    value="dotted"   >Dotted</option>
+<option    value="dashed"   >Dashed</option>		
+<option    value="double"   >Double</option>
+<option    value="groove"   >Groove</option>		
+<option    value="ridge"    >Ridge</option>
+<option    value="inset"    >Inset</option>	
+<option    value="outset"   >Outset</option>	
+<option    value="none"    >None</option>				
 </select>
 </td>
 </tr>
@@ -1757,15 +1757,15 @@ Data Border Bottom Style:
 </td>
 <td width="170px">
 <select name="dborderbottomstyle" id="dborderbottomstyle">					 
-<option    value="solid"   <?php if($row->dborderbottomstyle=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->dborderbottomstyle=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->dborderbottomstyle=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->dborderbottomstyle=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->dborderbottomstyle=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->dborderbottomstyle=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->dborderbottomstyle=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->dborderbottomstyle=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->dborderbottomstyle=="none" || $row->dborderbottomstyle=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"    >Dashed</option>		
+<option    value="double"    >Double</option>
+<option    value="groove"   >Groove</option>		
+<option    value="ridge"   >Ridge</option>
+<option    value="inset"  >Inset</option>	
+<option    value="outset"  >Outset</option>	
+<option    value="none"    >None</option>				
 </select>
 </td>
 </tr>
@@ -1774,7 +1774,7 @@ Data Border Bottom Style:
 Like Hits Data Width:
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitswidth" id="dlikehitswidth" value="<?php echo htmlspecialchars($row->dlikehitswidth); ?>" />
+<input size="20"  type="text" name="dlikehitswidth" id="dlikehitswidth" value="" />
 </td>
 </tr>
 <tr>
@@ -1782,7 +1782,7 @@ Like Hits Data Width:
 Like Hits Data Margin (left):
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitsmargin" id="dlikehitsmargin" value="<?php echo htmlspecialchars($row->dlikehitsmargin); ?>" />
+<input size="20"  type="text" name="dlikehitsmargin" id="dlikehitsmargin" value="" />
 </td>
 </tr>
 <tr>
@@ -1790,7 +1790,7 @@ Like Hits Data Margin (left):
 Like Hits Data Background Color:
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitsbgcolor" id="dlikehitsbgcolor" value="<?php echo htmlspecialchars($row->dlikehitsbgcolor); ?>" class="color" />
+<input size="20"  type="text" name="dlikehitsbgcolor" id="dlikehitsbgcolor" value="" class="color" />
 </td>
 </tr>
 <tr>
@@ -1799,15 +1799,15 @@ Like Hits Data Border Style:
 </td>
 <td width="170px">
 <select name="dlikehitsbdrst" id="dlikehitsbdrst">					 
-<option    value="solid"   <?php if($row->dlikehitsbdrst=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->dlikehitsbdrst=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->dlikehitsbdrst=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->dlikehitsbdrst=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->dlikehitsbdrst=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->dlikehitsbdrst=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->dlikehitsbdrst=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->dlikehitsbdrst=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->dlikehitsbdrst=="none" || $row->dlikehitsbdrst=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"    >Dashed</option>		
+<option    value="double"    >Double</option>
+<option    value="groove"    >Groove</option>		
+<option    value="ridge"     >Ridge</option>
+<option    value="inset"    >Inset</option>	
+<option    value="outset"   >Outset</option>	
+<option    value="none"    >None</option>				
 </select>
 </td>
 </tr>
@@ -1816,7 +1816,7 @@ Like Hits Data Border Style:
 Like Hits Data Border Width:
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitsbdrw" id="dlikehitsbdrw" value="<?php echo htmlspecialchars($row->dlikehitsbdrw); ?>" />
+<input size="20"  type="text" name="dlikehitsbdrw" id="dlikehitsbdrw" value="" />
 </td>
 </tr>
 <tr>
@@ -1824,7 +1824,7 @@ Like Hits Data Border Width:
 Like Hits Data Border Color:
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitsbdrc" id="dlikehitsbdrc" value="<?php echo htmlspecialchars($row->dlikehitsbdrc); ?>" class="color"/>
+<input size="20"  type="text" name="dlikehitsbdrc" id="dlikehitsbdrc" value="" class="color"/>
 </td>
 </tr>
 <tr>
@@ -1833,15 +1833,15 @@ Like Hits Data Border Top Style:
 </td>
 <td width="170px">
 <select name="dlikehitsbdrtst" id="dlikehitsbdrtst">					 
-<option    value="solid"   <?php if($row->dlikehitsbdrtst=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->dlikehitsbdrtst=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->dlikehitsbdrtst=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->dlikehitsbdrtst=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->dlikehitsbdrtst=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->dlikehitsbdrtst=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->dlikehitsbdrtst=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->dlikehitsbdrtst=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->dlikehitsbdrtst=="none" || $row->dlikehitsbdrtst=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"    >Dashed</option>		
+<option    value="double"    >Double</option>
+<option    value="groove"   >Groove</option>		
+<option    value="ridge"    >Ridge</option>
+<option    value="inset"    >Inset</option>	
+<option    value="outset"   >Outset</option>	
+<option    value="none"    >None</option>				
 </select>
 </td>
 </tr>
@@ -1851,15 +1851,15 @@ Like Hits Data Border Bottom Style:
 </td>
 <td width="170px">
 <select name="dlikehitsbdrbst" id="dlikehitsbdrbst">					 
-<option    value="solid"   <?php if($row->dlikehitsbdrbst=="solid") echo 'selected="selected"'?>>Solid</option>	 
-<option    value="dotted"    <?php if($row->dlikehitsbdrbst=="dotted") echo 'selected="selected"'?>>Dotted</option>
-<option    value="dashed"    <?php if($row->dlikehitsbdrbst=="dashed") echo 'selected="selected"'?>>Dashed</option>		
-<option    value="double"    <?php if($row->dlikehitsbdrbst=="double") echo 'selected="selected"'?>>Double</option>
-<option    value="groove"    <?php if($row->dlikehitsbdrbst=="groove") echo 'selected="selected"'?>>Groove</option>		
-<option    value="ridge"     <?php if($row->dlikehitsbdrbst=="ridge") echo 'selected="selected"'?>>Ridge</option>
-<option    value="inset"    <?php if($row->dlikehitsbdrbst=="inset") echo 'selected="selected"'?>>Inset</option>	
-<option    value="outset"    <?php if($row->dlikehitsbdrbst=="outset") echo 'selected="selected"'?>>Outset</option>	
-<option    value="none"    <?php if($row->dlikehitsbdrbst=="none" || $row->dlikehitsbdrbst=="") echo 'selected="selected"'?>>None</option>				
+<option    value="solid"   selected="selected">Solid</option>	 
+<option    value="dotted"    >Dotted</option>
+<option    value="dashed"   >Dashed</option>		
+<option    value="double"   >Double</option>
+<option    value="groove"   >Groove</option>		
+<option    value="ridge"    >Ridge</option>
+<option    value="inset"    >Inset</option>	
+<option    value="outset"   >Outset</option>	
+<option    value="none"   >None</option>				
 </select>
 </td>
 </tr>
@@ -1868,7 +1868,7 @@ Like Hits Data Border Bottom Style:
 Like Hits Data Border Corner Radius:
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitsbdrrad" id="dlikehitsbdrrad" value="<?php echo htmlspecialchars($row->dlikehitsbdrrad); ?>" />
+<input size="20"  type="text" name="dlikehitsbdrrad" id="dlikehitsbdrrad" value="" />
 </td>
 </tr>
 <tr>
@@ -1876,7 +1876,7 @@ Like Hits Data Border Corner Radius:
 Like Hits Data Text Color:
 </td>
 <td>
-<input size="20"  type="text" name="dlikehitstxtcl" id="dlikehitstxtcl" value="<?php echo htmlspecialchars($row->dlikehitstxtcl); ?>" class="color" />
+<input size="20"  type="text" name="dlikehitstxtcl" id="dlikehitstxtcl" value="" class="color" />
 </td>
 </tr>					
 <tr>
@@ -1884,10 +1884,10 @@ Like Hits Data Text Color:
 Image (before text):
 </td>
 <td>  
-                     <input type="text" value="<?php if($row->aimage )echo htmlspecialchars($row->aimage); ?>" name="aimage" id="post_image6" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="6" href="#" />Select</a><br />
+                     <input type="text" value="" name="aimage" id="post_image6" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="6" href="#" />Select</a><br />
                    <a href="javascript:removeImage6();">Remove Image</a><br />
                                <div style="height:50px;">
-                <img style=" display:<?php if($row->aimage=='') echo 'none'; else echo 'block' ?>; width:160px" id="imagebox6" src="<?php echo $row->aimage ?>" />     
+                <img style=" display:block;width:160px" id="imagebox6" src="" />     
                                                  </div>     
                                     <script type="text/javascript">    
                   function removeImage6()
@@ -1905,7 +1905,7 @@ Image (before text):
 Image Width:
 </td>
 <td>
-<input size="20"  type="text" name="aimagewidth" id="aimagewidth" value="<?php echo htmlspecialchars($row->aimagewidth); ?>" />
+<input size="20"  type="text" name="aimagewidth" id="aimagewidth" value="" />
 </td>
 </tr>
 				
@@ -1914,7 +1914,7 @@ Image Width:
 Image Height:
 </td>
 <td>
-<input size="20"  type="text" name="aimageheight" id="aimageheight" value="<?php echo htmlspecialchars($row->aimageheight); ?>" />
+<input size="20"  type="text" name="aimageheight" id="aimageheight" value="" />
 </td>
 </tr>
 				
@@ -1923,7 +1923,7 @@ Image Height:
 Image Margin:
 </td>
 <td>
-<input size="20"  type="text" name="amarginimage" id="amarginimage" value="<?php echo htmlspecialchars($row->amarginimage); ?>" />
+<input size="20"  type="text" name="amarginimage" id="amarginimage" value="" />
 </td>
 </tr>
 				
@@ -1933,10 +1933,10 @@ Image Margin:
 Image (after text):
 </td>
 <td>  
-                     <input type="text" value="<?php if($row->aimage2 )echo htmlspecialchars($row->aimage2); ?>" name="aimage2" id="post_image7" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="7" href="#" />Select</a><br />
+                     <input type="text" value="" name="aimage2" id="post_image7" class="text_input" style="width:121px; margin-bottom:4px;"/><a class="button lu_upload_button" id="7" href="#" />Select</a><br />
                    <a href="javascript:removeImage7();">Remove Image</a><br />
                                <div style="height:50px;">
-                <img style=" display:<?php if($row->aimage2=='') echo 'none'; else echo 'block' ?>; width:160px" id="imagebox7" src="<?php echo $row->aimage2 ?>" />     
+                <img style=" display:block; width:160px" id="imagebox7" src="" />     
                                                  </div>     
                                     <script type="text/javascript">    
                   function removeImage7()
@@ -1954,7 +1954,7 @@ Image (after text):
 Image Width:
 </td>
 <td>
-<input size="20"  type="text" name="aimagewidth2" id="aimagewidth2" value="<?php echo htmlspecialchars($row->aimagewidth2); ?>" />
+<input size="20"  type="text" name="aimagewidth2" id="aimagewidth2" value="" />
 </td>
 </tr>
 				
@@ -1963,7 +1963,7 @@ Image Width:
 Image Height:
 </td>
  <td>
-<input size="20"  type="text" name="aimageheight2" id="aimageheight2" value="<?php echo htmlspecialchars($row->aimageheight2); ?>" />
+<input size="20"  type="text" name="aimageheight2" id="aimageheight2" value="" />
 </td>
 </tr>
 				
@@ -1972,7 +1972,7 @@ Image Height:
 Image Margin:
 </td>
 <td>
- <input size="20"  type="text" name="amarginimage2" id="amarginimage2" value="<?php echo htmlspecialchars($row->amarginimage2); ?>" />
+ <input size="20"  type="text" name="amarginimage2" id="amarginimage2" value="" />
   </td>
   </tr>
 				
@@ -1983,7 +1983,7 @@ Image Margin:
 </fieldset>
 </div>
 <input type="hidden" name="id"
-value="<?php echo $row->id; ?>" />
+value="" />
 <input type="hidden" name="task" value="" />
 </form>
 <?php
@@ -1993,11 +1993,14 @@ value="<?php echo $row->id; ?>" />
 
 function 	html_show_spider_theme($rows, $pageNav,$sort){
 	global $wpdb;
-	
+	$serch_value = "";
+	if(!isset($sort["sortid_by"]))$sort["sortid_by"] = "id";
+	if(!isset($sort["custom_style"]))$sort["custom_style"] = "";
+	if(!isset($sort["1_or_2"]))$sort["1_or_2"] = "1";
 	?>
     <script language="javascript">
 	function ordering(name,as_or_desc)
-	{
+	{ 
 		document.getElementById('asc_or_desc').value=as_or_desc;		
 		document.getElementById('order_by').value=name;
 		document.getElementById('admin_form').submit();
@@ -2043,15 +2046,15 @@ This section allows you to create/edit themes for the FAQs. <a href="http://web-
     <?php echo "<h2>".'Themes'. "</h2>"; ?>
     </td>
     <td  style="width:90px; text-align:right;"><p class="submit" style="padding:0px; text-align:left"><input type="button" value="Add a Theme" name="custom_parametrs" onclick="window.location.href='admin.php?page=Spider_Faq_Themes&task=add_Spider_Faq_Themes'" /></p></td>
-<td style="text-align:right;font-size:16px;padding:20px; padding-right:50px">
+<td style="text-align:right;font-size:16px;padding:20px; padding-right:30px">
 
 	</td>
 
     </tr>
     </table>
     <?php
-	if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=$_POST['search_events_by_title']; }else{$serch_value="";}} 
-	$serch_fields='<div class="alignleft actions" style="width:180px;">
+	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_html($_POST['search_events_by_title']); }else{$serch_value="";}} 
+	$serch_fields='<div class="alignleft actions" style="width:204px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
         <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
     </div>
@@ -2066,8 +2069,8 @@ This section allows you to create/edit themes for the FAQs. <a href="http://web-
   <table class="wp-list-table widefat fixed pages" style="width:95%">
  <thead>
  <TR>
-   <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:30px" ><a href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span class="sorting-indicator"></span></a></th>
- <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
+   <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"];  ?>" style="width:45px;padding: 2px 11px 2px 0px;" ><a style="padding: 8px 4px 7px 10px;" href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span style="margin-top:6px; margin-left:5px" class="sorting-indicator"></span></a></th>
+ <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"];  ?>" style="" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
 
 
  <th style="width:80px">Edit</th>
@@ -2092,7 +2095,7 @@ This section allows you to create/edit themes for the FAQs. <a href="http://web-
   		
   ?>
  <tr>
-         <td><?php echo $rows[$i]->id; ?></td>
+         <td style="padding-left: 10px;padding-top: 8px; padding-bottom: 0px; padding-right: 0px;"><?php echo $rows[$i]->id; ?></td>
          <td><a  href="admin.php?page=Spider_Faq_Themes&task=edit_Spider_Faq_Themes&id=<?php echo $rows[$i]->id?>"><?php echo $rows[$i]->title; ?></a></td>
   
          
@@ -2104,8 +2107,8 @@ This section allows you to create/edit themes for the FAQs. <a href="http://web-
  </tbody>
  </table>
  <input type="hidden" name="oreder_move" id="oreder_move" value="" />
- <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc'];?>"  />
- <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];?>"  />
+ <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_html($_POST['asc_or_desc']);?>"  />
+ <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_html($_POST['order_by']);?>"  />
  <input type="hidden" name="saveorder" id="saveorder" value="" />
 
  <?php
@@ -3021,7 +3024,7 @@ Font Size:
 
   <tr>
 <td>
-<div style="font-size:14px; font-weight:bold;"><?php echo Title; ?></div>
+<div style="font-size:14px; font-weight:bold;"></div>
 </td> 
 </tr>
 
@@ -3291,7 +3294,7 @@ Border Corner Radius:
 
 <tr>
 <td>
-<div style="font-size:14px; font-weight:bold; margin-top:8px;"><?php echo Description; ?></div>
+<div style="font-size:14px; font-weight:bold; margin-top:8px;"></div>
 </td> 
 </tr>
 

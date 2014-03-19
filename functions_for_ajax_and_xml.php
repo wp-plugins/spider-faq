@@ -1,34 +1,12 @@
 <?php
-
-
-
-
-
 function spider_faq_select_category(){
 	require_once("nav_function/nav_html_func.php");
-if(get_bloginfo( 'version' )>3.3){
-	?>
-<link rel="stylesheet" href="<?php echo bloginfo("url") ?>/wp-admin/load-styles.php?c=0&amp;dir=ltr&amp;load=admin-bar,wp-admin&amp;ver=7f0753feec257518ac1fec83d5bced6a" type="text/css" media="all">
-<?php
-}
-else
-{
-	?>
- <link rel="stylesheet" href="<?php echo bloginfo("url") ?>/wp-admin/load-styles.php?c=1&amp;dir=ltr&amp;load=global,wp-admin&amp;ver=aba7495e395713976b6073d5d07d3b17" type="text/css" media="all">
- <?php
-}
- ?>
-<link rel="stylesheet" id="thickbox-css" href="<?php echo bloginfo('url')?>/wp-includes/js/thickbox/thickbox.css?ver=20111117" type="text/css" media="all">
-<link rel="stylesheet" id="colors-css" href="<?php echo bloginfo('url')?>/wp-admin/css/colors-classic.css?ver=20111206" type="text/css" media="all">
-
-
-<?php
-	////////////////////////////////////////////////////////////////////////
-		
-	
-	
-		global $wpdb;
+	global $wpdb;
 	$sort["default_style"]="manage-column column-autor sortable desc";
+	$order = "ORDER BY id";
+	$sort["sortid_by"] = "id";
+	$sort["custom_style"] = "manage-column column-autor sortable desc";
+	$sort["1_or_2"]="2";
 	if(isset($_POST['page_number']))
 	{
 			
@@ -93,8 +71,7 @@ else
 	
 	$rows = $wpdb->get_results($query);
 	html_select_category($rows, $pageNav,$sort);
-	exit;
-	
+	exit;	
 	}
 	
 	
@@ -106,7 +83,11 @@ else
 	
 function html_select_category($rows, $pageNav, $sort)
 {
-	?>
+$serch_value="";
+if(!isset($sort["sortid_by"])) $sort["sortid_by"] = "id";
+if(!isset($sort["custom_style"])) $sort["custom_style"] = "";
+if(!isset($sort["1_or_2"])) $sort["1_or_2"]="2";
+?>
 <script type="text/javascript">
 
 function submitbutton(pressbutton) {
@@ -170,10 +151,21 @@ function checkAll( n, fldName ) {
 	}
 }
 </script>
-
+<style>
+input[type=checkbox]:before {
+ font: 400 21px/1 Dashicons !important; 
+}
+input[type=checkbox] {
+ max-width:16px !important;
+ max-height:16px !important;
+}
+</style>
+      <link media="all" type="text/css" href="<?php echo get_admin_url(); ?>load-styles.php?c=1&amp;dir=ltr&amp;load=admin-bar,wp-admin,dashicons,buttons,wp-auth-check" rel="stylesheet">
+      <link media="all" type="text/css" href="<?php echo get_admin_url(); ?>css/colors<?php echo ((get_bloginfo('version') < '3.8') ? '-fresh' : ''); ?>.min.css" id="colors-css" rel="stylesheet">
+	  
 	<form action="<?php echo admin_url('admin-ajax.php?action=spiderFaqselectcategory') ?>" method="post" id="admin_form" name="adminForm">
     
-		<table width="95%">
+		<table style="width:98%">
            <td align="right" width="100%">
            <button onclick="xxx();" style="width:98px; height:34px; background:url(<?php echo plugins_url("images/add_but.png",__FILE__); ?>) no-repeat;border:none;cursor:pointer;">&nbsp;</button>        
              </td>
@@ -194,17 +186,13 @@ function checkAll( n, fldName ) {
     </div>';
 	 print_html_nav1($pageNav['total'],$pageNav['limit'],$serch_fields);	
 	 ?>
-    <table class="wp-list-table widefat plugins" >
-    <thead>
+    <table class="wp-list-table widefat plugins" style="margin:25px; width:93%">
+    <thead style="position:inherit">
     	<tr>
-            <th width="30"><?php echo '#'; ?></th>
-            <th width="20" class="manage-column column-cb check-column">
-            <input  type="checkbox" name="toggle" id="toggle" value="" onclick="checkAll(<?php echo count($rows)?>, 'v')">
-            </th>
-           <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:110px" ><a href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span class="sorting-indicator"></span></a></th>
- <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
-
-  <th scope="col" id="published" class="<?php if($sort["sortid_by"]=="published") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:80px" ><a href="javascript:ordering('published',<?php if($sort["sortid_by"]=="published") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Published</span><span class="sorting-indicator"></span></a></th>
+          <th style="width:44px;position:inherit;padding:19px 3px 6px 4px" class="manage-column column-cb check-column"><input  type="checkbox" name="toggle" id="toggle" value="" onclick="checkAll(<?php echo count($rows)?>, 'v')"></th>
+          <th style="width:70px;padding-left:11px" scope="col" id="id" class="table_small_col <?php if($sort["sortid_by"]=="id") echo $sort["custom_style"]; ?>" style="width:110px" ><a style=" padding: 0px; " href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span class="sorting-indicator"></span></a></th>
+          <th style="width:398px;padding-left:7px" scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"];  ?>" style="" ><a style=" padding: 0px; " href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
+          <th scope="col" id="published" class="<?php if($sort["sortid_by"]=="published") echo $sort["custom_style"];  ?>" style="width:80px" ><a style=" padding: 0px; " href="javascript:ordering('published',<?php if($sort["sortid_by"]=="published") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Published</span><span class="sorting-indicator"></span></a></th>
        </tr>
     </thead>
                 
@@ -218,28 +206,25 @@ function checkAll( n, fldName ) {
 	
 ?>
         <tr class="<?php echo "row$k"; ?>">
-        	<td align="center"><?php echo $i+1?></td>
-        	<td>
+        	<td class="table_small_col check-column" style="padding:9px 4px 6px 13px">
             <input type="checkbox" id="v<?php echo $i?>" value="<?php echo $row->id;?>" />
             <input type="hidden" id="title_<?php echo $i?>" value="<?php echo  htmlspecialchars($row->title);?>" />
           
             </td>
-        	<td align="center"><?php echo $row->id?></td>
+        	<td class="table_small_col"><?php echo $row->id?></td>
         	<td><a style="cursor: pointer;" onclick="window.parent.jSelectCategories(['<?php echo $row->id?>'],['<?php echo htmlspecialchars(addslashes($row->title));?>'])"><?php echo $row->title?></a></td>            
-            <td align="center"><?php echo $published?></td>        
+            <td ><?php echo $published?></td>        
         </tr>
         <?php
 		$k = 1 - $k;
 	}
 	?>
     </table>
-    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php echo $_POST['asc_or_desc'] ?>"  />
- 	<input type="hidden" name="order_by" id="order_by" value="<?php echo $_POST['order_by'] ?>"  />
-    <input type="hidden" name="option" value="com_Spider_Video_Player">
-    <input type="hidden" name="task" value="select_playlist">    
-    <input type="hidden" name="boxchecked" value="0"> 
-    <input type="hidden" name="filter_order_playlist" value="<?php echo $lists['order']; ?>" />
-    <input type="hidden" name="filter_order_Dir_playlist" value="<?php echo $lists['order_Dir']; ?>" />       
+    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc']; else echo "1"; ?>" />
+ 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by']; else echo 'id'; ?>" />
+    <input type="hidden" name="option" value="com_Spider_Video_Player" />
+    <input type="hidden" name="task" value="select_playlist" />    
+    <input type="hidden" name="boxchecked" value="0" /> 
     </form>
     <?php
 }
@@ -256,31 +241,8 @@ function checkAll( n, fldName ) {
 
 function spider_faq_select_standcategory(){
 	require_once("nav_function/nav_html_func.php");
-if(get_bloginfo( 'version' )>3.3){
-	?>
-<link rel="stylesheet" href="<?php echo bloginfo("url") ?>/wp-admin/load-styles.php?c=0&amp;dir=ltr&amp;load=admin-bar,wp-admin&amp;ver=7f0753feec257518ac1fec83d5bced6a" type="text/css" media="all">
-<?php
-}
-else
-{
-	?>
- <link rel="stylesheet" href="<?php echo bloginfo("url") ?>/wp-admin/load-styles.php?c=1&amp;dir=ltr&amp;load=global,wp-admin&amp;ver=aba7495e395713976b6073d5d07d3b17" type="text/css" media="all">
- <?php
-}
- ?>
-<link rel="stylesheet" id="thickbox-css" href="<?php echo bloginfo('url')?>/wp-includes/js/thickbox/thickbox.css?ver=20111117" type="text/css" media="all">
-<link rel="stylesheet" id="colors-css" href="<?php echo bloginfo('url')?>/wp-admin/css/colors-classic.css?ver=20111206" type="text/css" media="all">
-
-
-<?php
-	////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
-	
-		global $wpdb;
+    global $wpdb;
+	$order = "ORDER BY term_id";
 	$sort["default_style"]="manage-column column-autor sortable desc";
 	if(isset($_POST['page_number']))
 	{
@@ -359,9 +321,12 @@ $rows = $wpdb->get_results($query);
 	
 	
 	
-function html_select_standcategory($rows, $pageNav, $sort)
-{
-	?>
+function html_select_standcategory($rows, $pageNav, $sort) {
+$serch_value = "";
+if(!isset($sort["sortid_by"])) $sort["sortid_by"] = "term_id";
+if(!isset($sort["custom_style"])) $sort["custom_style"] = "";
+if(!isset($sort["1_or_2"])) $sort["1_or_2"]="2";
+?>
 <script type="text/javascript">
 
 function submitbutton(pressbutton) {
@@ -424,10 +389,20 @@ function checkAll( n, fldName ) {
 	}
 }
 </script>
-
+<style>
+input[type=checkbox]:before {
+ font: 400 21px/1 Dashicons !important; 
+}
+input[type=checkbox] {
+ max-width:16px !important;
+ max-height:16px !important;
+}
+</style>
+    <link media="all" type="text/css" href="<?php echo get_admin_url(); ?>load-styles.php?c=1&amp;dir=ltr&amp;load=admin-bar,wp-admin,dashicons,buttons,wp-auth-check" rel="stylesheet">
+    <link media="all" type="text/css" href="<?php echo get_admin_url(); ?>css/colors<?php echo ((get_bloginfo('version') < '3.8') ? '-fresh' : ''); ?>.min.css" id="colors-css" rel="stylesheet">	  
 	<form action="<?php echo admin_url('admin-ajax.php?action=spiderFaqselectstandcategory') ?>" method="post" id="admin_form" name="adminForm">
     
-		<table width="95%">
+		<table style="width:98%">
            <td align="right" width="100%">
            <button onclick="yyy();" style="width:98px; height:34px; background:url(<?php echo plugins_url("images/add_but.png",__FILE__); ?>) no-repeat;border:none;cursor:pointer;">&nbsp;</button>        
              </td>
@@ -448,39 +423,28 @@ function checkAll( n, fldName ) {
     </div>';
 	 print_html_nav1($pageNav['total'],$pageNav['limit'],$serch_fields);	
 	 ?>
-    <table class="wp-list-table widefat plugins" >
+    <table class="wp-list-table widefat plugins" style="margin:25px; width:93%" >
     <thead>
-    	<tr>
-            <th width="30"><?php echo '#'; ?></th>
-            <th width="20" class="manage-column column-cb check-column">
-            <input  type="checkbox" name="toggle" id="toggle" value="" onclick="checkAll(<?php echo count($rows)?>, 'c')">
-            </th>
-           <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="term_id") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:110px" ><a href="javascript:ordering('term_id',<?php if($sort["sortid_by"]=="term_id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span style="align:center">ID</span><span class="sorting-indicator"></span></a></th>
- <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="name") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('name',<?php if($sort["sortid_by"]=="name") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
-
-
+    	<tr style="position:inherit">
+         <th style="width:44px;position:inherit;padding:19px 3px 6px 4px" class="manage-column column-cb check-column"><input  type="checkbox" name="toggle" id="toggle" value="" onclick="checkAll(<?php echo count($rows)?>, 'c')" style="margin-top: -9px;"></th>
+         <th style="width:70px;padding-left:60px" scope="col" id="id" class="table_small_col <?php if($sort["sortid_by"]=="term_id") echo $sort["custom_style"]; ?>" style="width:110px" ><a style="padding:0px;" href="javascript:ordering('term_id',<?php if($sort["sortid_by"]=="term_id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span style="align:center">ID</span><span class="sorting-indicator"></span></a></th>
+         <th style="width: 79%;padding-left: 89px;" scope="col" id="title" class="<?php if($sort["sortid_by"]=="name") echo $sort["custom_style"]; ?>" style="" ><a style="padding:0px;" href="javascript:ordering('name',<?php if($sort["sortid_by"]=="name") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
        </tr>
-    </thead>
-              
-    <?php
-	
+    </thead>	
+    <?php	
     $k = 0;
 	for($i=0, $n=count($rows); $i < $n ; $i++)
 	{
 		$row = &$rows[$i];
-		$published 	= $row->published;
 		
-	
-?>
+       ?>
         <tr class="<?php echo "row$k"; ?>">
-        	<td align="center"><?php echo $i+1?></td>
-        	<td>
+        	<td class="table_small_col check-column" style="padding:9px 4px 6px 13px">
             <input type="checkbox" id="c<?php echo $i?>" value="<?php echo $row->term_id;?>" />
-            <input type="hidden" id="titles_<?php echo $i?>" value="<?php echo  htmlspecialchars($row->catname);?>" />
-          
+            <input type="hidden" id="titles_<?php echo $i?>" value="<?php echo  htmlspecialchars($row->catname);?>" />          
             </td>
-        	<td align="center"><?php echo $row->term_id?></td>
-        	<td><a style="cursor: pointer;" onclick="window.parent.jSelectStandCategories(['<?php echo $row->term_id?>'],['<?php echo htmlspecialchars(addslashes($row->catname));?>'])"><?php echo $row->catname?></a></td>            
+        	<td class="table_small_col"><?php echo $row->term_id?></td>
+        	<td style="padding-left: 105px;"><a style="cursor: pointer;" onclick="window.parent.jSelectStandCategories(['<?php echo $row->term_id?>'],['<?php echo htmlspecialchars(addslashes($row->catname));?>'])"><?php echo $row->catname?></a></td>            
                 
         </tr>
         <?php
@@ -488,13 +452,11 @@ function checkAll( n, fldName ) {
 	}
 	?>
     </table>
-    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php echo $_POST['asc_or_desc'] ?>"  />
- 	<input type="hidden" name="order_by" id="order_by" value="<?php echo $_POST['order_by'] ?>"  />
+    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc']; else echo "1"; ?>"  />
+ 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];else echo "id"; ?>"  />
     <input type="hidden" name="option" value="com_Spider_Video_Player">
     <input type="hidden" name="task" value="select_playlist">    
-    <input type="hidden" name="boxchecked" value="0"> 
-    <input type="hidden" name="filter_order_playlist" value="<?php echo $lists['order']; ?>" />
-    <input type="hidden" name="filter_order_Dir_playlist" value="<?php echo $lists['order_Dir']; ?>" />       
+    <input type="hidden" name="boxchecked" value="0">     
     </form>
     <?php
 }

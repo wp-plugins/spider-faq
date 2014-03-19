@@ -26,11 +26,11 @@ html {
 }
 
 body {
-	margin: 10px;
+	/*margin: 10px;
 	padding: 0;
-	background: #fff;
-	padding-bottom: 1px;
-	font-size: 68.8%; /* Set base to 11px */
+	background: #fff;*/
+	/*padding-bottom: 1px;
+	font-size: 68.8%;*/ /* Set base to 11px */
 }
 
 body,td,th {
@@ -94,7 +94,7 @@ a:visited {
 }
 
 a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 fieldset {
@@ -109,13 +109,13 @@ legend {
 	font-size: 1.182em;
 	font-weight: bold;
 }
-
+/*
 input, select {
 	font-size: 0.909em;
 	border: 1px solid silver;
 	background: #fff;
 }
-
+*/
 textarea {
 	font-size: 1.273em;
 	border: 1px solid silver;
@@ -141,13 +141,13 @@ input.disabled {
 input.button {
 	cursor: pointer;
 }
-
+/*
 input:focus,
 select:focus,
 textarea:focus {
 	background-color: #ffd;
 }
-
+*/
 .enabled,
 .success {
 	color: green;

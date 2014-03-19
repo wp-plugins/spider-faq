@@ -49,7 +49,7 @@ This section allows you to create categories of questions <a href="http://web-do
 Title:
 </td>
 <td>
-<input class="text_area" type="text" name="title" id="title" size="50" maxlength="250" value="<?php echo $row->title;?>" />
+<input class="text_area" type="text" name="title" id="title" size="50" maxlength="250" value="" />
 </td>
 </tr>
 
@@ -63,7 +63,7 @@ Description:
 </td>
 <td>
 
-<textarea name="description" rows="5" cols="80"><?php echo htmlspecialchars($row->description); ?></textarea>
+<textarea name="description" rows="5" cols="80"></textarea>
 
 </td>
 </tr>
@@ -111,23 +111,18 @@ Description:
 </tr>
 </table>
 <input type="hidden" name="id"
-value="<?php echo $row->id; ?>" />
+value="" />
 <input type="hidden" name="task" value="" />
 </form>
 <?php
-
-
 }
-
-
-
-
-
-
-
 
 function 	html_show_spider_cat($rows, $pageNav,$sort){
 	global $wpdb;
+	$serch_value = "";
+	if(!isset($sort["sortid_by"]))$sort["sortid_by"] = "id";
+	if(!isset($sort["custom_style"]))$sort["custom_style"] = "";
+	if(!isset($sort["1_or_2"]))$sort["1_or_2"] = "1";
 	?>
     <script language="javascript">
 	function ordering(name,as_or_desc)
@@ -156,6 +151,11 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 }
 	</script>
     <form method="post"  onkeypress="doNothing()" action="admin.php?page=Spider_Faq_Categories" id="admin_form" name="admin_form">
+	 <div style="display:block;width:95%;text-align:right"><a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com/files" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+			</div>
 	<table cellspacing="10" width="100%">
 	 <tr>
         	<td width="100%" style="font-size:14px; font-weight:bold"><a href="http://web-dorado.com/spider-faq-wordpress-guide-step-2.html" target="_blank" style="color:blue; text-decoration:none;">User Manual</a><br>
@@ -167,7 +167,7 @@ This section allows you to create categories of questions <a href="http://web-do
     <?php echo "<h2>".'Categories'. "</h2>"; ?>
     </td>
     <td  style="width:90px; text-align:right;"><p class="submit" style="padding:0px; text-align:left"><input type="button" value="Add a Category" name="custom_parametrs" onclick="window.location.href='admin.php?page=Spider_Faq_Categories&task=add_Spider_Faq_Categories'" /></p></td>
-<td style="text-align:right;font-size:16px;padding:20px; padding-right:50px">
+<td style="text-align:right;font-size:16px;padding:20px; padding-right:30px">
 
 	</td>
 
@@ -175,11 +175,11 @@ This section allows you to create categories of questions <a href="http://web-do
     </table>
     <?php
 	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_html($_POST['search_events_by_title']); }else{$serch_value="";}} 
-	$serch_fields='<div class="alignleft actions" style="width:180px;">
+	$serch_fields='<div class="alignleft actions" style="width:204px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
-        <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
+        <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()" >
     </div>
-	<div class="alignleft actions">
+	<div class="alignleft actions" style="padding: 2px 18px 0 0px">
    		<input type="button" value="Search" onclick="document.getElementById(\'page_number\').value=\'1\'; document.getElementById(\'serch_or_not\').value=\'search\';
 		 document.getElementById(\'admin_form\').submit();" class="button-secondary action">
 		 <input type="button" value="Reset" onclick="window.location.href=\'admin.php?page=Spider_Faq_Categories\'" class="button-secondary action">
@@ -190,10 +190,10 @@ This section allows you to create categories of questions <a href="http://web-do
   <table class="wp-list-table widefat fixed pages" style="width:95%">
  <thead>
  <TR>
-   <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:30px" ><a href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span class="sorting-indicator"></span></a></th>
- <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
-<th scope="col" id="description" class="<?php if($sort["sortid_by"]=="description") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="" ><a href="javascript:ordering('description',<?php if($sort["sortid_by"]=="description") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Description</span><span class="sorting-indicator"></span></a></th>
-  <th scope="col" id="published"  class="<?php if($sort["sortid_by"]=="published") echo $sort["custom_style"]; else echo $sort["default_style"]; ?>" style="width:100px" ><a href="javascript:ordering('published',<?php if($sort["sortid_by"]=="published") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Published</span><span class="sorting-indicator"></span></a></th>
+   <th scope="col" id="id" class="<?php if($sort["sortid_by"]=="id") echo $sort["custom_style"];  ?>" style="width:44px;padding: 2px 11px 2px 0px;" ><a style="padding: 8px 4px 7px 10px;" href="javascript:ordering('id',<?php if($sort["sortid_by"]=="id") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>ID</span><span style="margin-top:6px; margin-left:5px" class="sorting-indicator"></span></a></th>
+ <th scope="col" id="title" class="<?php if($sort["sortid_by"]=="title") echo $sort["custom_style"];  ?>" style="" ><a href="javascript:ordering('title',<?php if($sort["sortid_by"]=="title") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Title</span><span class="sorting-indicator"></span></a></th>
+<th scope="col" id="description" class="<?php if($sort["sortid_by"]=="description") echo $sort["custom_style"];  ?>" style="" ><a href="javascript:ordering('description',<?php if($sort["sortid_by"]=="description") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Description</span><span class="sorting-indicator"></span></a></th>
+  <th scope="col" id="published"  class="<?php if($sort["sortid_by"]=="published") echo $sort["custom_style"];  ?>" style="width:100px" ><a href="javascript:ordering('published',<?php if($sort["sortid_by"]=="published") echo $sort["1_or_2"]; else echo "1"; ?>)"><span>Published</span><span class="sorting-indicator"></span></a></th>
  <th style="width:80px">Edit</th>
  <th style="width:80px">Delete</th>
  </TR>
@@ -205,7 +205,7 @@ This section allows you to create categories of questions <a href="http://web-do
   		
   ?>
  <tr>
-         <td><?php echo $rows[$i]->id; ?></td>
+         <td style="padding-left: 10px;padding-top: 8px; padding-bottom: 0px; padding-right: 0px;"><?php echo $rows[$i]->id; ?></td>
          <td><a  href="admin.php?page=Spider_Faq_Categories&task=edit_Spider_Faq_Categories&id=<?php echo $rows[$i]->id?>"><?php echo $rows[$i]->title; ?></a></td>
          <td><?php echo $rows[$i]->description; ?></td>
          

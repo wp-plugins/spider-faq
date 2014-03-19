@@ -8,10 +8,7 @@ function add_spider_ques(){
     $query = "SELECT ordering,title FROM ".$wpdb->prefix."spider_faq_question order by ordering";
     $ord_elem =  $wpdb->get_results($query);
 
-    if (!$row->id)
-        $pub = 1;
-    else
-        $pub = $row->published;
+    
  
   
 	$cat_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_category WHERE  published=1");
@@ -22,10 +19,10 @@ function add_spider_ques(){
 html_add_spider_ques($cat_row,$ord_elem);
 }
 
-function show_spider_ques(){
-		  
-	  
+function show_spider_ques(){		  
   global $wpdb;
+  $where = "";
+  $order = "";
 	$sort["default_style"]="manage-column column-autor sortable desc";
 	
 	if(isset($_POST['page_number']))
@@ -178,9 +175,9 @@ function show_spider_ques(){
 	}	
 		
 	
-	if(isset($_POST["oreder_move"]))
+	if(isset($_POST["oreder_move"]) and $_POST["oreder_move"]!="")
 	{
-		$ids=explode(",",$_POST["oreder_move"]);
+		$ids=explode(",",$_POST["oreder_move"]); 
 		$this_order=$wpdb->get_var("SELECT ordering FROM ".$wpdb->prefix."spider_faq_question WHERE id=".$ids[0]);
 		$next_order=$wpdb->get_var("SELECT ordering FROM ".$wpdb->prefix."spider_faq_question WHERE id=".$ids[1]);	
 		$wpdb->update($wpdb->prefix.'spider_faq_question', array(
@@ -258,8 +255,8 @@ function save_spider_ques(){
 	 
 	$count_of_rows=count($rows);
 
-	$ordering_values==array();
-	$ordering_ids==array();
+	$ordering_values = array();
+	$ordering_ids = array();
 	for($i=0;$i<$count_of_rows;$i++)
 	{		
 	
@@ -347,8 +344,8 @@ function apply_spider_ques($id){
 				$rows=$wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'spider_faq_question WHERE ordering>='.$_POST["ordering"].' AND id<>\''.$id.'\'  ORDER BY `ordering` ASC ');
 			 
 			$count_of_rows=count($rows);
-			$ordering_values==array();
-			$ordering_ids==array();
+			$ordering_values = array();
+			$ordering_ids = array();
 			for($i=0;$i<$count_of_rows;$i++)
 			{		
 			
@@ -369,8 +366,8 @@ function apply_spider_ques($id){
 			 $rows=$wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'spider_faq_question WHERE ordering<='.$_POST["ordering"].' AND id<>\''.$id.'\'  ORDER BY `ordering` ASC ');
 			 
 			$count_of_rows=count($rows);
-			$ordering_values==array();
-			$ordering_ids==array();
+			$ordering_values = array();
+			$ordering_ids = array();
 			for($i=0;$i<$count_of_rows;$i++)
 			{		
 			
@@ -471,10 +468,10 @@ function remove_spider_ques($id){
  }
  
  $rows=$wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'spider_faq_question  ORDER BY `ordering` ASC ');
-	
+	if(!isset($_POST["ordering"]))$_POST["ordering"] = "ordering";
 	$count_of_rows=count($rows);
-	$ordering_values==array();
-	$ordering_ids==array();
+	$ordering_values=array();
+	$ordering_ids=array();
 	for($i=0;$i<$count_of_rows;$i++)
 	{		
 	
@@ -482,6 +479,7 @@ function remove_spider_ques($id){
 		$ordering_values[$i]=$i+1+esc_html($_POST["ordering"]);
 	}
 
+	
 		for($i=0;$i<$count_of_rows;$i++)
 	{	
 			$wpdb->update($wpdb->prefix.'spider_faq_question', 
@@ -511,7 +509,7 @@ function change_spider_ques( $id ){
               array('id'=>$id),
 			  array(  '%d' )
 			  );
-	if($save_or_no)
+	if(!$savedd)
 	{
 		?>
 	<div class="error"><p><strong><?php _e('Error. Please install plugin again'); ?></strong></p></div>

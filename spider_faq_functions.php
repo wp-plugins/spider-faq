@@ -10,18 +10,19 @@ function add_spider_faq(){
 	
 
    
-    if (!$row->id)
+    /*if (!$row->id)
         $pub = 1;
     else
-        $pub = $row->published;
+        $pub = $row->published;*/
    // $lists['published'] = JHTML::_('select.booleanlist', 'published', 'class="inputbox"', $pub);
   
-	$theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme ");
-	
+	$theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme ORDER BY id DESC");
+	    $row->title = "";
+		$row->id = "";
   
 		
 // display function
-html_add_spider_faq($theme_row);
+html_add_spider_faq($row,$theme_row);
 }
 
 function show_spider_faq(){
@@ -29,14 +30,17 @@ function show_spider_faq(){
 	  
   global $wpdb;
 	$sort["default_style"]="manage-column column-autor sortable desc";
-	
+	$order = "";
+	$sort["sortid_by"] = "numbertext";
+	$sort["custom_style"] = "";
+	$sort["1_or_2"] = "";
 	if(isset($_POST['page_number']))
 	{
 			
 			if($_POST['asc_or_desc'])
 			{
-				$sort["sortid_by"]=$_POST['order_by'];
-				if($_POST['asc_or_desc']==1)
+				$sort["sortid_by"]=esc_html($_POST['order_by']);
+				if(esc_html($_POST['asc_or_desc'])==1)
 				{
 					$sort["custom_style"]="manage-column column-title sorted asc";
 					$sort["1_or_2"]="2";
@@ -51,7 +55,7 @@ function show_spider_faq(){
 			}
 	if($_POST['page_number'])
 		{
-			$limit=($_POST['page_number']-1)*20; 
+			$limit=(esc_html($_POST['page_number'])-1)*20; 
 		}
 		else
 		{
@@ -63,7 +67,7 @@ function show_spider_faq(){
 			$limit=0;
 		}
 	if(isset($_POST['search_events_by_title'])){
-		$search_tag=$_POST['search_events_by_title'];
+		$search_tag=esc_html($_POST['search_events_by_title']);
 		}
 		
 		else
@@ -73,6 +77,8 @@ function show_spider_faq(){
 	if ( $search_tag ) {
 		$where= ' WHERE '.$wpdb->prefix.'spider_faq_faq.title LIKE "%'.$search_tag.'%"';
 	}
+	else
+	  $where="";
 	
 	
 	
@@ -100,10 +106,21 @@ function show_spider_faq(){
 
 
 function edit_spider_faq($id){
-	global $wpdb;	  
-	  $query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='%d'",$id);
-	   $row=$wpdb->get_row($query);	   
-$theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme");
+	global $wpdb;
+      if($id) {	
+	    $query="SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='".$id."'";
+	    $row=$wpdb->get_row($query);
+      }
+	  /*else {
+	    $row->
+		$row->
+		$row->
+		$row->
+		$row->
+		$row->
+		$row->
+	  }	  */
+	  $theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme ORDER BY id DESC");
 
 
     html_edit_spider_faq($row,$theme_row);
@@ -119,17 +136,17 @@ function save_spider_faq(){
 	$save_or_no= $wpdb->insert($wpdb->prefix.'spider_faq_faq', array(
 		'id'	=> NULL,
         'title'     => stripslashes($_POST["title"]),
-		'theme'   => $_POST["theme_search"],
-        'category'   => $_POST["params"],
-		'standcategory'   => $_POST["contcats"],
-		'standcat'			=>$_POST["standcat"],
-		'show_searchform'	  =>$_POST["show_searchform"],
-		'expand'				 =>$_POST["expand"],
-		'numbertext'				 =>$_POST["faq_numbertext"],
-		'like'				            =>$_POST["faq_like"],
-		'hits'				                 =>$_POST["faq_hits"],
-		'date'				                     =>$_POST["faq_date"],
-		'user'				                         =>$_POST["faq_user"],
+		'theme'   => "",
+        'category'   => esc_html($_POST["params"]),
+		'standcategory'   => esc_html($_POST["contcats"]),
+		'standcat'			=>esc_html($_POST["standcat"]),
+		'show_searchform'	  =>esc_html($_POST["show_searchform"]),
+		'expand'				 =>esc_html($_POST["expand"]),
+		'numbertext'				 =>esc_html($_POST["faq_numbertext"]),
+		'like'				            =>esc_html($_POST["faq_like"]),
+		'hits'				                 =>esc_html($_POST["faq_hits"]),
+		'date'				                     =>esc_html($_POST["faq_date"]),
+		'user'				                         =>esc_html($_POST["faq_user"]),
                 ),
 				array(
 				'%d',
@@ -169,18 +186,18 @@ function apply_spider_faq(){
 	
 	 $save_or_no= $wpdb->update($wpdb->prefix.'spider_faq_faq', array(
         
-          'title'     => stripslashes($_POST["title"]),
-		'theme'   => $_POST["theme_search"],
-        'category'   => $_POST["params"],
-		'standcategory'   => $_POST["contcats"],
-		'standcat'				 =>$_POST["standcat"],
-		'show_searchform'				 =>$_POST["show_searchform"],
-		'expand'				 =>$_POST["expand"],
-		'numbertext'				 =>$_POST["faq_numbertext"],
-		'like'				            =>$_POST["faq_like"],
-		'hits'				                 =>$_POST["faq_hits"],
-		'date'				                     =>$_POST["faq_date"],
-		'user'				                         =>$_POST["faq_user"],
+          'title'  => stripslashes($_POST["title"]),
+		'theme'  => "",
+        'category'  => esc_html($_POST["params"]),
+		'standcategory'  => esc_html($_POST["contcats"]),
+		'standcat'	=>esc_html($_POST["standcat"]),
+		'show_searchform'  =>esc_html($_POST["show_searchform"]),
+		'expand'  =>esc_html($_POST["expand"]),
+		'numbertext'  =>esc_html($_POST["faq_numbertext"]),
+		'like'	=>esc_html($_POST["faq_like"]),
+		'hits'	=>esc_html($_POST["faq_hits"]),
+		'date'  =>esc_html($_POST["faq_date"]),
+		'user'	=>esc_html($_POST["faq_user"]),
                 ),
 				 array('id'=>$_POST["id"]),
 				 
@@ -216,7 +233,7 @@ function apply_spider_faq(){
 
 function remove_spider_faq($id){
    global $wpdb;
- $sql_remov_tag=$wpdb->prepare("DELETE FROM ".$wpdb->prefix."spider_faq_faq WHERE id='%d'",$id);
+ $sql_remov_tag="DELETE FROM ".$wpdb->prefix."spider_faq_faq WHERE id='".$id."'";
  if(!$wpdb->query($sql_remov_tag))
  {
 	  ?>
@@ -235,7 +252,7 @@ function remove_spider_faq($id){
 
 function change_ques( $id ){
   global $wpdb;
-  $published=$wpdb->get_var($wpdb->prepare("SELECT published FROM ".$wpdb->prefix."spider_faq_question WHERE `id`='%d'",$id ));
+  $published=$wpdb->get_var("SELECT published FROM ".$wpdb->prefix."spider_faq_question WHERE `id`=".$id );
   if($published)
    $published=0;
   else

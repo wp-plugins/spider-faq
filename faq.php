@@ -3,7 +3,7 @@
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/products/wordpress-faq-plugin.html
 Description: The Spider WordPress FAQ plugin is for creating an FAQ (Frequently Asked Questions) section for your website. Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can facilitate you in managing various user inquiries by significantly decreasing their amount.
-Version: 1.1
+Version: 1.1.2
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -25,10 +25,18 @@ add_action('wp_ajax_wp_expand_hits', 'wp_expand_hits');
 add_action('wp_ajax_nopriv_wp_expand_hits','wp_expand_hits');
 add_action('wp_ajax_wp_expand_post_hits', 'wp_expand_post_hits');
 add_action('wp_ajax_nopriv_wp_expand_post_hits','wp_expand_post_hits');
+add_action('wp_loaded','boot_session');
+
+
+function boot_session() {
+  if (!isset($_SESSION)) {
+	session_start();
+  }
+}
 
 
 function wp_expand_post_hits()
-{session_start();
+{  if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $or=" or";
 $position="";
@@ -134,7 +142,7 @@ echo $position;
 die();	
 }
 function wp_expand_hits()
-{session_start();
+{  if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $cat="";
 $position="";
@@ -184,7 +192,7 @@ die();
 }
 
 function wp_hits()
-{session_start();
+{  if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $request=esc_html($_REQUEST['hits']);
 $faq_hit_id=esc_html($_REQUEST['faq_hit_id']);
@@ -206,14 +214,14 @@ echo "Hits: ".$edit_hit;
  die();	
 }
 function wp_post_hits()
-{session_start();
+{  if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $request=esc_html($_REQUEST['post_hits']);
 $faq_hit_id=esc_html($_REQUEST['post_faq_id']);
 $true_false=0;
  $post_right_contents=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."post_right_content ");
  foreach($post_right_contents as $post_right_content)
- {if($post_right_content->id==$like)$true_false=$true_false+1;}
+ {if($post_right_content->id==$request)$true_false=$true_false+1;}
  if($true_false==0)
 {
 
@@ -233,8 +241,8 @@ $wpdb->update(
     $wpdb->prefix . "post_right_content",   
     array( 'hits' => $hit ),
     array( 'id' =>$request ),  
-    array( '%d' ),  
-    array( '%d' ) );
+    array( '%d' ,  
+     '%d' ) );
 	$_SESSION['post_hits_valid_user'.$request]=1;
 $rows=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."post_right_content  WHERE id='%d'",$request));
 }
@@ -246,7 +254,7 @@ function wp_post_like ()
 {global $wpdb;
 $theme_id=esc_html($_REQUEST['pltheme_id']);
 $ikon_color=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_theme  WHERE id='%d'",$theme_id));
- session_start();
+   if (!isset($_SESSION)) {session_start();}
 $request=esc_html($_REQUEST['post_like']);
 
 if(!isset($_SESSION['post_valid_user'.$request]))
@@ -254,7 +262,7 @@ if(!isset($_SESSION['post_valid_user'.$request]))
 
 $like=$request;
 $faq_id=esc_html($_REQUEST['post_show_hits']);
-$faq_show_hits=$wpdb->get_row("SELECT * FROM ".$wpdb->prefix."spider_faq_faq  WHERE id='%d'",$faq_id);
+$faq_show_hits=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_faq  WHERE id='%d'",$faq_id)); 
 $rows=$wpdb->get_row($wpdb->prepare("SELECT * FROM  ".$wpdb->prefix."posts as A LEFT JOIN  ".$wpdb->prefix."post_right_content as B ON A.ID = B.id LEFT JOIN  ".$wpdb->prefix."users as C ON A.post_author = C.ID WHERE A.ID='%d'",$like));
 if($ikon_color->ikncol==0){ $imgunlike='<img onclick="post_unlike('.$like.','.$faq_id.','.$theme_id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_black.png">';
 $imglike='<img onclick="post_like('.$like.','.$faq_id.','.$theme_id.')"  class="like_img"   src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';}
@@ -318,7 +326,7 @@ $likespan='<span class="sentences" style="width:50%;float:none;display:table-cel
  die();
 }
 function wp_post_unlike()
-{session_start();
+{  if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $theme_id=esc_html($_REQUEST['punltheme_id']);
 $ikon_color=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_theme  WHERE id='%d'",$theme_id)); 
@@ -327,10 +335,10 @@ $request=esc_html($_REQUEST['post_like']);
 if(!isset($_SESSION['post_valid_user'.$request]))
  {
 
-$like=$request;
+$like=$request; 
 $faq_id=esc_html($_REQUEST['post_show_hits']);
 $faq_show_hits=$wpdb->get_row("SELECT * FROM ".$wpdb->prefix."spider_faq_faq  WHERE id='".$faq_id."' ");
-$rows=$wpdb->get_row($wpdb->prepare("SELECT * FROM  ".$wpdb->prefix."posts as A LEFT JOIN  ".$wpdb->prefix."post_right_content as B ON A.ID = B.id LEFT JOIN  ".$wpdb->prefix."users as C ON A.post_author = C.ID WHERE A.ID='d%'",$like));
+$rows=$wpdb->get_row($wpdb->prepare("SELECT * FROM  ".$wpdb->prefix."posts as A LEFT JOIN  ".$wpdb->prefix."post_right_content as B ON A.ID = B.id LEFT JOIN  ".$wpdb->prefix."users as C ON A.post_author = C.ID WHERE A.ID='%d'",$like));
 if($ikon_color->ikncol==0){ $imgunlike='<img onclick="post_unlike('.$like.','.$faq_id.','.$theme_id.')" class="unlike_img" " src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_black.png">';
 $imglike='<img onclick="post_like('.$like.','.$faq_id.','.$theme_id.')"  class="like_img"   src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';}
  else { $imgunlike='<img onclick="post_unlike('.$like.','.$faq_id.','.$theme_id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_white.png">';
@@ -393,11 +401,11 @@ $likespan='<span class="sentences" style="width:50%;float:none;display:table-cel
  die();
 }
 function wp_like ()
-{ session_start();
+{   if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $request=esc_html($_REQUEST['like']);
 $theme_id=esc_html($_REQUEST['ltheme_id']);
-$ikon_color=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_theme  WHERE id='d%'",$theme_id));
+$ikon_color=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_theme  WHERE id='%d'",$theme_id));
 if(!isset($_SESSION['valid_user'.$request]))
  {
 $like=$request;
@@ -453,7 +461,7 @@ $likespan='<span class="sentences" style="width:50%;float:none;display:table-cel
 }
 
 function wp_unlike ()
-{ session_start();
+{   if (!isset($_SESSION)) {session_start();}
 global $wpdb;
 $request=esc_html($_REQUEST['unlike']);
 $theme_id=esc_html($_REQUEST['unltheme_id']);
@@ -719,12 +727,12 @@ window.parent.tb_remove();
 					<label for="filter_group_id">
 						Filter User Group					</label>
 					<select id="filter_group_id1" name="filter_group_id" onchange="displayVals()" >
-						<option value="2" <?php  if(isset($_POST["filter_group"])&& esc_html($_POST["filter_group"])=='2') echo "selected"; elseif(!isset($_POST["filter_group"])) echo "selected"?>  >Show All Groups </option>
-						<option value='a:1:{s:10:"subscriber";b:1;}' <?php  if(isset($_POST["filter_group"])&& esc_html($_POST["filter_group"])=='a:1:{s:10:"subscriber";b:1;}') echo "selected";?> >Subscriber</option>
-						<option value='a:1:{s:13:"administrator";b:1;}'<?php  if(isset($_POST["filter_group"])&& esc_html($_POST["filter_group"])=='a:1:{s:13:"administrator";b:1;}') echo "selected";?> >Administrator</option>
-						<option value='a:1:{s:6:"editor";b:1;}'<?php  if(isset($_POST["filter_group"])&& esc_html($_POST["filter_group"])=='a:1:{s:6:"editor";b:1;}') echo "selected";?> >Editor</option>
-						<option value='a:1:{s:6:"author";b:1;}'<?php  if(isset($_POST["filter_group"])&& esc_html($_POST["filter_group"])=='a:1:{s:6:"author";b:1;}') echo "selected";?> >Author</option>
-						<option value='a:1:{s:11:"contributor";b:1;}'<?php  if(isset($_POST["filter_group"])&& esc_html($_POST["filter_group"])=='a:1:{s:11:"contributor";b:1;}') echo "selected";?> >Contributor</option>
+						<option value="2" <?php  if(isset($_POST["filter_group"])&& $_POST["filter_group"]=='2') echo 'selected="selected"'; ?>  >Show All Groups </option>
+						<option value='a:1:{s:10:"subscriber";b:1;}' <?php  if(isset($_POST["filter_group"])&& $_POST["filter_group"]=='a:1:{s:10:"subscriber";b:1;}') echo 'selected="selected"'; ?> >Subscriber</option>
+						<option value='a:1:{s:13:"administrator";b:1;}'<?php  if(isset($_POST["filter_group"])&& $_POST["filter_group"]=='a:1:{s:13:"administrator";b:1;}') echo 'selected="selected"'; ?> >Administrator</option>
+						<option value='a:1:{s:6:"editor";b:1;}'<?php  if(isset($_POST["filter_group"])&& $_POST["filter_group"]=='a:1:{s:6:"editor";b:1;}') echo 'selected="selected"'; ?> >Editor</option>
+						<option value='a:1:{s:6:"author";b:1;}'<?php  if(isset($_POST["filter_group"])&& $_POST["filter_group"]=='a:1:{s:6:"author";b:1;}') echo 'selected="selected"'; ?> >Author</option>
+						<option value='a:1:{s:11:"contributor";b:1;}'<?php  if(isset($_POST["filter_group"])&& $_POST["filter_group"]=='a:1:{s:11:"contributor";b:1;}') echo 'selected="selected"'; ?> >Contributor</option>
 				    </select>
 				</li>
 			</ol>
@@ -735,11 +743,11 @@ window.parent.tb_remove();
 		<thead>
 			<tr>
 				<th class="left">
-					<a href="#" onclick="order_by_name()" title="Click to sort by this column">Name<img id="sortimg"  <?php if(esc_html($_POST["order_column"])=="name"){if(isset($_POST["order_asc_desc"])&& esc_html($_POST["order_asc_desc"])=="DESC" && esc_html($_POST["order_column"])=="name" ) {?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_desc.png"  <?php } else{?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_asc.png" <?php }} else echo 'src=""'?>  alt=""  /></a>				</th>
+					<a href="#" onclick="order_by_name()" title="Click to sort by this column">Name<img id="sortimg"  <?php if( isset($_POST['order_column']) and esc_html($_POST["order_column"])=="name"){if(isset($_POST["order_asc_desc"])&& esc_html($_POST["order_asc_desc"])=="DESC" && esc_html($_POST["order_column"])=="name" ) {?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_desc.png"  <?php } else{?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_asc.png" <?php }} else echo 'src=""'?>  alt=""  /></a>				</th>
 				<th class="nowrap" width="25%">
-					<a href="#" onclick="order_by_user_name()" title="Click to sort by this column">User Name<img id="sortimg"  <?php if(esc_html($_POST["order_column"])=="username"){if(isset($_POST["order_asc_desc"])&& esc_html($_POST["order_asc_desc"])=="DESC" && esc_html($_POST["order_column"])=="username") {?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_desc.png"  <?php } else{?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_asc.png" <?php }} else echo 'src=""'?> alt=""  /></a>				</th>
+					<a href="#" onclick="order_by_user_name()" title="Click to sort by this column">User Name<img id="sortimg"  <?php if(isset($_POST['order_column']) and esc_html($_POST["order_column"])=="username"){if(isset($_POST["order_asc_desc"])&& esc_html($_POST["order_asc_desc"])=="DESC" && esc_html($_POST["order_column"])=="username") {?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_desc.png"  <?php } else{?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_asc.png" <?php }} else echo 'src=""'?> alt=""  /></a>				</th>
 				<th class="nowrap" width="25%">
-					<a href="#" onclick="order_by_groups()" title="Click to sort by this column">User Groups<img id="sortimg"  <?php if(esc_html($_POST["order_column"])=="groups"){if(isset($_POST["order_asc_desc"])&& esc_html($_POST["order_asc_desc"])=="DESC" && esc_html($_POST["order_column"])=="groups") {?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_desc.png"  <?php } else{?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_asc.png" <?php }} else echo 'src=""'?> alt=""  /></a>				</th>
+					<a href="#" onclick="order_by_groups()" title="Click to sort by this column">User Groups<img id="sortimg"  <?php if(isset($_POST['order_column']) and esc_html($_POST["order_column"])=="groups"){if(isset($_POST["order_asc_desc"])&& esc_html($_POST["order_asc_desc"])=="DESC" && esc_html($_POST["order_column"])=="groups") {?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_desc.png"  <?php } else{?> src="<?php echo plugins_url( '',__FILE__) ?>/images/sort_asc.png" <?php }} else echo 'src=""'?> alt=""  /></a>				</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -804,9 +812,9 @@ window.parent.tb_remove();
 				?>
 	</table>
 	<div>
-		<input type="hidden" id="name_group"  name="filter_group" value='<?php echo esc_html($_POST["filter_group"]);?>' />
-		<input type="hidden" name="order_column"  id="order_column" value="<?php echo esc_html($_POST['order_column']); ?>" />
-	    <input type="hidden" name="order_asc_desc"  id="order_asc_desc" value="<?php echo esc_html($_POST['order_asc_desc']); ?>" />
+		<input type="hidden" id="name_group"  name="filter_group" value='<?php if(isset($_POST['filter_group'])) echo esc_html($_POST["filter_group"]);?>' />
+		<input type="hidden" name="order_column"  id="order_column" value="<?php if(isset($_POST['order_column'])) echo esc_html($_POST['order_column']);  ?>" />
+	    <input type="hidden" name="order_asc_desc"  id="order_asc_desc" value="<?php if(isset($_POST['order_asc_desc'])) echo esc_html($_POST['order_asc_desc']); else echo "asc"; ?>" />
     </div>
 		</form>
 	</body>
@@ -825,7 +833,9 @@ function Spider_FAQ_shotrcode($atts)
  {
      extract(shortcode_atts(array(
 	      'id' => 'no Spider FAQ'
-     ), $atts));
+     ), $atts)); 
+	 
+	 
      return front_end_Spider_FAQ($id);
 }
 
@@ -834,87 +844,77 @@ add_shortcode('Spider_FAQ', 'Spider_FAQ_shotrcode');
 
 
 
- function   front_end_Spider_FAQ($id){
- 
- global $wpdb;
-
-	 
-	 $all_faq_ids=$wpdb->get_col("SELECT id FROM ".$wpdb->prefix."spider_faq_faq");
-				$b=false;
-				foreach($all_faq_ids as $all_faq_id)
-				{
-					if($all_faq_id==$id)
-					$b=true;
-				}
-				if(!$b)
-				return "";	
+ function   front_end_Spider_FAQ($id) {
+    global $wpdb;  
+	$all_faq_ids=$wpdb->get_col("SELECT id FROM ".$wpdb->prefix."spider_faq_faq");
+	$b=false;
+	foreach($all_faq_ids as $all_faq_id) {
+	  if($all_faq_id==$id)
+	  $b=true;
+    }
+	if(!$b)
+	  return "";	
 				
-				$Spider_Faq_front_end="";
+	$Spider_Faq_front_end="";
+
+	$faq=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='%d'",$id));// var_dump($faq);
+		
+	$faq_ids=$wpdb->get_col("SELECT id FROM ".$wpdb->prefix."spider_faq_faq");
 		
 		
-		$faq=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_faq WHERE id='%d'",$id));
+	$cats_id=explode(',',$faq->category);
+	$cats_id= array_slice($cats_id,1, count($cats_id)-2); 
 		
-		$faq_ids=$wpdb->get_col("SELECT id FROM ".$wpdb->prefix."spider_faq_faq");
-		
-		
-		$cats_id=explode(',',$faq->category);
-		$cats_id= array_slice($cats_id,1, count($cats_id)-2); 
-		
-		foreach($cats_id as $id)
-	{
-		$cats[]=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_category WHERE published='1' AND id='%d'",$id));
-		
-	}	
-		
+	foreach($cats_id as $id) {
+	  $cats[]=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_category WHERE published='1' AND id='%d'",$id));
 	
-		$standcats_id=explode(',',$faq->standcategory);
-		$standcats_id= array_slice($standcats_id,1, count($standcats_id)-2); 
+	}
+	
+	$standcats_id=explode(',',$faq->standcategory);
+	$standcats_id= array_slice($standcats_id,1, count($standcats_id)-2); 
 		
-		foreach($standcats_id as $id)
-	{
-		$standcats[]=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."terms WHERE term_id='%d'",$id));
-		
+	foreach($standcats_id as $id) {
+		$standcats[]=$wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."terms WHERE term_id='%d'",$id));	
 	}	
 	
 	$s=0;
-	if ($faq->standcat==0)
-	{
-	if($cats)
-					{
-				foreach($cats as $cat)
-				{
-							
-			$rows1 = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_question WHERE published='1' AND category='%d' ORDER BY `ordering`",$cat->id));	
-							
-						$rows[$cat->id] = $rows1;
-						$s+=count($rows[$cat->id]);	
+	if ($faq->standcat==0) {
+	    if($cats) { 
+			foreach($cats as $cat)  { 
+                if($cat!= NULL) {			
+					$rows1 = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."spider_faq_question WHERE published='1' AND category='%d' ORDER BY `ordering`",$cat->id));	
+					$rows[$cat->id] = $rows1;
+					$s+=count($rows[$cat->id]);	
 				}
+				else
+				 $rows = NULL;
+			}
+		}
+		$standcats = NULL;		
+	}
+	else{ 
+		if($standcats) { //var_dump($standcats);
+			foreach($standcats as $cat) {
+				if($cat!=null) {			
+				  $args = array(
+				  'numberposts'     => 5000,
+				  'offset'          => 0,
+				  'category'        => $cat->term_id,
+				  'post_type'       => 'post',
+				  'post_status'     => 'publish' );
+				  $rows[$cat->term_id] = get_posts($args);
+				  $s+=count($rows[$cat->term_id]);	
 				}
-				
-	}
-	else{
-	if($standcats)
-					{
-		foreach($standcats as $cat)
-				{
-					
-	$args = array(
-      'numberposts'     => 5000,
-    'offset'          => 0,
-    'category'        => $cat->term_id,
-    'post_type'       => 'post',
-     'post_status'     => 'publish' );
-$rows[$cat->term_id] = get_posts($args);
-$s+=count($rows[$cat->term_id]);	
-	}
-	}
+			}
+		}
+		$cats = NULL;
 	}
 	
 	$stls=$wpdb->get_row("SELECT * FROM ".$wpdb->prefix."spider_faq_theme WHERE `default`=22");
 	
 		
 	return front_end_faq ($rows,$cats,$standcats,$stls,$faq,$s);		
-	}
+ }
 
 	
 	add_action( 'wp_enqueue_scripts', 'faq_add_my_stylesheet' );
@@ -922,6 +922,10 @@ $s+=count($rows[$cat->term_id]);
     /**
      * Enqueue plugin style-file
      */
+    function Spider_Faq_featured_plugins_styles() {
+		  wp_enqueue_style('Featured_Plugins', plugins_url('elements/featured_plugins.css', __FILE__));
+	}
+	 
     function faq_add_my_stylesheet() {
         // Respects SSL, Style.css is relative to the current file
 		
@@ -946,103 +950,76 @@ $s+=count($rows[$cat->term_id]);
 
 		
 function front_end_faq($rows,$cats,$standcats,$stl,$faq,$s) {
-session_start();
+if (!isset($_SESSION)) {
+	session_start();
+  }
+  $atts=""; 
 ?>
 <script>
   var ajax_url = "<?php echo add_query_arg(array('action' => ''), admin_url('admin-ajax.php'));  ?>"
 </script>
 <?php
-ob_start();	
+
 global $wpdb;
-global $many_faqs;
-if($faq->standcat==0){
-  if (isset($_POST["reset".$faq->id]))
-{
+global $many_faqs; 
+ if($faq->standcat==0) {
+	if (isset($_POST["reset".$faq->id])) {
+	  if (esc_html($_POST['search'.$faq->id])!="") {
+	    $_POST['search'.$faq->id]="";
+	  }
 
-
-  if (esc_html($_POST['search'.$faq->id])!="")
-  {
-  $_POST['search'.$faq->id]="";
-  }
-
-}
-else
-{
-
-
-if (isset($_POST["submit".$faq->id]))
-{
-
-if($cats){
-if(esc_html($_POST['search'.$faq->id])=="Search...")
-$_POST['search'.$faq->id]="";
-
-foreach($cats as $cat)
-				{
-				
-				$rows1 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_question WHERE published='1' AND category=".$cat->id." AND (title LIKE '%".esc_html($_POST['search'.$faq->id])."%' OR article LIKE '%".esc_html($_POST['search'.$faq->id])."%')" );				
-                $rows[$cat->id] = $rows1;
-						
-				}
-				}
- }
-else 
-{
-
-}
-}
-}
-else{
- if (isset($_POST["reset".$faq->id]))
-{
- if (esc_html($_POST['search'.$faq->id])!="")
-  {
-  $_POST['search'.$faq->id]="";
-  }
-}
-if(esc_html($_POST['search'.$faq->id])=="Search...")
-$_POST['search'.$faq->id]="";
-
-else
-{
-if (esc_html($_POST["search".$faq->id])!="")
-{
-
-$k=0;
-if($standcats){
-
-foreach($standcats as $cat)
-				{		
-				$args = array(
-      'numberposts'     => 5000,
-    'offset'          => 0,
-    'category'        => $cat->term_id,
-    'post_type'       => 'post',
-     'post_status'     => 'publish' );
-$rows[$cat->term_id] = get_posts($args);
-
-
-	for ($i=0;$i<count($rows[$cat->term_id]);$i++)
-	{
-	
-	if(stripos($rows[$cat->term_id][$i]->post_title, $_POST['search'.$faq->id]) !== FALSE || stripos($rows[$cat->term_id][$i]->post_content, $_POST['search'.$faq->id]) !== FALSE)
-	{
-	
-	$rows1[$cat->term_id][$k]=$rows[$cat->term_id][$i];
-	$k++;
-	
 	}
-	
-	}
+	else {
+	  if (isset($_POST["submit".$faq->id]))	{
+	    if($cats) {
+	      if(esc_html($_POST['search'.$faq->id])=="Search...")
+	        $_POST['search'.$faq->id]="";
+	      foreach($cats as $cat) {	
+			  $rows1 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_question WHERE published='1' AND category=".$cat->id." AND (title LIKE '%".esc_html($_POST['search'.$faq->id])."%' OR article LIKE '%".esc_html($_POST['search'.$faq->id])."%')" );				
+			  $rows[$cat->id] = $rows1;
+		    }
+		}
+	  }
+	  else {
 
-$k=0;
-
-				}
-	$rows=$rows1;			
-				
-				}
+	  }
+    }
  }
-}
+ else { 
+  if (isset($_POST["reset".$faq->id])) {
+   if (esc_html($_POST['search'.$faq->id])!="") {
+     $_POST['search'.$faq->id]="";
+   }
+  }
+  if(isset($_POST['search'.$faq->id]) and esc_html($_POST['search'.$faq->id])=="Search...")
+  $_POST['search'.$faq->id]="";
+  else {
+	if (isset($_POST['search'.$faq->id]) and esc_html($_POST["search".$faq->id])!="") {
+	  $k=0;
+	  if($standcats) { 
+		  foreach($standcats as $cat)  {		
+			$args = array(
+				'numberposts'     => 5000,
+				'offset'          => 0,
+				'category'        => $cat->term_id,
+				'post_type'       => 'post',
+				'post_status'     => 'publish' );
+			  
+			$rows[$cat->term_id] = get_posts($args);
+			for ($i=0;$i<count($rows[$cat->term_id]);$i++) {		
+			  if(stripos($rows[$cat->term_id][$i]->post_title, $_POST['search'.$faq->id]) !== FALSE || stripos($rows[$cat->term_id][$i]->post_content, $_POST['search'.$faq->id]) !== FALSE) {		
+				$rows1[$cat->term_id][$k]=$rows[$cat->term_id][$i];
+				$k++;		
+			  }
+			  else
+			    $rows1 =null;			
+			}   
+			$k=0;
+		  }
+		  $rows=$rows1;							
+		}
+	 }
+  }
 }
 
 
@@ -1155,12 +1132,6 @@ $sformmargin[]=$margin.'px';
 }
 $stl->sformmargin=implode(' ',$sformmargin);
 }
-/*<?phpif($faq->standcat==0){ if($faq->expand==1) {?>
-expand_hits(1,<?php echo $faq->id ?>,<?php echo $stl->id ?>,'<?php echo $stl->tbgcolor ?>','<?php echo $stl->tbghovercolor ?>');
-<?php;}}
-else { if($faq->expand==1){?>
-expand_post_hits(1,<?php echo $faq->id ?>,<?php echo $stl->id ?>,'<?php echo $stl->tbgcolor ?>','<?php echo $stl->tbghovercolor ?>');
-<?php; }}?>*/
 if($faq->standcat==0){
 if($faq->expand=='1')
 {
@@ -1400,7 +1371,7 @@ color:#1982d1 !important;
 }
 
 a{
-color:#1982d1 ;
+color:#1982d1;
 }
 
 #atext<?php echo $faq->id ?>{
@@ -1528,11 +1499,15 @@ border-color:<?php echo '#'.$stl->cdbcolor ?>;
 	a.post_exp, a.post_coll, #post_expcol<?php echo $faq->id ?> {
 color:<?php echo '#'.$stl->expcolcolor ?> ;
 font-size:<?php echo $stl->expcolfontsize.'px' ?>;
+text-decoration: none;
+cursor:pointer;
 }
 
 a.post_exp:hover, a.post_coll:hover, #post_expcol<?php echo $faq->id ?>:hover {
 color:<?php echo '#'.$stl->expcolhovercolor ?> !important;
 background:none !important;
+text-decoration: none;
+cursor:pointer;
 }
 
 .expcoll, #expcol<?php echo $faq->id ?> {
@@ -1542,11 +1517,15 @@ color:<?php echo '#'.$stl->expcolcolor ?> ;
 
 a.more-link, #more-link<?php echo $faq->id ?>{
 color:<?php echo '#'.$stl->rmcolor ?> !important; 
-font-size:<?php echo $stl->rmfontsize.'px' ?> !important; ;
+font-size:<?php echo $stl->rmfontsize.'px' ?> !important; 
+text-decoration: none;
+cursor:pointer;
 }
 
 a.more-link, #more-link<?php echo $faq->id ?>:hover{
-color:<?php echo '#'.$stl->rmhovercolor ?> !important; ;
+color:<?php echo '#'.$stl->rmhovercolor ?> !important; 
+text-decoration: none;
+cursor:pointer;
 }
 </style>
 
@@ -1650,138 +1629,137 @@ setTimeout("changeall=true",400);
 </div>
 </div>	
 </form>
-<?php	
+<?php
 } 
 echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';
 echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/like_white.png">';
 echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_black.png">';
-echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_white.png">';
+echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_white.png">'; 
 
-if ($faq->standcat==0)
-{	
-$a=false;
-if ($cats)
-{
-foreach($cats as $cat)
- {
-
-$a=true;
-}
-}
-
-if($a)
-{
-echo '<div class="expcoll" id="expcol'.$faq->id. '">
-     <a   class="post_exp" id="post_expcol'.$faq->id. '"><span onclick=" iiiiiiiiiii='.$many_faqs.'; faq_changeexp'.$faq->id.'();expand_hits(1,'.$faq->id.','.$stl->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')">'.__("Expand All","faq").' </span></a><span>|</span>
-     <a   class="post_coll" id="post_expcol'.$faq->id. '"><span onclick="jjjjjjjjjjj='.$many_faqs.'; faq_changecoll'.$faq->id.'();expand_hits(0,'.$faq->id.','.$stl->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')">'.__("Collapse All","faq").'</span></a></div>';
-}
-
-
-	 $n=0;
-	 if ($cats)
-{
-if($faq->numbertext==1)
- {$num=$faq->numbertext;$point=".";}
- else{$num="";$point="";}
-foreach($cats as $cat)
- {
- 
-if ($cat->show_title==1)
-{
-if ($cat->title=="Uncategorized")
-echo '<div class="cattitle" id="cattitle'.$faq->id. '" ><span style="float:left">'.$num.$point.'</span>'.__("Uncategorized","faq").$atts.'</div>';
-else
-echo '<div class="cattitle" id="cattitle'.$faq->id. '"><span style="float:left">'.$num.$point.'</span>'.$cat->title.'</div>';
-}
-if ($cat->show_description==1 && $cat->description!="")
-echo '<div class="catdes" id="catdes'.$faq->id. '" >'.$cat->description.'</div>';
-else{
-echo '<div style="padding-top:18px"></div>';
-}
-
-
-if(count($rows[$cat->id]))
-{
-if($stl->numbering==1)$numbering=1;
- for ($i=0;$i<count($rows[$cat->id]);$i++)
- {$date="";
- if($stl->numbering==1)$number_div='<div class="number'.$faq->id.'" >'.$numbering.'</div>';else $number_div=="";
- $row = &$rows[$cat->id][$i];
-if($faq->date==1 or $faq->user==1)
-     {$date=$row->date;$user_name=$row->user_name; if($stl->ikncol==0){$dateimg='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/Calendar-Black.png">';$user_img='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/User_Black.png" >';}
-	 else{$dateimg='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/Calendar_white.png">';$user_img='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/User_white.png" >';}
-	 if($faq->user==0){$user_img=""; $user_name="";}if($faq->date==0 or $date==""){$dateimg="";$date="";}if($user_name==""){$user_img="";}
-	 $date_user_div='<div class="date_user" id="date_user'.$faq->id.'"  ><span id="user'.$faq->id.'" style="vertical-align: bottom;">'.$user_img.$user_name.'</span><span style="vertical-align: bottom;" id="date'.$faq->id.'" >'.$dateimg.$date.'</span></div>';}
-	 else{$date_user_div='';}if($row->date=="" && $row->user_name==""){$date_user_div='';}
-if($faq->like==1 or $faq->hits==1)
-     {if($faq->like==0){$like='';$unlike='';$imglike='';$imgunlike='';$br='';}
-	       else {$like=$row->like;  $unlike=$row->unlike;$br='<br>';
-	          if($stl->ikncol==0){ $imgunlike='<img onclick="unlike('.$row->id.','.$faq->id.','.$stl->id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_black.png">';
-                 $imglike='<img onclick="like('.$row->id.','.$faq->id.','.$stl->id.')"  class="like_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';}
-             else { $imgunlike='<img onclick="unlike('.$row->id.','.$faq->id.','.$stl->id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_white.png">';
-                 $imglike='<img onclick="like('.$row->id.','.$faq->id.','.$stl->id.')"  class="like_img"   src="'.plugins_url( '',__FILE__).'/upload/ikon/like_white.png">';}}
-			  if($faq->hits==1){$hits=$row->hits;$hits_expression='Hits: ';$hitsspan=''.$br.'<span id="hits'.$row->id.'" style="margin-right:10px;margin-right:10px;float:right;" >'.$hits_expression.$hits.'</span>';}
-			  elseif($faq->hits==0){$hits='';$hits_expression='';$hitsspan='';}
-			  if($_SESSION['expand_hits_valid_user'.$faq->id]==1)unset($_SESSION['expand_hits_valid_user'.$faq->id]);
-  			  if($_SESSION['hits_valid_user'.$row->id]==1)unset($_SESSION['hits_valid_user'.$row->id]);
-			  if($_SESSION['valid_user'.$row->id]==1 && $faq->like==1){$likespan='<span  class="sentences" style="width:50%;float:none;display:table-cell;" >You already voted for this FAQ today!</span>';}elseif($_SESSION['valid_user'.$row->id]!=1 && $faq->like==1){$likespan='<span class="sentences" style="width:50%;float:none;display:table-cell;" >Was this helpful?</span>';}
-	          if ($faq->like==1)$class='class="likeimg"';else $class="";
-			  $like_hits_div='<div id="like_hits_div'.$row->id.'" class="like_hits'.$faq->id.'" >'.$likespan.'<span class="like_hits_span" style="width:50%;float:none;display:table-cell;"><span><span   '.$class.' >'.$imglike.$like.'</span><span>'.$imgunlike.$unlike.'</span></span>'.$hitsspan.'</span></div>';}
-			  else{$like_hits_div='';}
-	echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
-				  <div class="post_right" id="post_right'.$faq->id.'">
-					  <a href="#" class="post_ajax_title"><span id="post_span'.$row->id.$faq->id.'" onclick="faq_changesrc'.$faq->id.'('.$n.')"><h2 onclick="hits('.$row->id.','.$faq->id.','.$stl->id.');edit_title(1,'.$row->id.','.$faq->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')"  class="post_title" id="post_title'.$faq->id.'" style="padding: 5px;'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
-					  '.$number_div.''?><?php if($stl->imgpos==0){ if ($stl->tchangeimage1!=""){ echo'<div align="left" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>'  ?><?php } echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div></h2></span></a>
-				    </div>
-			    </div>';}else{ echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div>'?><?php if ($stl->tchangeimage1!=""){ echo'<div align="right" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>' ?><?php } echo '</h2></span></a>
-			    </div></div>';}
-			if (strlen($row->fullarticle)>1){
-			echo '<div id="post_content'.$row->id.'" class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
-				  <div  class="post_content_wrapper" id="post_content_wrapper'.$faq->id.'" style="'?><?php if($stl->abg==1) { if ($stl->abgimage!="") { echo 'background-image:url('.$stl->abgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->abgcolor.'">
-				    '?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div class="atext" id="atext'.$faq->id. '">'.$row->article.'<p><a href="#" class="more-link" id="more-link'.$faq->id. '">More</a></p>
-			            <div class="post_content_more" style="margin-top:-6px;">'.$row->fullarticle.'</div>	    
-			               </div></div>'.$like_hits_div?><?php if ($stl->aimage2!=""){ echo'<div class="imgafter" id="imgafter'.$faq->id. '"><img src="'.$stl->aimage2.'"  /></div>'  ?><?php } echo '
-			       </div></div>
-				</li>';
-			
-			}
-			else{
-			echo '<div id="post_content'.$row->id.'" class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
-				  <div class="post_content_wrapper" id="post_content_wrapper'.$faq->id.'" style="'?><?php if($stl->abg==1) { if ($stl->abgimage!="") { echo 'background-image:url('.$stl->abgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->abgcolor.'">
-				    '?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div style="border-top:1px;" class="atext" id="atext'.$faq->id. '">'.$row->article.'	    
-			               </div></div>'.$like_hits_div?><?php if ($stl->aimage2!=""){ echo'<div class="imgafter" id="imgafter'.$faq->id. '"><img src="'.$stl->aimage2.'"  /></div>'  ?><?php } echo '
-			       </div></div>
-				</li>';
-			
+if ($faq->standcat==0) {	  
+	$a=false;
+	if ($cats)
+	{
+		foreach($cats as $cat) {
+			if($cat!=null)
+			$a=true;
 		}
-
-	echo '<div style="padding-bottom:'.$stl->paddingbq.'px"></div>';	
-		
-	$n++;	
-	if($stl->numbering==1)$numbering++;	
-}
-
-	
 	}
-	else{
-if(isset($_POST['submit'.$faq->id]))
-{
-echo 'Question(s) not found';
-}
-else
-echo 'There are no questions in this category';	
-	
+
+	if($a) {
+	  echo '<div class="expcoll" id="expcol'.$faq->id. '">
+		 <a   class="post_exp" id="post_expcol'.$faq->id. '"><span onclick=" iiiiiiiiiii='.$many_faqs.'; faq_changeexp'.$faq->id.'();expand_hits(1,'.$faq->id.','.$stl->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')">'.__("Expand All","faq").' </span></a><span>|</span>
+		 <a   class="post_coll" id="post_expcol'.$faq->id. '"><span onclick="jjjjjjjjjjj='.$many_faqs.'; faq_changecoll'.$faq->id.'();expand_hits(0,'.$faq->id.','.$stl->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')">'.__("Collapse All","faq").'</span></a></div>';
 	}
-	echo '<div style="padding-bottom:30px;"></div>';
-if($faq->numbertext==1)
-    {	
-	$num++;
+
+
+		 $n=0;
+		if ($cats) {
+			if($faq->numbertext==1) {
+			  $num=$faq->numbertext;$point=".";
+			}
+			else {
+			   $num="";$point="";
+			}
+		    foreach($cats as $cat) {			 
+				if ($cat!=null and $cat->show_title==1) {
+					if ($cat->title=="Uncategorized")
+					echo '<div class="cattitle" id="cattitle'.$faq->id. '" ><span style="float:left">'.$num.$point.'</span>'.__("Uncategorized","faq").$atts.'</div>';
+					else
+					echo '<div class="cattitle" id="cattitle'.$faq->id. '"><span style="float:left">'.$num.$point.'</span>'.$cat->title.'</div>';
+				}
+				if ($cat!=null and $cat->show_description==1 && $cat->description!="")
+				 echo '<div class="catdes" id="catdes'.$faq->id. '" >'.$cat->description.'</div>';
+				 
+				else {
+				  echo '<div style="padding-top:18px"></div>';
+				}
+				
+				$number_div = "";
+				$likespan = "";
+				if( $cat!=null and count($rows[$cat->id])) {
+				if($stl->numbering==1)$numbering=1;
+				 for ($i=0;$i<count($rows[$cat->id]);$i++) {
+					 $date="";
+					 if($stl->numbering==1)$number_div='<div class="number'.$faq->id.'" >'.$numbering.'</div>';else $number_div=="";
+					 $row = &$rows[$cat->id][$i];
+					if($faq->date==1 or $faq->user==1)
+						 {$date=$row->date;$user_name=$row->user_name; if($stl->ikncol==0){$dateimg='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/Calendar-Black.png">';$user_img='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/User_Black.png" >';}
+						 else{$dateimg='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/Calendar_white.png">';$user_img='<img  src="'.plugins_url( '',__FILE__).'/upload/ikon/User_white.png" >';}
+						 if($faq->user==0){$user_img=""; $user_name="";}if($faq->date==0 or $date==""){$dateimg="";$date="";}if($user_name==""){$user_img="";}
+						 $date_user_div='<div class="date_user" id="date_user'.$faq->id.'"  ><span id="user'.$faq->id.'" style="vertical-align: bottom;">'.$user_img.$user_name.'</span><span style="vertical-align: bottom;" id="date'.$faq->id.'" >'.$dateimg.$date.'</span></div>';}
+						 else{$date_user_div='';}if($row->date=="" && $row->user_name==""){$date_user_div='';}
+					if($faq->like==1 or $faq->hits==1)
+						 {if($faq->like==0){$like='';$unlike='';$imglike='';$imgunlike='';$br='';}
+							   else {$like=$row->like;  $unlike=$row->unlike;$br='<br>';
+								  if($stl->ikncol==0){ $imgunlike='<img onclick="unlike('.$row->id.','.$faq->id.','.$stl->id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_black.png">';
+									 $imglike='<img onclick="like('.$row->id.','.$faq->id.','.$stl->id.')"  class="like_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';}
+								 else { $imgunlike='<img onclick="unlike('.$row->id.','.$faq->id.','.$stl->id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_white.png">';
+									 $imglike='<img onclick="like('.$row->id.','.$faq->id.','.$stl->id.')"  class="like_img"   src="'.plugins_url( '',__FILE__).'/upload/ikon/like_white.png">';}}
+								  if($faq->hits==1){$hits=$row->hits;$hits_expression='Hits: ';$hitsspan=''.$br.'<span id="hits'.$row->id.'" style="margin-right:10px;margin-right:10px;float:right;" >'.$hits_expression.$hits.'</span>';}
+								  elseif($faq->hits==0){$hits='';$hits_expression='';$hitsspan='';}
+								  if (isset($_SESSION['expand_hits_valid_user'.$faq->id])) if($_SESSION['expand_hits_valid_user'.$faq->id]==1)unset($_SESSION['expand_hits_valid_user'.$faq->id]);
+								  if (isset($_SESSION['hits_valid_user'.$row->id])) { if($_SESSION['hits_valid_user'.$row->id]==1)unset($_SESSION['hits_valid_user'.$row->id]);}
+								  if(isset($_SESSION['valid_user'.$row->id]) && $_SESSION['valid_user'.$row->id]==1 && $faq->like==1 ){$likespan='<span  class="sentences" style="width:50%;float:none;display:table-cell;" >You already voted for this FAQ today!</span>';}elseif(!isset($_SESSION['valid_user'.$row->id])  && $faq->like==1){$likespan='<span class="sentences" style="width:50%;float:none;display:table-cell;" >Was this helpful?</span>';} 
+								  if ($faq->like==1)$class='class="likeimg"';else $class="";
+								  $like_hits_div='<div id="like_hits_div'.$row->id.'" class="like_hits'.$faq->id.'" >'.$likespan.'<span class="like_hits_span" style="width:50%;float:none;display:table-cell;"><span><span   '.$class.' >'.$imglike.$like.'</span><span>'.$imgunlike.$unlike.'</span></span>'.$hitsspan.'</span></div>';}
+								  else{$like_hits_div='';}
+						echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
+									  <div class="post_right" id="post_right'.$faq->id.'">
+										  <a href="#" class="post_ajax_title"><span id="post_span'.$row->id.$faq->id.'" onclick="faq_changesrc'.$faq->id.'('.$n.')"><h2 onclick="hits('.$row->id.','.$faq->id.','.$stl->id.');edit_title(1,'.$row->id.','.$faq->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')"  class="post_title" id="post_title'.$faq->id.'" style="padding: 5px;'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
+										  '.$number_div.''?><?php if($stl->imgpos==0){ if ($stl->tchangeimage1!=""){ echo'<div align="left" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>'  ?><?php } echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div></h2></span></a>
+										</div>
+									</div>';}else{ echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div>'?><?php if ($stl->tchangeimage1!=""){ echo'<div align="right" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>' ?><?php } echo '</h2></span></a>
+									</div></div>';}
+								if (strlen($row->fullarticle)>1){
+								echo '<div id="post_content'.$row->id.'" class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
+									  <div  class="post_content_wrapper" id="post_content_wrapper'.$faq->id.'" style="'?><?php if($stl->abg==1) { if ($stl->abgimage!="") { echo 'background-image:url('.$stl->abgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->abgcolor.'">
+										'?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div class="atext" id="atext'.$faq->id. '">'.wpautop($row->article).'<p><a href="#" class="more-link" id="more-link'.$faq->id. '">More</a></p>
+											<div class="post_content_more" style="margin-top:-6px;">'.wpautop($row->fullarticle).'</div>	    
+											   </div></div>'.$like_hits_div?><?php if ($stl->aimage2!=""){ echo'<div class="imgafter" id="imgafter'.$faq->id. '"><img src="'.$stl->aimage2.'"  /></div>'  ?><?php } echo '
+									   </div></div>
+									</li>';
+								
+								}
+								else{
+								echo '<div id="post_content'.$row->id.'" class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
+									  <div class="post_content_wrapper" id="post_content_wrapper'.$faq->id.'" style="'?><?php if($stl->abg==1) { if ($stl->abgimage!="") { echo 'background-image:url('.$stl->abgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->abgcolor.'">
+										'?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div style="border-top:1px;" class="atext" id="atext'.$faq->id. '">'.wpautop($row->article).'	    
+											   </div></div>'.$like_hits_div?><?php if ($stl->aimage2!=""){ echo'<div class="imgafter" id="imgafter'.$faq->id. '"><img src="'.$stl->aimage2.'"  /></div>'  ?><?php } echo '
+									   </div></div>
+									</li>';
+								
+							}
+
+						echo '<div style="padding-bottom:'.$stl->paddingbq.'px"></div>';	
+							
+						$n++;	
+						if($stl->numbering==1)$numbering++;	
+				}
+
+					
+					}
+					else {
+						if(isset($_POST['submit'.$faq->id]))
+						{
+						echo 'Question(s) not found';
+						}
+						elseif($cat==null)
+						 echo "";
+						else
+						 echo 'There are no questions in this category';		
+					}
+					
+					echo '<div style="padding-bottom:30px;"></div>';
+				if($faq->numbertext==1) {	
+				  $num++;
+				}
+			}
+		}
     }
-	}
-	}
-	}
 	
-	else{	/////////////// stand category////////////////////
+	else{	/////////////// stand category////////////////////  ]
+	
 	if($faq->numbertext==1)
  {$num=$faq->numbertext;$point=".";}
  else{$num="";$point="";}
@@ -1808,9 +1786,12 @@ $k=0;
 	if ($standcats)
 {
 foreach($standcats as $cat)
- {
+ {if($cat!=null) {
+ $number_div = "";
+$likespan = "";
+ 
 if($stl->numbering==1)$numbering=1;
-if ($cat->name=="")
+if ( $cat->name=="")
 {
 echo '<div style="padding-bottom:60px"></div>';
 }
@@ -1839,6 +1820,8 @@ else{
 $row->text=$row->post_content;
 $row->fulltext='';
 }
+
+
  $stand_cat_post=$wpdb->get_row($wpdb->prepare("SELECT * FROM  ".$wpdb->prefix."posts as A LEFT JOIN  ".$wpdb->prefix."post_right_content as B ON A.ID = B.id LEFT JOIN  ".$wpdb->prefix."users as C ON A.post_author = C.ID WHERE A.ID='%d'",$row->ID));
  
  if($faq->date==1 or $faq->user==1)
@@ -1856,11 +1839,11 @@ $row->fulltext='';
                  $imglike='<img onclick="post_like('.$row->ID.','.$faq->id.','.$stl->id.')"  class="like_img"   src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';}
              else { $imgunlike='<img onclick="post_unlike('.$row->ID.','.$faq->id.','.$stl->id.')" class="unlike_img"  src="'.plugins_url( '',__FILE__).'/upload/ikon/unlike_white.png">';
                  $imglike='<img onclick="post_like('.$row->ID.','.$faq->id.','.$stl->id.')"  class="like_img"   src="'.plugins_url( '',__FILE__).'/upload/ikon/like_white.png">';}}
-			  if($_SESSION['post_valid_user'.$row->ID]==1 && $faq->like==1){$likespan='<span class="sentences" style="width:50%;float:none;display:table-cell;" >You already voted for this FAQ today!</span>';}elseif($_SESSION['post_valid_user'.$row->ID]!=1 && $faq->like==1){$likespan='<span class="sentences" style="width:50%;float:none;display:table-cell;" >Was this helpful?</span>';}
+			  if(isset($_SESSION['post_valid_user'.$row->ID]) && $_SESSION['post_valid_user'.$row->ID]==1 && $faq->like==1){$likespan='<span class="sentences" style="width:50%;float:none;display:table-cell;" >You already voted for this FAQ today!</span>';}elseif(!isset($_SESSION['post_valid_user'.$row->ID])  && $faq->like==1){$likespan='<span class="sentences" style="width:50%;float:none;display:table-cell;" >Was this helpful?</span>';}
 			  if($faq->hits==1){if($stand_cat_post->hits==NULL)$hits=0;else $hits=$stand_cat_post->hits;$hits_expression='Hits: ';$hitsspan=''.$br.'<span id="post_hits'.$row->ID.'" style="margin-right:10px;float:right;" >'.$hits_expression.$hits.'</span>';}
 			  elseif($faq->hits==0){$hits='';$hits_expression='';$hitsspan='';}
-			  if($_SESSION['post_hits_valid_user'.$row->ID]==1)unset($_SESSION['post_hits_valid_user'.$row->ID]);  
-			  if($_SESSION['expand_post_hits_valid_user'.$faq->id]==1)unset($_SESSION['expand_post_hits_valid_user'.$faq->id]);                                    
+			  if(isset($_SESSION['post_hits_valid_user'.$row->ID]) and $_SESSION['post_hits_valid_user'.$row->ID]==1)unset($_SESSION['post_hits_valid_user'.$row->ID]);  
+			  if(isset($_SESSION['expand_post_hits_valid_user'.$row->ID]) and  $_SESSION['expand_post_hits_valid_user'.$faq->id]==1)unset($_SESSION['expand_post_hits_valid_user'.$faq->id]);                                    
 	          if ($faq->like==1)$class='class="likeimg"';else $class="";
 			  $like_hits_div='<div id="post_like_hits_div'.$row->ID.'" class="like_hits'.$faq->id.'" >'.$likespan.'<span class="like_hits_span" style="width:50%;float:none;display:table-cell;"  ><span><span '.$class.' >'.$imglike.$like.'</span><span>'.$imgunlike.$unlike.'</span></span>'.$hitsspan.'</span></div>';}
 			  else{$like_hits_div='';}
@@ -1875,8 +1858,8 @@ $row->fulltext='';
 			if (strlen($row->fulltext)>1){
 			echo '<div id="post_content'.$row->ID.'" class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
 				  <div class="post_content_wrapper" id="post_content_wrapper'.$faq->id.'" style="'?><?php if($stl->abg==1) {  if ($stl->abgimage!="") { echo 'background-image:url('.$stl->abgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->abgcolor.'">
-				    '?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div class="atext" id="atext'.$faq->id. '">'.$row->text.'<p><a href="#" class="more-link " id="more-link'.$faq->id. '">More</a></p>
-			            <div class="post_content_more" style="margin-top:-6px;">'.$row->fulltext.'</div>	    
+				    '?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div class="atext" id="atext'.$faq->id. '">'.wpautop($row->text).'<p><a href="#" class="more-link " id="more-link'.$faq->id. '">More</a></p>
+			            <div class="post_content_more" style="margin-top:-6px;">'.wpautop($row->fulltext).'</div>	    
 			               </div></div>'.$like_hits_div?><?php if ($stl->aimage2!=""){ echo'<div class="imgafter" id="imgafter'.$faq->id. '"><img src="'.$stl->aimage2.'"  /></div>'  ?><?php } echo '
 			       </div></div>
 				</li>';		
@@ -1884,7 +1867,7 @@ $row->fulltext='';
 			else{
 			echo '<div id="post_content'.$row->ID.'"  class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
 				  <div class="post_content_wrapper" id="post_content_wrapper'.$faq->id.'" style="'?><?php if($stl->abg==1) {  if ($stl->abgimage!="") { echo 'background-image:url('.$stl->abgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->abgcolor.'">
-				    '?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div class="atext" id="atext'.$faq->id. '">'.$row->post_content.'	    
+				    '?><?php if ($stl->aimage!=""){ echo'<div class="imgbefore" id="imgbefore'.$faq->id. '"><img src="'.$stl->aimage.'"  /></div>'  ?><?php } echo ''.$date_user_div.'<div class="post_right" id="post_right'.$faq->id.'"><div class="atext" id="atext'.$faq->id. '">'.wpautop($row->post_content).'	    
 			               </div></div>'.$like_hits_div?><?php if ($stl->aimage2!=""){ echo'<div class="imgafter" id="imgafter'.$faq->id. '"><img src="'.$stl->aimage2.'"  /></div>'  ?><?php } echo '
 			       </div></div>
 				</li>';
@@ -1913,8 +1896,12 @@ echo 'There are no questions in this category';
     {	
 	$num++;
     }
+	
+	}
+	
 	}
 	}	
+//ob_start();	
 	}	
 $many_faqs++;
 ?>
@@ -1938,16 +1925,24 @@ $many_faqs++;
 </body>
 
 <?php
+ob_start();
 $content=ob_get_contents();
 		ob_end_clean();
 	
 		return $content;
 }
+
+/*function do_output_buffer() {
+  
+}
+add_action('init', 'do_output_buffer');*/
+
 //// add editor new mce button
 add_filter('mce_external_plugins', "Spider_Faq_register");
 add_filter('mce_buttons', 'Spider_Faq_add_button', 0);
 
 /// function for add new button
+
 function Spider_Faq_add_button($buttons)
 {
     array_push($buttons, "Spider_Faq_mce");
@@ -1981,17 +1976,26 @@ add_action('admin_menu', 'Spider_Faq_options_panel');
 function Spider_Faq_options_panel(){
   add_menu_page(	'Theme page title', 'Spider FAQ', 'manage_options', 'Spider_Faq', 'Spider_Faq')  ;
  $faqqq=add_submenu_page( 'Spider_Faq', 'Spider Faq', 'FAQs', 'manage_options', 'Spider_Faq', 'Spider_Faq');
-   $questions=add_submenu_page( 'Spider_Faq', 'Questions', 'Questions', 'manage_options', 'Spider_Faq_Questions', 'Spider_Faq_Questions');
+ $questions=add_submenu_page( 'Spider_Faq', 'Questions', 'Questions', 'manage_options', 'Spider_Faq_Questions', 'Spider_Faq_Questions');
   add_submenu_page( 'Spider_Faq', 'Categories', 'Categories', 'manage_options', 'Spider_Faq_Categories', 'Spider_Faq_Categories');
   $page_theme=add_submenu_page( 'Spider_Faq', 'Themes', 'Themes', 'manage_options', 'Spider_Faq_Themes', 'Spider_Faq_Themes');
-   add_submenu_page( 'Spider_Faq', 'Licensing', 'Licensing', 'manage_options', 'Spider_FAQ_Licensing', 'Spider_FAQ_Licensing');
+  add_submenu_page( 'Spider_Faq', 'Licensing', 'Licensing', 'manage_options', 'Spider_FAQ_Licensing', 'Spider_FAQ_Licensing');
+  $featured_plugins_page = add_submenu_page('Spider_Faq', 'Featured Plugins', 'Featured Plugins', 'manage_options', 'Spider_Faq_featured_plugins', 'Spider_Faq_featured_plugins');
+   add_action('admin_print_styles-' . $featured_plugins_page, 'Spider_Faq_featured_plugins_styles');
+
+
   add_submenu_page( 'Spider_Faq', 'Uninstall Spider_Faq ', 'Uninstall Spider FAQ', 'manage_options', 'Uninstall_Spider_FAQ', 'Uninstall_Spider_Faq');
 	add_action('admin_print_styles-' . $page_theme, 'sp_faq_admin_styles_scripts');
 	add_action('admin_print_styles-' .$questions, 'faq_calaendar_js');
   }
-   function Spider_FAQ_Licensing(){
+  
+  function Spider_FAQ_Licensing(){
 	?>
-    
+    <div style="display:block;width:95%;text-align:right"><a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
+            <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com/files" width="215"><br>
+            Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+			</div>
    <div style="width:95%"> <p>
 This plugin is the non-commercial version of the Spider FAQ. Use of the FAQ is free.<br /> The only
 limitation is the use of the themes. If you want to use one of the 22 standard themes or create a new one that
@@ -2011,6 +2015,7 @@ standard themes and give possibility to edit the themes of the Spider FAQ. </p>
 	
 	
 	}
+  
   function faq_calaendar_js()
   {
 	wp_enqueue_script("faq_calaendar",plugins_url('js\calendar.js', __FILE__));
@@ -2052,7 +2057,6 @@ function faq_ShowTinyMCE() {
 	wp_print_scripts('editor');
 	if (function_exists('add_thickbox')) add_thickbox();
 	wp_print_scripts('media-upload');
-	if (function_exists('wp_tiny_mce')) wp_tiny_mce();
 	wp_admin_css();
 	wp_enqueue_script('utils');
 	do_action("admin_print_styles-post-php");
@@ -2373,8 +2377,6 @@ global $wpdb;
 	}
 	
 	
-	
-	
 	switch($task){
 	case 'Spider_Faq_Themes':
 		show_spider_theme();
@@ -2457,7 +2459,7 @@ function Uninstall_Spider_FAQ(){
 global $wpdb;
 $base_name = plugin_basename('Spider_Faq');
 $base_page = 'admin.php?page='.$base_name;
-$mode = trim($_GET['mode']);
+$mode = "";
 
 
 if(!empty($_POST['do'])) {
@@ -2555,80 +2557,476 @@ switch($mode) {
 <?php
 } // End switch($mode)	
 }
-function  post_right_content()
-{
-global $wpdb;
 
-  $post_right_content = "CREATE TABLE `".$wpdb->prefix."post_right_content` (
-     `id` int(11) NOT NULL AUTO_INCREMENT,
-	 `like` int(11) NOT NULL,
-	 `unlike` int(11) NOT NULL,
-	 `hits` int(11) NOT NULL,
-      PRIMARY KEY (`id`)
-  )ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
- 
-  
-  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-  dbDelta( $post_right_content );
+
+function Spider_Faq_featured_plugins() {
+  ?>
+    <div id="main_featured_plugins_page">
+      <table align="center" width="90%" style="margin-top: 0px;border-bottom: rgb(111, 111, 111) solid 2px;">
+        <tr>
+          <td colspan="2" style="height: 70px;"><h3 style="margin: 0px;font-family:Segoe UI;padding-bottom: 15px;color: rgb(111, 111, 111); font-size:18pt;">Featured Plugins</h3></td>
+          <td></td>
+        </tr>
+      </table>
+      <form method="post">
+        <ul id="featured-plugins-list">
+		  <li class="photo-gallery">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Photo Gallery</strong>
+                <p>WordPress Photo Gallery Plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Photo Gallery is a fully responsive WordPress Gallery plugin with advanced functionality. 
+				It allows having different image galleries for your posts and pages, as well as different widgets. </p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-photo-gallery-plugin.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="form-maker">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Form Maker</strong>
+                <p>Wordpress form builder plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Form Maker is a modern and advanced tool for creating WordPress forms easily and fast.</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-form.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="spider-calendar">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Spider Calendar</strong>
+                <p>WordPress event calendar plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Spider Event Calendar is a highly configurable product which allows you to have multiple organized events.</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-calendar.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="catalog">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Spider Catalog</strong>
+                <p>WordPress product catalog plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Spider Catalog for WordPress is a convenient tool for organizing the products represented on your website into catalogs.</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-catalog.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="player">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Video Player</strong>
+                <p>WordPress Video player plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Spider Video Player for WordPress is a Flash & HTML5 video player plugin that allows you to easily add videos to your website with the possibility</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-player.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="contacts">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Spider Contacts</strong>
+                <p>Wordpress staff list plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Spider Contacts helps you to display information about the group of people more intelligible, effective and convenient.</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-contacts-plugin.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="facebook">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Spider Facebook</strong>
+                <p>WordPress Facebook plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Spider Facebook is a WordPress integration tool for Facebook.It includes all the available Facebook social plugins and widgets to be added to your web</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-facebook.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="zoom">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Zoom</strong>
+                <p>WordPress text zoom plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Zoom enables site users to resize the predefined areas of the web site.</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-zoom.html" class="download">Download</a>
+            </div>
+          </li>
+          <li class="flash-calendar">
+            <div class="product">
+              <div class="title">
+                <strong class="heading">Flash Calendar</strong>
+                <p>WordPress flash calendar plugin</p>
+              </div>
+            </div>
+            <div class="description">
+                <p>Spider Flash Calendar is a highly configurable Flash calendar plugin which allows you to have multiple organized events.</p>
+                <a target="_blank" href="http://web-dorado.com/products/wordpress-events-calendar.html" class="download">Download</a>
+            </div>
+          </li>
+        </ul>
+      </form>
+    </div >
+    <?php
 }
-function  add_column()
-{
-global $wpdb;
 
-  $sql_question = "CREATE TABLE `".$wpdb->prefix."spider_faq_question` (
-     `id` int(11) NOT NULL AUTO_INCREMENT,
-     `title` text NOT NULL,
-     `category` int(11) NOT NULL,
-     `article` longtext NOT NULL,
-     `fullarticle` longtext NOT NULL,
-     `ordering` int(11) NOT NULL, 
-     `published` tinyint(1) NOT NULL,
-     `user_name` longtext NOT NULL,
-	 `date` text NOT NULL,
-	 `like` int(11) NOT NULL,
-	 `unlike` int(11) NOT NULL,
-	 `hits` int(11) NOT NULL,
-      PRIMARY KEY (`id`)
-  )ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
- 
-  
-  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-  dbDelta( $sql_question );
+
+function add_faq_column() {
+
+    global $wpdb;
+	$exists_numbertext = 0;
+    $exists_like = 0;
+    $exists_hits = 0;
+	$exists_date = 0;
+    $exists_user = 0;
+	
+	
+	$form_properties = $wpdb->get_results("DESCRIBE " . $wpdb->prefix . "spider_faq_faq", ARRAY_A);
+
+	foreach ($form_properties as $prop) {
+	        if ($prop['Field'] == 'numbertext')
+			  $exists_numbertext = 1;
+			if ($prop['Field'] == 'like')
+			  $exists_like = 1;
+			if ($prop['Field'] == 'hits')
+			  $exists_hits = 1;
+			if ($prop['Field'] == 'date') 
+			  $exists_date = 1;
+			if ($prop['Field'] == 'user')
+			  $exists_user = 1;
+			}
+	  if (!$exists_numbertext) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_faq ADD `numbertext` int(11) NOT NULL AFTER `expand`");
+      }		
+	  if (!$exists_like) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_faq ADD `like` int(11) NOT NULL AFTER `numbertext`");
+      }
+      if (!$exists_hits) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_faq ADD `hits` int(11) NOT NULL AFTER `like`");
+      }
+	  if (!$exists_date) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_faq ADD `date` text NOT NULL AFTER `hits`");
+      }  	
+      if (!$exists_user) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_faq ADD `user` longtext NOT NULL AFTER `date`");
+      }	
 }
 
-function  add_column_faq()
-{
-global $wpdb;
 
-  $sql_faq="CREATE TABLE `".$wpdb->prefix."spider_faq_faq` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `standcat` tinyint(1) NOT NULL,
-  `category`  varchar(255) NOT NULL,
-  `standcategory`  varchar(255) NOT NULL, 
-  `theme` varchar(255) NOT NULL,
-  `show_searchform` tinyint(1) NOT NULL,
-  `expand` tinyint(1) NOT NULL,
-  `numbertext` tinyint(1) NOT NULL,
-  `like` tinyint(1) NOT NULL,
-  `hits` tinyint(1) NOT NULL,
-  `date` tinyint(1) NOT NULL,
-  `user` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
- 
-  
-  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-  dbDelta( $sql_faq );
+
+function add_question_column() {
+
+    global $wpdb;
+    $exists_like = 0;
+    $exists_unlike = 0;
+    $exists_hits = 0;
+    $exists_user_name = 0;
+    $exists_date = 0;
+	
+	$form_properties = $wpdb->get_results("DESCRIBE " . $wpdb->prefix . "spider_faq_question", ARRAY_A);
+
+	foreach ($form_properties as $prop) {
+			if ($prop['Field'] == 'like')
+			  $exists_like = 1;
+			if ($prop['Field'] == 'unlike')
+			  $exists_unlike = 1;
+			if ($prop['Field'] == 'hits')
+			  $exists_hits = 1;
+			if ($prop['Field'] == 'user_name')
+			  $exists_user_name = 1;
+            if ($prop['Field'] == 'date') 
+			  $exists_date = 1;
+			}
+
+	  if (!$exists_like) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_question ADD `like` int(11) NOT NULL AFTER `published`");
+      }
+      if (!$exists_unlike) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_question ADD `unlike` int(11) NOT NULL AFTER `like`");
+      }
+      if (!$exists_hits) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_question ADD `hits` int(11) NOT NULL AFTER `unlike`");
+      }
+      if (!$exists_user_name) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_question ADD `user_name` longtext NOT NULL AFTER `hits`");
+      }
+      if (!$exists_date) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_question ADD `date` text NOT NULL AFTER `user_name`");
+      }  		
 }
-function  add_column_faq_theme()
-{
+
+
+function add_theme_column() {
+    global $wpdb;	
+	global $truefalse;
+	
+    $exists_dwidth = 0;
+    $exists_dheight = 0;
+    $exists_dlikehitswidth = 0;
+    $exists_dlikehitsmargin = 0;
+    $exists_dmarginleft = 0; 
+	$exists_dbordertopstyle = 0;
+	$exists_dborderbottomstyle = 0;
+    $exists_dbackgroundcolor = 0;
+    $exists_dborderstyle = 0;
+    $exists_dborderwidth = 0;
+    $exists_dbordercolor = 0;
+	$exists_dbordercornerradius = 0;
+    $exists_dtextcolor = 0;
+    $exists_dlikehitsbgcolor = 0;
+    $exists_dlikehitsbdrst = 0;
+    $exists_dlikehitsbdrtst = 0;
+	$exists_dlikehitsbdrw = 0;
+    $exists_dlikehitsbdrc = 0;
+    $exists_dlikehitsbdrrad = 0;
+    $exists_dlikehitstxtcl = 0;
+    $exists_apadd = 0;
+	$exists_dlikehitsbdrbst = 0;
+    $exists_numbering = 0;
+    $exists_ansmarginleft = 0;
+    $exists_imgpos = 0;
+    $exists_answidth = 0;
+	$exists_ikncol = 0;
+    $exists_numberfnts = 0;
+    $exists_numbercl = 0;
+    $exists_tbtopstyle = 0;
+    $exists_tbrightstyle = 0;
+	$exists_abrightstyle = 0;
+    $exists_default = 0;
+	
+	
+	$form_properties = $wpdb->get_results("DESCRIBE " . $wpdb->prefix . "spider_faq_theme", ARRAY_A);
+
+	foreach ($form_properties as $prop) {
+			if ($prop['Field'] == 'dwidth')
+			  $exists_dwidth = 1;
+			if ($prop['Field'] == 'dheight')
+			  $exists_dheight = 1;
+			if ($prop['Field'] == 'dlikehitswidth')
+			  $exists_dlikehitswidth = 1;
+			if ($prop['Field'] == 'dlikehitsmargin')
+			  $exists_dlikehitsmargin = 1;
+			if ($prop['Field'] == 'dmarginleft')
+			  $exists_dmarginleft = 1;  
+            if ($prop['Field'] == 'dbordertopstyle') 
+			  $exists_dbordertopstyle = 1;
+            if ($prop['Field'] == 'dborderbottomstyle')
+			  $exists_dborderbottomstyle = 1;
+			if ($prop['Field'] == 'dbackgroundcolor')
+			  $exists_dbackgroundcolor = 1;
+			if ($prop['Field'] == 'dborderstyle')
+			  $exists_dborderstyle = 1;
+			if ($prop['Field'] == 'dborderwidth')
+			  $exists_dborderwidth = 1;
+            if ($prop['Field'] == 'dbordercolor')
+			  $exists_dbordercolor = 1;
+			if ($prop['Field'] == 'dbordercornerradius')
+			  $exists_dbordercornerradius = 1;
+			if ($prop['Field'] == 'dtextcolor')
+			  $exists_dtextcolor = 1;
+			if ($prop['Field'] == 'dlikehitsbgcolor')
+			  $exists_dlikehitsbgcolor = 1;
+			if ($prop['Field'] == 'dlikehitsbdrst')
+			  $exists_dlikehitsbdrst = 1;
+            if ($prop['Field'] == 'dlikehitsbdrtst') 
+			  $exists_dlikehitsbdrtst = 1;
+			if ($prop['Field'] == 'dlikehitsbdrw') 
+			  $exists_dlikehitsbdrw = 1;
+			if ($prop['Field'] == 'dlikehitsbdrc') 
+			  $exists_dlikehitsbdrc = 1;
+			if ($prop['Field'] == 'dlikehitsbdrrad') 
+			  $exists_dlikehitsbdrrad = 1;
+			if ($prop['Field'] == 'dlikehitstxtcl') 
+			  $exists_dlikehitstxtcl = 1; 
+			if ($prop['Field'] == 'apadd') 
+			  $exists_apadd = 1;  
+			if ($prop['Field'] == 'dlikehitsbdrbst')
+			  $exists_dlikehitsbdrbst = 1;
+			if ($prop['Field'] == 'numbering') 
+			  $exists_numbering = 1;
+			if ($prop['Field'] == 'ansmarginleft') 
+			  $exists_ansmarginleft = 1;
+			if ($prop['Field'] == 'imgpos') 
+			  $exists_imgpos = 1;
+			if ($prop['Field'] == 'answidth') 
+			  $exists_answidth = 1;
+			if ($prop['Field'] == 'ikncol') 
+			  $exists_ikncol = 1;
+			if ($prop['Field'] == 'numberfnts') 
+			  $exists_numberfnts = 1;
+			if ($prop['Field'] == 'numbercl') 
+			  $exists_numbercl = 1;
+			if ($prop['Field'] == 'tbtopstyle') 
+			  $exists_tbtopstyle = 1;
+			if ($prop['Field'] == 'tbrightstyle') 
+			  $exists_tbrightstyle = 1;
+			if ($prop['Field'] == 'abrightstyle') 
+			  $exists_abrightstyle = 1;
+			if ($prop['Field'] == 'default') 
+			  $exists_default = 1;
+		}
+		
+	  if (!$exists_dwidth) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dwidth` varchar(200) NOT NULL AFTER `rmfontsize`");
+      }
+      if (!$exists_dheight) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dheight` varchar(200) NOT NULL AFTER `dwidth`");
+      }
+      if (!$exists_dlikehitswidth) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitswidth` varchar(200) NOT NULL AFTER `dheight`");
+      }
+      if (!$exists_dlikehitsmargin) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsmargin` varchar(200) NOT NULL AFTER `dlikehitswidth`");
+      }
+      if (!$exists_dmarginleft) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dmarginleft` varchar(200) NOT NULL AFTER `dlikehitsmargin`");
+      }
+      if (!$exists_dbordertopstyle) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dbordertopstyle` varchar(200) NOT NULL AFTER `dmarginleft`");
+      }
+      if (!$exists_dborderbottomstyle) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dborderbottomstyle` varchar(200) NOT NULL AFTER `dbordertopstyle`");
+      }
+	  if (!$exists_dbackgroundcolor) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dbackgroundcolor` text NOT NULL AFTER `dborderbottomstyle`");
+      }
+      if (!$exists_dborderstyle) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dborderstyle` varchar(200) NOT NULL AFTER `dbackgroundcolor`");
+      }
+	  if (!$exists_dborderwidth) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dborderwidth` varchar(200) NOT NULL AFTER `dborderstyle`");
+      }
+ 	  if (!$exists_dbordercolor) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dbordercolor` text NOT NULL AFTER `dborderwidth`");
+      }
+	  if (!$exists_dbordercornerradius) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dbordercornerradius` varchar(200) NOT NULL AFTER `dbordercolor`");
+      }
+	  if (!$exists_dtextcolor) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dtextcolor` text NOT NULL AFTER `dbordercornerradius`");
+      }
+	  if (!$exists_dlikehitsbgcolor) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbgcolor` text NOT NULL AFTER `dtextcolor`");
+      }
+	  if (!$exists_dlikehitsbdrst) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbdrst` text NOT NULL AFTER `dlikehitsbgcolor`");
+      }
+	  if (!$exists_dlikehitsbdrtst) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbdrtst` text NOT NULL AFTER `dlikehitsbdrst`");
+      }
+	  if (!$exists_dlikehitsbdrw) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbdrw` text NOT NULL AFTER `dlikehitsbdrtst`");
+      }
+	  if (!$exists_dlikehitsbdrc) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbdrc` text NOT NULL AFTER `dlikehitsbdrw`");
+      }
+	  if (!$exists_dlikehitsbdrrad) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbdrrad` text NOT NULL AFTER `dlikehitsbdrc`");
+      }
+	  if (!$exists_dlikehitstxtcl) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitstxtcl` text NOT NULL AFTER `dlikehitsbdrrad`");
+      }
+	  if (!$exists_apadd) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `apadd` text NOT NULL AFTER `dlikehitstxtcl`");
+      }
+	  if (!$exists_dlikehitsbdrbst) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `dlikehitsbdrbst` text NOT NULL AFTER `apadd`");
+      }
+	  if (!$exists_numbering) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `numbering` tinyint(2) NOT NULL AFTER `dlikehitsbdrbst`");
+      }
+	  if (!$exists_ansmarginleft) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `ansmarginleft` text NOT NULL AFTER `numbering`");
+      }
+	  if (!$exists_imgpos) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `imgpos` tinyint(2) NOT NULL AFTER `ansmarginleft`");
+      }
+	  if (!$exists_answidth) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `answidth` text NOT NULL AFTER `imgpos`");
+      }
+	  if (!$exists_ikncol) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `ikncol` tinyint(2) NOT NULL AFTER `answidth`");
+      }
+	  if (!$exists_numberfnts) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `numberfnts` text NOT NULL AFTER `ikncol`");
+      }
+	  if (!$exists_numbercl) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `numbercl` text NOT NULL AFTER `numberfnts`");
+      }
+	  if (!$exists_tbtopstyle) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `tbtopstyle` text NOT NULL AFTER `numbercl`");
+      }
+	  if (!$exists_tbrightstyle) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `tbrightstyle` text NOT NULL AFTER `tbtopstyle`");
+      }
+	  if (!$exists_abrightstyle) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `abrightstyle` text NOT NULL AFTER `tbrightstyle`");
+      }
+	  if (!$exists_default) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "spider_faq_theme ADD `default` tinyint(2) NOT NULL AFTER `abrightstyle`");
+        $truefalse=true;
+      }
+}
+
+
+function Spider_FAQ_activate() {
 global $wpdb;
 global $truefalse;
-$row=$wpdb->get_col("SELECT dwidth FROM ".$wpdb->prefix."spider_faq_theme");	
-if($row) $truefalse=false; else $truefalse=true;
 
-  $sql_faq_theme="CREATE TABLE `".$wpdb->prefix."spider_faq_theme` (
+$truefalse = false;
+
+$sql_faq="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_faq` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `title` text NOT NULL,
+   `standcat` tinyint(1) NOT NULL,
+   `category`  varchar(255) NOT NULL,
+   `standcategory`  varchar(255) NOT NULL, 
+   `theme` varchar(255) NOT NULL,
+   `show_searchform` tinyint(1) NOT NULL,
+   `expand` tinyint(1) NOT NULL,
+   PRIMARY KEY (`id`)
+ ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+
+$sql_question="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_question` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `title` text NOT NULL,
+   `category` int(11) NOT NULL,
+   `article` longtext NOT NULL,
+   `fullarticle` longtext NOT NULL,
+   `ordering` int(11) NOT NULL, 
+   `published` tinyint(1) NOT NULL,
+   PRIMARY KEY  (`id`)
+ ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+
+
+$sql_category="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `show_title` tinyint(1) NOT NULL,
+  `show_description` tinyint(1) NOT NULL,
+  `published` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+
+
+
+$sql_theme="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_theme` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
   `background` tinyint(2) NOT NULL,
@@ -2735,202 +3133,30 @@ if($row) $truefalse=false; else $truefalse=true;
   `rmcolor` text NOT NULL,
   `rmhovercolor` text NOT NULL,
   `rmfontsize` varchar(200) NOT NULL,
-  `dwidth` varchar(200) NOT NULL,
-  `dheight` varchar(200) NOT NULL,  
-  `dlikehitswidth` varchar(200) NOT NULL,
-  `dlikehitsmargin` varchar(200) NOT NULL,
-  `dmarginleft` varchar(200) NOT NULL,
-  `dbordertopstyle` varchar(200) NOT NULL,
-  `dborderbottomstyle` varchar(200) NOT NULL,
-  `dbackgroundcolor` text NOT NULL,
-  `dborderstyle` varchar(200) NOT NULL,
-  `dborderwidth` varchar(200) NOT NULL,
-  `dbordercolor` text NOT NULL,
-  `dbordercornerradius` varchar(200) NOT NULL,
-  `dtextcolor` text NOT NULL,
-  `dlikehitsbgcolor` text NOT NULL,
-  `dlikehitsbdrst` text NOT NULL,
-  `dlikehitsbdrtst` text NOT NULL,
-  `dlikehitsbdrw` text NOT NULL,
-  `dlikehitsbdrc` text NOT NULL,
-  `dlikehitsbdrrad` text NOT NULL,
-  `dlikehitstxtcl` text NOT NULL, 
-  `apadd` text NOT NULL,
-  `dlikehitsbdrbst` text NOT NULL,
-  `numbering` tinyint(2) NOT NULL,
-  `ansmarginleft` text NOT NULL,
-  `imgpos` tinyint(2) NOT NULL,
-  `answidth` text NOT NULL,
-  `ikncol` tinyint(2) NOT NULL,
-  `numberfnts` text NOT NULL,
-  `numbercl` text NOT NULL,
-  `tbtopstyle` text NOT NULL,
-  `tbrightstyle` text NOT NULL,
-  `abrightstyle` text NOT NULL,
-  `default` tinyint(2) NOT NULL,  
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ";
-  
-  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-  dbDelta( $sql_faq_theme );
-  
-}
-
-function Spider_FAQ_activate()
-{
-global $wpdb;
-
-$sql_faq="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_faq` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `standcat` tinyint(1) NOT NULL,
-  `category`  varchar(255) NOT NULL,
-  `standcategory`  varchar(255) NOT NULL, 
-  `theme` varchar(255) NOT NULL,
-  `show_searchform` tinyint(1) NOT NULL,
-  `expand` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
-
-$sql_question="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_question` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-    `category` int(11) NOT NULL,
-  `article` longtext NOT NULL,
-  `fullarticle` longtext NOT NULL,
-  `ordering` int(11) NOT NULL, 
-  `published` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
-
-
-$sql_category="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `show_title` tinyint(1) NOT NULL,
-  `show_description` tinyint(1) NOT NULL,
-  `published` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
-
-
-
-$sql_theme="CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."spider_faq_theme` (
-`id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `background` tinyint(2) NOT NULL,
-  `bgimage` varchar(200) NOT NULL,
-  `bgcolor` text NOT NULL,
-  `width` varchar(200) NOT NULL,
-  `ctbg` tinyint(1) NOT NULL,
-  `ctbggrad` tinyint(1) NOT NULL,
-  `ctbgcolor` text NOT NULL,
-  `ctgradtype` varchar(200) NOT NULL,
-  `ctgradcolor1` text NOT NULL,
-  `ctgradcolor2` text NOT NULL,
-  `cttxtcolor` text NOT NULL,
-  `ctfontsize` varchar(200) NOT NULL,
-  `ctmargin` varchar(200) NOT NULL,
-  `ctpadding` varchar(200) NOT NULL,
-  `ctbstyle` text NOT NULL,
-  `ctbwidth` varchar(200) NOT NULL,
-  `ctbcolor` text NOT NULL,
-  `ctbradius` varchar(200) NOT NULL,
-  `cdbg` tinyint(1) NOT NULL,
-  `cdbggrad` tinyint(1) NOT NULL,
-  `cdbgcolor` text NOT NULL,
-  `cdgradtype` varchar(200) NOT NULL,
-  `cdgradcolor1` text NOT NULL,
-  `cdgradcolor2` text NOT NULL,
-  `cdtxtcolor` text NOT NULL,
-  `cdfontsize` varchar(200) NOT NULL,
-  `cdmargin` varchar(200) NOT NULL,
-  `cdpadding` varchar(200) NOT NULL,
-  `cdbstyle` varchar(200) NOT NULL,
-  `cdbwidth` varchar(200) NOT NULL,
-  `cdbcolor` text NOT NULL,
-  `cdbradius` varchar(200) NOT NULL,
-  `paddingbq` varchar(200) NOT NULL,
-  `marginleft` varchar(200) NOT NULL,
-  `theight` varchar(200) NOT NULL,
-  `twidth` varchar(200) NOT NULL,
-  `tfontsize` varchar(200) NOT NULL,
-  `ttxtwidth` varchar(200) NOT NULL,
-  `ttxtpleft` varchar(200) NOT NULL,
-  `tcolor` text NOT NULL,
-  `titlebg` tinyint(1) NOT NULL,
-  `tbgcolor` text NOT NULL,
-  `tbgimage` varchar(200) NOT NULL,
-  `titlebggrad` tinyint(1) NOT NULL,
-  `gradtype` varchar(200) NOT NULL,
-  `gradcolor1` text NOT NULL,
-  `gradcolor2` text NOT NULL,
-  `tbghovercolor` text NOT NULL,
-  `tbgsize` varchar(200) NOT NULL,
-  `tbstyle` varchar(200) NOT NULL,
-  `tbwidth` varchar(200) NOT NULL,
-  `tbcolor` text NOT NULL,
-  `tbradius` varchar(200) NOT NULL,
-  `tchangeimage1` varchar(200) NOT NULL,
-  `marginlimage1` varchar(200) NOT NULL,
-  `tchangeimage2` varchar(200) NOT NULL,
-  `marginlimage2` varchar(200) NOT NULL,
-  `awidth` varchar(200) NOT NULL,
-  `amargin` varchar(200) NOT NULL,
-  `afontsize` varchar(200) NOT NULL,
-  `abg` tinyint(1) NOT NULL,
-  `abgcolor` text NOT NULL,
-  `abgimage` varchar(200) NOT NULL,
-  `abgsize` varchar(200) NOT NULL,
-  `abstyle` varchar(200) NOT NULL,
-  `abwidth` varchar(200) NOT NULL,
-  `abcolor` text NOT NULL,
-  `abradius` varchar(200) NOT NULL,
-  `aimage` varchar(200) NOT NULL,
-  `aimage2` varchar(200) NOT NULL,
-  `aimagewidth` varchar(200) NOT NULL,
-  `aimageheight` varchar(200) NOT NULL,
-  `amarginimage` varchar(200) NOT NULL,
-  `aimagewidth2` varchar(200) NOT NULL,
-  `aimageheight2` varchar(200) NOT NULL,
-  `amarginimage2` varchar(200) NOT NULL,
-  `atxtcolor` text NOT NULL,
-  `expcolcolor` text NOT NULL,
-  `expcolfontsize` varchar(200) NOT NULL,
-  `expcolmargin` varchar(200) NOT NULL,
-  `expcolhovercolor` text NOT NULL,
-  `sformmargin` varchar(200) NOT NULL,
-  `sboxwidth` varchar(200) NOT NULL,
-  `sboxheight` varchar(200) NOT NULL,
-  `sboxbg` tinyint(1) NOT NULL,
-  `sboxbgcolor` text NOT NULL,
-  `sboxbstyle` text NOT NULL,
-  `sboxbwidth` varchar(200) NOT NULL,
-  `sboxbcolor` text NOT NULL,
-  `sboxfontsize` varchar(200) NOT NULL,
-  `sboxtcolor` text NOT NULL,
-  `srwidth` varchar(200) NOT NULL,
-  `srheight` varchar(200) NOT NULL,
-  `srbg` tinyint(1) NOT NULL,
-  `srbgcolor` text NOT NULL,
-  `srbstyle` text NOT NULL,
-  `srbwidth` varchar(200) NOT NULL,
-  `srbcolor` text NOT NULL,
-  `srfontsize` varchar(200) NOT NULL,
-  `srfontweight` varchar(200) NOT NULL,
-  `srtcolor` text NOT NULL,
-  `rmcolor` text NOT NULL,
-  `rmhovercolor` text NOT NULL,
-  `rmfontsize` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ";
 
 
+$post_right_content = "CREATE TABLE IF NOT EXISTS`".$wpdb->prefix."post_right_content` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+	`like` int(11) NOT NULL,
+	`unlike` int(11) NOT NULL,
+	`hits` int(11) NOT NULL,
+     PRIMARY KEY (`id`)
+  )ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+ 
 
-$table_name=$wpdb->prefix."spider_faq_category";
-$sql_category_insert_row1="INSERT INTO `".$wpdb->prefix."spider_faq_category` (id,title,description,show_title,show_description,published) VALUES(1, 'Uncategorized', '',1, 1, 1)";
 
+$wpdb->query($sql_faq);
+$wpdb->query($sql_question);
+$wpdb->query($sql_category);
+$wpdb->query($sql_theme);
+$wpdb->query($post_right_content);
+
+
+$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_theme");
+
+if(!$id or  $id <17) {
 $table_name=$wpdb->prefix."spider_faq_theme";
 $sql_theme1="INSERT INTO `".$table_name."` VALUES(1, 'White', 2, '', 'FFFFFF', '600', 1, 1, '44A9CF', 'top', '44A9CF', '54DDFF', 'FFFFFF', '20', '0 60 0 0', '9 20 12', 'solid', '2', 'E0E0E0', '2', 1, 0, 'C4C4C4', 'top', 'FFFFFF', 'FFFFFF', '000000', '12', '10 90 12 21', '4 8', 'double', '3', 'FFFFFF', '2', '', '', '30', '512', '14', '', '6', '000000', 0, 'FFFFFF', '', 0, 'top', 'FFFFFF', 'FFFFFF', 'EDEAD8', '100%', 'solid', '1', 'C7C7C7', '4', '', '', '', '', '513', '0 15 25', '13', 0, 'FFFFFF', '', '', 'none', '', 'FFFFFF', '', '', '".plugins_url("upload/style1/style1a.png",__FILE__)."', '', '', '', '512', '5', '', '44A9CF', '000000', '14', '12 60 18 0', '8F8F8F', '0 60 12 0', '300', '25', 0, 'EBEBEB', 'solid', '2', 'A6A6A6', '12', '000000', '60', '30', 0, 'FFFFFF', 'solid', '2', '828282', '14', '', '000000', '000000', '9E9E9E', '12')";
 $sql_theme2="INSERT INTO `".$table_name."` VALUES(2, 'Cyan', 2, '', 'FFFFFF', '600', 1, 0, '242424', 'top', 'FFFFFF', 'FFFFFF', 'FFFFFF', '20', '0 60 10 8', '10 15 8 ', 'solid', '2', '5EBDB0', '', 0, 0, 'FFFFFF', 'top', 'FFFFFF', 'FFFFFF', '212121', '13', '10 90 14 30', '6', 'dashed', '2', '5EBDB0', '', '1', '4', '35', '510', '14', '', '5', '2B2727', 0, '70E0D1', '', 0, 'top', 'FFFFFF', 'FFFFFF', 'FFFFFF', '100% 100%', 'outset', '1', 'ABABAB', '3', '', '', '', '', '511', '0 8 24', '13', 0, '70E0D1', '', '', 'none', '', 'FFFFFF', '', '', '', '', '', '', '', '', '', '2B2727', '000000', '16', '12 60 18 0', '58B0A4', '0 60 12 0', '220', '25', 1, 'EBEBEB', 'solid', '2', '5EBDB0', '14', 'FFFFFF', '70', '28', 1, '242424', 'solid', '2', '5EBDB0', '14', 'bold', 'FFFFFF', '000000', '9E9E9E', '12')";
@@ -2951,10 +3177,6 @@ $sql_theme16="INSERT INTO `".$table_name."` VALUES(16, 'Grey & White', 2, '', 'F
 $sql_theme17="INSERT INTO `".$table_name."` VALUES(17, 'Green & Blue', 2, '', 'FFFFFF', '600', 1, 0, 'E0CA3B', 'top', 'FFFFFF', 'FFFFFF', '000000', '18', '0 20 0 0', '8 4 6', 'groove', '1', 'AED2D9', '8', 0, 0, 'FFFFFF', 'top', 'FFFFFF', 'FFFFFF', '000000', '14', '9 20 14 42', '8', 'outset', '1', 'E3E3E3', '5', '', '', '30', '560', '14', '95', '', '000000', 0, 'AED2D9', '', 0, 'top', 'FFFFFF', 'FFFFFF', 'CCD232', '100% 100%', 'dotted', '1', '3B3B3B', '18', '".plugins_url("upload/style17/style17a.png",__FILE__)."', '8', '".plugins_url("upload/style17/style17b.png",__FILE__)."', '', '560', '', '12', 0, 'E8E8E8', '', '100% 100%', 'outset', '1', 'D4D4D4', '18', '', '', '', '', '', '', '', '', '000000', '000000', '14', '10 40 14 0', 'B2B82C', '0 40 16 0', '220', '25', 0, 'EBEBEB', 'inset', '', '000000', '14', '000000', '70', '27', 0, 'FFFFFF', 'inset', '', '000000', '', '', '000000', '000000', 'C9C9C9', '12')";
 //create tables
 
-$wpdb->query($sql_faq);
-$wpdb->query($sql_question);
-$wpdb->query($sql_category);
-$wpdb->query($sql_theme);
 
 
 
@@ -2978,19 +3200,19 @@ $wpdb->query($sql_theme16);
 $wpdb->query($sql_theme17);
 
 
+$table_name=$wpdb->prefix."spider_faq_category";
+$sql_category_insert_row1="INSERT INTO `".$wpdb->prefix."spider_faq_category` (id,title,description,show_title,show_description,published) VALUES(1, 'Uncategorized', '',1, 1, 1)";
 ////// insert category rows
 $wpdb->query($sql_category_insert_row1);
+}
 
 /////  update tables
-
-post_right_content();
-add_column_faq();
-add_column();
-add_column_faq_theme();
+add_faq_column();
+add_question_column();
+add_theme_column();
 
 ////// update themes
-
-global $truefalse;
+$table_name=$wpdb->prefix."spider_faq_theme";
 if($truefalse)
 {
     $wpdb->update( $table_name,  
@@ -3141,5 +3363,6 @@ $wpdb->query($sql_theme21);
 $wpdb->query($sql_theme22);
 			  			  
 }
+
 }
 register_activation_hook( __FILE__, 'Spider_FAQ_activate' );
