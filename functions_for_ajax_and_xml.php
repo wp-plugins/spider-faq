@@ -453,7 +453,7 @@ input[type=checkbox] {
 	?>
     </table>
     <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc']; else echo "1"; ?>"  />
- 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];else echo "id"; ?>"  />
+ 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];else echo "term_id"; ?>"  />
     <input type="hidden" name="option" value="com_Spider_Video_Player">
     <input type="hidden" name="task" value="select_playlist">    
     <input type="hidden" name="boxchecked" value="0">     

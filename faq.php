@@ -3,7 +3,7 @@
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/products/wordpress-faq-plugin.html
 Description: The Spider WordPress FAQ plugin is for creating an FAQ (Frequently Asked Questions) section for your website. Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can facilitate you in managing various user inquiries by significantly decreasing their amount.
-Version: 1.1.2
+Version: 1.1.3
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
