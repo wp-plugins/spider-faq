@@ -3,7 +3,7 @@
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/products/wordpress-faq-plugin.html
 Description: The Spider WordPress FAQ plugin is for creating an FAQ (Frequently Asked Questions) section for your website. Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can facilitate you in managing various user inquiries by significantly decreasing their amount.
-Version: 1.1.3
+Version: 1.1.4
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -1958,14 +1958,12 @@ function Spider_Faq_register($plugin_array)
     return $plugin_array;	
 }
 
-
-function add_button_style_Spider_Faq()
-{
-echo '<style type="text/css">
-.wp_themeSkin span.mce_Spider_Faq_mce {background:url('.plugins_url( 'images/faq.png' , __FILE__ ).') no-repeat !important; margin-left:1px; margin-top:1px;}
-.wp_themeSkin .mceButtonEnabled:hover span.mce_Spider_Faq_mce,.wp_themeSkin .mceButtonActive span.mce_Spider_Faq_mce
-{background:url('.plugins_url( 'images/faq_hover.png' , __FILE__ ).') no-repeat !important;}
-</style>';
+function add_button_style_Spider_Faq() {
+  ?>
+  <script>
+    var spider_faq_plugin_url = '<?php echo plugins_url(plugin_basename(dirname(__FILE__))); ?>'; 
+  </script>
+  <?php
 }
 
 add_action('admin_head', 'add_button_style_Spider_Faq');
@@ -1974,7 +1972,8 @@ add_action('admin_head', 'add_button_style_Spider_Faq');
 
 add_action('admin_menu', 'Spider_Faq_options_panel');
 function Spider_Faq_options_panel(){
-  add_menu_page(	'Theme page title', 'Spider FAQ', 'manage_options', 'Spider_Faq', 'Spider_Faq')  ;
+  $ikon_dir = plugins_url(plugin_basename(dirname(__FILE__))) . '/images/spider_faq_menu_ikon.png';
+  add_menu_page(	'Theme page title', 'Spider FAQ', 'manage_options', 'Spider_Faq', 'Spider_Faq', $ikon_dir);
  $faqqq=add_submenu_page( 'Spider_Faq', 'Spider Faq', 'FAQs', 'manage_options', 'Spider_Faq', 'Spider_Faq');
  $questions=add_submenu_page( 'Spider_Faq', 'Questions', 'Questions', 'manage_options', 'Spider_Faq_Questions', 'Spider_Faq_Questions');
   add_submenu_page( 'Spider_Faq', 'Categories', 'Categories', 'manage_options', 'Spider_Faq_Categories', 'Spider_Faq_Categories');

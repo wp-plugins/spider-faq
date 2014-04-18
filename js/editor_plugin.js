@@ -18,7 +18,7 @@
             ed.addButton('Spider_Faq_mce', {
             title : 'Insert Spider Faq',
 			cmd : 'mceSpider_Faq_mce',
-			
+			image: spider_faq_plugin_url + '/images/spider-faq_edit_but.png'
             });
         }
     });
