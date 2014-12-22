@@ -3,7 +3,7 @@ Contributors: webdorado
 Donate link: http://web-dorado.com/products/wordpress-faq-plugin.html
 Tags: FAQ, FAQ Plugin, FAQs,wordpress faq, questions, answer, answers, helpdesk, help desk, help, frequently asked questions, faq page, FAQ widget
 Requires at least: 3.0  
-Tested up to: 4.0  
+Tested up to: 4.1  
 Stable tag: 1.1.5
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
