@@ -30,7 +30,7 @@ function show_spider_ques(){
 			
 			if($_POST['asc_or_desc'])
 			{
-				$sort["sortid_by"]=esc_html($_POST['order_by']);
+				$sort["sortid_by"]=esc_sql(esc_html(stripslashes($_POST['order_by'])));
 				if(esc_html($_POST['asc_or_desc'])==1)
 				{
 					$sort["custom_style"]="manage-column column-title sorted asc";
@@ -46,7 +46,7 @@ function show_spider_ques(){
 			}
 	if($_POST['page_number'])
 		{
-			$limit=(esc_html($_POST['page_number'])-1)*20; 
+			$limit=(esc_sql(esc_html(stripslashes($_POST['page_number'])))-1)*20; 
 		}
 		else
 		{
@@ -58,7 +58,7 @@ function show_spider_ques(){
 			$limit=0;
 		}
 	if(isset($_POST['search_events_by_title'])){
-		$search_tag=esc_html($_POST['search_events_by_title']);
+		$search_tag=esc_sql(esc_html(stripslashes($_POST['search_events_by_title'])));
 		}
 		
 		else
@@ -178,8 +178,8 @@ function show_spider_ques(){
 	if(isset($_POST["oreder_move"]) and $_POST["oreder_move"]!="")
 	{
 		$ids=explode(",",$_POST["oreder_move"]); 
-		$this_order=$wpdb->get_var("SELECT ordering FROM ".$wpdb->prefix."spider_faq_question WHERE id=".$ids[0]);
-		$next_order=$wpdb->get_var("SELECT ordering FROM ".$wpdb->prefix."spider_faq_question WHERE id=".$ids[1]);	
+		$this_order=$wpdb->get_var("SELECT ordering FROM ".$wpdb->prefix."spider_faq_question WHERE id=".esc_sql(esc_html(stripslashes($ids[0]))));
+		$next_order=$wpdb->get_var("SELECT ordering FROM ".$wpdb->prefix."spider_faq_question WHERE id=".esc_sql(esc_html(stripslashes($ids[1]))));	
 		$wpdb->update($wpdb->prefix.'spider_faq_question', array(
 		'ordering'    =>$next_order,
           ), 
@@ -245,7 +245,7 @@ $cat_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_category"
 function save_spider_ques(){
 	global $wpdb;
 	 if(isset($_POST["ordering"])){	 
-	 	$rows=$wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'spider_faq_question WHERE ordering>='.$_POST["ordering"].'  ORDER BY `ordering` ASC ');
+	 	$rows=$wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'spider_faq_question WHERE ordering>='.esc_sql(esc_html(stripslashes($_POST["ordering"]))).'  ORDER BY `ordering` ASC ');
 	 }
 	 else{
 		 		echo "<h1>Error</h1>";
@@ -261,7 +261,7 @@ function save_spider_ques(){
 	{		
 	
 		$ordering_ids[$i]=$rows[$i]->id;
-		$ordering_values[$i]=$i+1+esc_html($_POST["ordering"]);
+		$ordering_values[$i]=$i+1+esc_sql(esc_html(stripslashes($_POST["ordering"])));
 	}
 	for($i=0;$i<$count_of_rows;$i++){
 				$wpdb->update($wpdb->prefix.'spider_faq_question', 
@@ -273,7 +273,7 @@ function save_spider_ques(){
 			 
 	}
 	
-	$answer=stripslashes($_POST["content"]);
+	$answer=esc_sql(esc_html(stripslashes($_POST["content"])));
 	
 
 if (stripos($answer, "<!--more-->") !== false)
@@ -292,13 +292,13 @@ $fullarticle='';
 
 	$save_or_no= $wpdb->insert($wpdb->prefix.'spider_faq_question', array(
 		'id'	=> NULL,
-        'title'     => stripslashes($_POST["title"]),
-		'category'   => esc_html($_POST["cat_search"]),
-		'user_name'  => stripslashes($_POST["user_name"]),
-		'date'   => esc_html($_POST["date"]),
-		'like'   => esc_html($_POST["like"]),
-		'unlike'   => esc_html($_POST["unlike"]),
-		'hits'   => esc_html($_POST["hits"]),
+        'title'     => esc_sql(esc_html(stripslashes($_POST["title"]))),
+		'category'   => esc_sql(esc_html(stripslashes($_POST["cat_search"]))),
+		'user_name'  => esc_sql(esc_html(stripslashes($_POST["user_name"]))),
+		'date'   => esc_sql(esc_html(stripslashes($_POST["date"]))),
+		'like'   => esc_sql(esc_html(stripslashes($_POST["like"]))),
+		'unlike'   => esc_sql(esc_html(stripslashes($_POST["unlike"]))),
+		'hits'   => esc_sql(esc_html(stripslashes($_POST["hits"]))),
         'article'    => $article,
 		'fullarticle'    => $fullarticle,
 		'ordering'     => $_POST["ordering"],
@@ -374,7 +374,7 @@ function apply_spider_ques($id){
 				$ordering_ids[$i]=$rows[$i]->id;
 				$ordering_values[$i]=$i+1;
 			}
-			if($max_ord==esc_html($_POST["ordering"])-1)
+			if($max_ord==esc_sql(esc_html(stripslashes($_POST["ordering"])))-1)
 			{
 				$_POST["ordering"]--;
 			}
@@ -407,13 +407,13 @@ $fullarticle='';
 
 	 $save_or_no= $wpdb->update($wpdb->prefix.'spider_faq_question', array(
         
-        'title'     => stripslashes($_POST["title"]),
-		'category'   => esc_html($_POST["cat_search"]),
-		'user_name'  => esc_html($_POST["user_name"]),
-		'date'		=> esc_html($_POST["date"]),
-		'like'   => esc_html($_POST["like"]),
-		'unlike'   => esc_html($_POST["unlike"]),
-		'hits'   => esc_html($_POST["hits"]),
+        'title'     => esc_sql(esc_html(stripslashes($_POST["title"]))),
+		'category'   => esc_sql(esc_html(stripslashes($_POST["cat_search"]))),
+		'user_name'  => esc_sql(esc_html(stripslashes($_POST["user_name"]))),
+		'date'		=> esc_sql(esc_html(stripslashes($_POST["date"]))),
+		'like'   => esc_sql(esc_html(stripslashes($_POST["like"]))),
+		'unlike'   => esc_sql(esc_html(stripslashes($_POST["unlike"]))),
+		'hits'   => esc_sql(esc_html(stripslashes($_POST["hits"]))),
         'article'    => $article,
 		'fullarticle'    => $fullarticle,
 		'ordering'     => $_POST["ordering"],
@@ -476,7 +476,7 @@ function remove_spider_ques($id){
 	{		
 	
 		$ordering_ids[$i]=$rows[$i]->id;
-		$ordering_values[$i]=$i+1+esc_html($_POST["ordering"]);
+		$ordering_values[$i]=$i+1+esc_sql(esc_html(stripslashes($_POST["ordering"])));
 	}
 
 	

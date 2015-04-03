@@ -3,7 +3,7 @@
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/products/wordpress-faq-plugin.html
 Description: The Spider WordPress FAQ plugin is for creating an FAQ (Frequently Asked Questions) section for your website. Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can facilitate you in managing various user inquiries by significantly decreasing their amount.
-Version: 1.1.5
+Version: 1.1.6
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -2102,12 +2102,12 @@ global $wpdb;
 	case 'save':
 	if($id)
 	{	
-	
+	check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 	apply_spider_faq($id);
 		
 	}
 	else
-	{
+	{   check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 		save_spider_faq();
 	}
 		show_spider_faq();
@@ -2117,12 +2117,12 @@ global $wpdb;
 
 		if($id)	
 		{
-			
+			check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 			apply_spider_faq($id);
 		}
 		else
 		{
-			
+			check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 			save_spider_faq();
 			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_faq");
 		}
@@ -2139,6 +2139,9 @@ global $wpdb;
 
 	
 	case 'remove_Spider_Faq':
+	    $nonce_sp_faq = $_REQUEST['_wpnonce'];
+		if (! wp_verify_nonce($nonce_sp_faq, 'nonce_sp_faq') )
+		  die("Are you sure you want to do this?");
 		remove_spider_faq($id);
 		show_spider_faq();
 		break;
@@ -2183,6 +2186,9 @@ global $wpdb;
 		show_spider_ques();
 		break;
 		case "unpublish_Spider_Faq_Questions":
+		$nonce_sp_faq = $_REQUEST['_wpnonce'];
+		if (! wp_verify_nonce($nonce_sp_faq, 'nonce_sp_faq') )
+		  die("Are you sure you want to do this?");
 		change_spider_ques($id);		
 		show_spider_ques();
 		
@@ -2198,12 +2204,14 @@ global $wpdb;
 	
 	case 'save':
 	if($id)
-	{		
+	{	
+check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');	
 	apply_spider_ques($id);
 		
 	}
 	else
 	{
+	check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 		save_spider_ques();
 	}
 		show_spider_ques();
@@ -2212,12 +2220,12 @@ global $wpdb;
 	case 'apply':	
 		if($id)	
 		{
-			
+			check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 			apply_spider_ques($id);
 		}
 		else
 		{
-			
+			check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 			save_spider_ques();
 			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_question");
 		}
@@ -2236,6 +2244,9 @@ global $wpdb;
 
 	
 	case 'remove_Spider_Faq_Questions':
+		$nonce_sp_faq = $_REQUEST['_wpnonce'];
+		if (! wp_verify_nonce($nonce_sp_faq, 'nonce_sp_faq') )
+		  die("Are you sure you want to do this?");
 		remove_spider_ques($id);
 		show_spider_ques();
 		break;
@@ -2280,6 +2291,9 @@ global $wpdb;
 		show_spider_cat();
 		break;
 		case "unpublish_Spider_Faq_Categories":
+		$nonce_sp_faq = $_REQUEST['_wpnonce'];
+		if (! wp_verify_nonce($nonce_sp_faq, 'nonce_sp_faq') )
+		  die("Are you sure you want to do this?");
 		change_spider_cat($id);		
 		show_spider_cat();
 		
@@ -2294,12 +2308,12 @@ global $wpdb;
 	case 'save':
 	if($id)
 	{	
-	
+	check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 	apply_spider_cat($id);
 		
 	}
 	else
-	{
+	{   check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 		save_spider_cat();
 	}
 		show_spider_cat();
@@ -2308,12 +2322,12 @@ global $wpdb;
 	case 'apply':	
 		if($id)	
 		{
-			
+			check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 			apply_spider_cat($id);
 		}
 		else
 		{
-			
+			check_admin_referer('nonce_sp_faq', 'nonce_sp_faq');
 			save_spider_cat();
 			$id=$wpdb->get_var("SELECT MAX(id) FROM ".$wpdb->prefix."spider_faq_category");
 		}
@@ -2334,6 +2348,9 @@ global $wpdb;
 
 	
 	case 'remove_Spider_Faq_Categories':
+		$nonce_sp_faq = $_REQUEST['_wpnonce'];
+		if (! wp_verify_nonce($nonce_sp_faq, 'nonce_sp_faq') )
+		  die("Are you sure you want to do this?");
 		remove_spider_cat($id);
 		show_spider_cat();
 		break;

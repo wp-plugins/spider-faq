@@ -17,8 +17,8 @@ function show_spider_cat(){
 			
 			if($_POST['asc_or_desc'])
 			{
-				$sort["sortid_by"]=$_POST['order_by'];
-				if(esc_html($_POST['asc_or_desc'])==1)
+				$sort["sortid_by"]=esc_sql(esc_html(stripslashes($_POST['order_by'])));
+				if(esc_sql(esc_html(stripslashes($_POST['asc_or_desc'])))==1)
 				{
 					$sort["custom_style"]="manage-column column-title sorted asc";
 					$sort["1_or_2"]="2";
@@ -33,7 +33,7 @@ function show_spider_cat(){
 			}
 	if($_POST['page_number'])
 		{
-			$limit=(esc_html($_POST['page_number'])-1)*20; 
+			$limit=(esc_sql(esc_html(stripslashes($_POST['page_number'])))-1)*20; 
 		}
 		else
 		{
@@ -45,7 +45,7 @@ function show_spider_cat(){
 			$limit=0;
 		}
 	if(isset($_POST['search_events_by_title'])){
-		$search_tag=esc_html($_POST['search_events_by_title']);
+		$search_tag = esc_sql(esc_html(stripslashes($_POST['search_events_by_title'])));
 		}
 		
 		else
@@ -99,11 +99,11 @@ function save_spider_cat(){
 	global $wpdb;
 	$save_or_no= $wpdb->insert($wpdb->prefix.'spider_faq_category', array(
 		'id'	=> NULL,
-        'title'    => esc_html($_POST["title"]),
-        'description' => esc_html($_POST["description"]),
-		'show_title'	 => esc_html($_POST["show_title"]),
-		'show_description'	=> esc_html($_POST["show_description"]),
-        'published'			  => esc_html($_POST["published"]),
+        'title'    => esc_sql(esc_html(stripslashes($_POST["title"]))),
+        'description' => esc_sql(esc_html(stripslashes($_POST["description"]))),
+		'show_title'	 => esc_sql(esc_html(stripslashes($_POST["show_title"]))),
+		'show_description'	=> esc_sql(esc_html(stripslashes($_POST["show_description"]))),
+        'published'			  => esc_sql(esc_html(stripslashes($_POST["published"]))),
                 ),
 				array(
 				'%d',
@@ -135,13 +135,13 @@ function apply_spider_cat(){
 	
 	
 	 $save_or_no= $wpdb->update($wpdb->prefix.'spider_faq_category', array(
-        'title'     => esc_html($_POST["title"]),
-        'description'  => esc_html($_POST["description"]),
-		'show_title'      =>esc_html($_POST["show_title"]),
-		'show_description'	 =>esc_html($_POST["show_description"]),
-        'published'  =>esc_html($_POST["published"]),
+        'title'     => esc_sql(esc_html(stripslashes($_POST["title"]))),
+        'description'  => esc_sql(esc_html(stripslashes($_POST["description"]))),
+		'show_title'      =>esc_sql(esc_html(stripslashes($_POST["show_title"]))),
+		'show_description'	 =>esc_sql(esc_html(stripslashes($_POST["show_description"]))),
+        'published'  =>esc_sql(esc_html(stripslashes($_POST["published"]))),
                 ),
-				 array('id'=>esc_html($_POST["id"])),
+				 array('id'=>esc_sql(esc_html(stripslashes($_POST["id"])))),
 				 
 				 
 				array(

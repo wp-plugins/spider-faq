@@ -15,7 +15,7 @@ function add_spider_faq(){
     else
         $pub = $row->published;*/
    // $lists['published'] = JHTML::_('select.booleanlist', 'published', 'class="inputbox"', $pub);
-  
+  $row= new stdClass();
 	$theme_row=$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."spider_faq_theme ORDER BY id DESC");
 	    $row->title = "";
 		$row->id = "";
@@ -39,7 +39,7 @@ function show_spider_faq(){
 			
 			if($_POST['asc_or_desc'])
 			{
-				$sort["sortid_by"]=esc_html($_POST['order_by']);
+				$sort["sortid_by"]=esc_sql(esc_html(stripslashes($_POST['order_by'])));
 				if(esc_html($_POST['asc_or_desc'])==1)
 				{
 					$sort["custom_style"]="manage-column column-title sorted asc";
@@ -55,7 +55,7 @@ function show_spider_faq(){
 			}
 	if($_POST['page_number'])
 		{
-			$limit=(esc_html($_POST['page_number'])-1)*20; 
+			$limit=(esc_sql(esc_html(stripslashes($_POST['page_number'])))-1)*20; 
 		}
 		else
 		{
@@ -67,7 +67,7 @@ function show_spider_faq(){
 			$limit=0;
 		}
 	if(isset($_POST['search_events_by_title'])){
-		$search_tag=esc_html($_POST['search_events_by_title']);
+		$search_tag=esc_sql(esc_html(stripslashes($_POST['search_events_by_title'])));
 		}
 		
 		else
@@ -137,16 +137,16 @@ function save_spider_faq(){
 		'id'	=> NULL,
         'title'     => stripslashes($_POST["title"]),
 		'theme'   => "",
-        'category'   => esc_html($_POST["params"]),
-		'standcategory'   => esc_html($_POST["contcats"]),
-		'standcat'			=>esc_html($_POST["standcat"]),
-		'show_searchform'	  =>esc_html($_POST["show_searchform"]),
-		'expand'				 =>esc_html($_POST["expand"]),
-		'numbertext'				 =>esc_html($_POST["faq_numbertext"]),
-		'like'				            =>esc_html($_POST["faq_like"]),
-		'hits'				                 =>esc_html($_POST["faq_hits"]),
-		'date'				                     =>esc_html($_POST["faq_date"]),
-		'user'				                         =>esc_html($_POST["faq_user"]),
+        'category'   => esc_sql(esc_html(stripslashes($_POST["params"]))),
+		'standcategory'   => esc_sql(esc_html(stripslashes($_POST["contcats"]))),
+		'standcat'			=>esc_sql(esc_html(stripslashes($_POST["standcat"]))),
+		'show_searchform'	  =>esc_sql(esc_html(stripslashes($_POST["show_searchform"]))),
+		'expand'				 =>esc_sql(esc_html(stripslashes($_POST["expand"]))),
+		'numbertext'				 =>esc_sql(esc_html(stripslashes($_POST["faq_numbertext"]))),
+		'like'				            =>esc_sql(esc_html(stripslashes($_POST["faq_like"]))),
+		'hits'				                 =>esc_sql(esc_html(stripslashes($_POST["faq_hits"]))),
+		'date'				                     =>esc_sql(esc_html(stripslashes($_POST["faq_date"]))),
+		'user'				                         =>esc_sql(esc_html(stripslashes($_POST["faq_user"]))),
                 ),
 				array(
 				'%d',
@@ -186,18 +186,18 @@ function apply_spider_faq(){
 	
 	 $save_or_no= $wpdb->update($wpdb->prefix.'spider_faq_faq', array(
         
-          'title'  => stripslashes($_POST["title"]),
+          'title'  => esc_sql(esc_html(stripslashes($_POST["title"]))),
 		'theme'  => "",
-        'category'  => esc_html($_POST["params"]),
-		'standcategory'  => esc_html($_POST["contcats"]),
-		'standcat'	=>esc_html($_POST["standcat"]),
-		'show_searchform'  =>esc_html($_POST["show_searchform"]),
-		'expand'  =>esc_html($_POST["expand"]),
-		'numbertext'  =>esc_html($_POST["faq_numbertext"]),
-		'like'	=>esc_html($_POST["faq_like"]),
-		'hits'	=>esc_html($_POST["faq_hits"]),
-		'date'  =>esc_html($_POST["faq_date"]),
-		'user'	=>esc_html($_POST["faq_user"]),
+        'category'  => esc_sql(esc_html(stripslashes($_POST["params"]))),
+		'standcategory'  => esc_sql(esc_html(stripslashes($_POST["contcats"]))),
+		'standcat'	=>esc_sql(esc_html(stripslashes($_POST["standcat"]))),
+		'show_searchform'  =>esc_sql(esc_html(stripslashes($_POST["show_searchform"]))),
+		'expand'  =>esc_sql(esc_html(stripslashes($_POST["expand"]))),
+		'numbertext'  =>esc_sql(esc_html(stripslashes($_POST["faq_numbertext"]))),
+		'like'	=>esc_sql(esc_html(stripslashes($_POST["faq_like"]))),
+		'hits'	=>esc_sql(esc_html(stripslashes($_POST["faq_hits"]))),
+		'date'  =>esc_sql(esc_html(stripslashes($_POST["faq_date"]))),
+		'user'	=>esc_sql(esc_html(stripslashes($_POST["faq_user"]))),
                 ),
 				 array('id'=>$_POST["id"]),
 				 

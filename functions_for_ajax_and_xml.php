@@ -12,7 +12,7 @@ function spider_faq_select_category(){
 			
 			if($_POST['asc_or_desc'])
 			{
-				$sort["sortid_by"]=$_POST['order_by'];
+				$sort["sortid_by"]= esc_sql(esc_html(stripslashes($_POST['order_by'])));
 				if($_POST['asc_or_desc']==1)
 				{
 					$sort["custom_style"]="manage-column column-title sorted asc";
@@ -29,7 +29,7 @@ function spider_faq_select_category(){
 			
 	if($_POST['page_number'])
 		{
-			$limit=($_POST['page_number']-1)*20; 
+			$limit=(esc_sql(esc_html(stripslashes($_POST['page_number'])))-1)*20; 
 		}
 		else
 		{
@@ -41,7 +41,7 @@ function spider_faq_select_category(){
 			$limit=0;
 		}
 	if(isset($_POST['search_events_by_title'])){
-		$search_tag=$_POST['search_events_by_title'];
+		$search_tag=esc_sql(esc_html(stripslashes($_POST['search_events_by_title'])));
 		}
 		
 		else
@@ -174,7 +174,7 @@ input[type=checkbox] {
 		</table>    
     
         <?php 
-        if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=$_POST['search_events_by_title']; }else{$serch_value="";}} 
+        if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=esc_sql(esc_html(stripslashes($_POST['search_events_by_title']))); }else{$serch_value="";}} 
 	$serch_fields='<div class="alignleft actions" style="width:180px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
         <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
@@ -220,8 +220,8 @@ input[type=checkbox] {
 	}
 	?>
     </table>
-    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc']; else echo "1"; ?>" />
- 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by']; else echo 'id'; ?>" />
+    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_sql(esc_html(stripslashes($_POST['asc_or_desc']))); else echo "1"; ?>" />
+ 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_sql(esc_html(stripslashes($_POST['order_by']))); else echo 'id'; ?>" />
     <input type="hidden" name="option" value="com_Spider_Video_Player" />
     <input type="hidden" name="task" value="select_playlist" />    
     <input type="hidden" name="boxchecked" value="0" /> 
@@ -249,7 +249,7 @@ function spider_faq_select_standcategory(){
 			
 			if($_POST['asc_or_desc'])
 			{
-				$sort["sortid_by"]=$_POST['order_by'];
+				$sort["sortid_by"]=esc_sql(esc_html(stripslashes($_POST['order_by'])));
 				if($_POST['asc_or_desc']==1)
 				{
 					$sort["custom_style"]="manage-column column-title sorted asc";
@@ -266,7 +266,7 @@ function spider_faq_select_standcategory(){
 			
 	if($_POST['page_number'])
 		{
-			$limit=($_POST['page_number']-1)*20; 
+			$limit=(esc_sql(esc_html(stripslashes($_POST['page_number'])))-1)*20; 
 		}
 		else
 		{
@@ -278,7 +278,7 @@ function spider_faq_select_standcategory(){
 			$limit=0;
 		}
 	if(isset($_POST['search_events_by_title'])){
-		$search_tag=$_POST['search_events_by_title'];
+		$search_tag=esc_sql(esc_html(stripslashes($_POST['search_events_by_title'])));
 		}
 		
 		else
@@ -411,7 +411,7 @@ input[type=checkbox] {
 		</table>    
     
         <?php 
-        if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=$_POST['search_events_by_title']; }else{$serch_value="";}} 
+        if(isset($_POST['serch_or_not'])) {if($_POST['serch_or_not']=="search"){ $serch_value=esc_sql(esc_html(stripslashes($_POST['search_events_by_title']))); }else{$serch_value="";}} 
 	$serch_fields='<div class="alignleft actions" style="width:180px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
         <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()">
@@ -452,8 +452,8 @@ input[type=checkbox] {
 	}
 	?>
     </table>
-    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo $_POST['asc_or_desc']; else echo "1"; ?>"  />
- 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo $_POST['order_by'];else echo "term_id"; ?>"  />
+    <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_sql(esc_html(stripslashes($_POST['asc_or_desc']))); else echo "1"; ?>"  />
+ 	<input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_sql(esc_html(stripslashes($_POST['order_by'])));else echo "term_id"; ?>"  />
     <input type="hidden" name="option" value="com_Spider_Video_Player">
     <input type="hidden" name="task" value="select_playlist">    
     <input type="hidden" name="boxchecked" value="0">     

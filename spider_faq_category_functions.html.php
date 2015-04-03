@@ -110,6 +110,7 @@ Description:
 </td>
 </tr>
 </table>
+<?php wp_nonce_field('nonce_sp_faq', 'nonce_sp_faq'); ?>
 <input type="hidden" name="id"
 value="" />
 <input type="hidden" name="task" value="" />
@@ -151,6 +152,7 @@ var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.
 }
 	</script>
     <form method="post"  onkeypress="doNothing()" action="admin.php?page=Spider_Faq_Categories" id="admin_form" name="admin_form">
+	 <?php $sp_faq_nonce = wp_create_nonce('nonce_sp_faq'); ?>
 	 <div style="display:block;width:95%;text-align:right"><a href="http://web-dorado.com/files/fromFAQWP.php" target="_blank" style="color:red; text-decoration:none;">
             <img src="<?php echo plugins_url('images/header.png',__FILE__) ?>" border="0" alt="http://web-dorado.com/files" width="215"><br>
             Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
@@ -174,7 +176,7 @@ This section allows you to create categories of questions <a href="http://web-do
     </tr>
     </table>
     <?php
-	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_html($_POST['search_events_by_title']); }else{$serch_value="";}} 
+	if(isset($_POST['serch_or_not'])) {if(esc_html($_POST['serch_or_not'])=="search"){ $serch_value=esc_js(esc_html(stripslashes($_POST['search_events_by_title']))); }else{$serch_value="";}} 
 	$serch_fields='<div class="alignleft actions" style="width:204px;">
     	<label for="search_events_by_title" style="font-size:14px">Title: </label>
         <input type="text" name="search_events_by_title" value="'.$serch_value.'" id="search_events_by_title" onchange="clear_serch_texts()" >
@@ -209,17 +211,18 @@ This section allows you to create categories of questions <a href="http://web-do
          <td><a  href="admin.php?page=Spider_Faq_Categories&task=edit_Spider_Faq_Categories&id=<?php echo $rows[$i]->id?>"><?php echo $rows[$i]->title; ?></a></td>
          <td><?php echo $rows[$i]->description; ?></td>
          
-         <td><a  href="admin.php?page=Spider_Faq_Categories&task=unpublish_Spider_Faq_Categories&id=<?php echo $rows[$i]->id?>"<?php if(!$rows[$i]->published){ ?> style="color:#C00;" <?php }?> ><?php if($rows[$i]->published)echo "Yes"; else echo "No"; ?></a></td>
+         <td><a  href="admin.php?page=Spider_Faq_Categories&task=unpublish_Spider_Faq_Categories&id=<?php echo $rows[$i]->id?>&_wpnonce=<?php echo $sp_faq_nonce; ?>"<?php if(!$rows[$i]->published){ ?> style="color:#C00;" <?php }?> ><?php if($rows[$i]->published)echo "Yes"; else echo "No"; ?></a></td>
          <td ><a  href="admin.php?page=Spider_Faq_Categories&task=edit_Spider_Faq_Categories&id=<?php echo $rows[$i]->id?>">Edit</a></td>
          
-		 <td><a href="javascript:confirmation('admin.php?page=Spider_Faq_Categories&task=remove_Spider_Faq_Categories&id=<?php echo $rows[$i]->id ?>','<?php if($rows[$i]->title!="") echo addslashes($rows[$i]->title); else echo "" ?>')">Delete</a> </td>
+		 <td><a href="javascript:confirmation('admin.php?page=Spider_Faq_Categories&task=remove_Spider_Faq_Categories&id=<?php echo $rows[$i]->id ?>&_wpnonce=<?php echo $sp_faq_nonce; ?>','<?php if($rows[$i]->title!="") echo addslashes($rows[$i]->title); else echo "" ?>')">Delete</a> </td>
   </tr> 
  <?php } ?>
  </tbody>
  </table>
+ <?php wp_nonce_field('nonce_sp_faq', 'nonce_sp_faq'); ?>
  <input type="hidden" name="oreder_move" id="oreder_move" value="" />
- <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_html($_POST['asc_or_desc']);?>"  />
- <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_html($_POST['order_by']);?>"  />
+ <input type="hidden" name="asc_or_desc" id="asc_or_desc" value="<?php if(isset($_POST['asc_or_desc'])) echo esc_js(esc_html(stripslashes($_POST['asc_or_desc'])));?>"  />
+ <input type="hidden" name="order_by" id="order_by" value="<?php if(isset($_POST['order_by'])) echo esc_js(esc_html(stripslashes($_POST['order_by'])));?>"  />
  <input type="hidden" name="saveorder" id="saveorder" value="" />
 
  <?php
@@ -371,6 +374,7 @@ Description:
 </td>
 </tr>
 </table>
+<?php wp_nonce_field('nonce_sp_faq', 'nonce_sp_faq'); ?>
 <input type="hidden" name="id" value="<?php echo $row->id;?>" />
 <input type="hidden" name="task" value="" />
 </form>
