@@ -273,7 +273,7 @@ function save_spider_ques(){
 			 
 	}
 	
-	$answer=esc_sql(esc_html(stripslashes($_POST["content"])));
+	$answer=stripslashes($_POST["content"]);
 	
 
 if (stripos($answer, "<!--more-->") !== false)
