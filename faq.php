@@ -3,7 +3,7 @@
 Plugin Name: Spider FAQ
 Plugin URI: http://web-dorado.com/products/wordpress-faq-plugin.html
 Description: The Spider WordPress FAQ plugin is for creating an FAQ (Frequently Asked Questions) section for your website. Spider FAQ allows you to provide the users with a well-designed and informative FAQ section, which can facilitate you in managing various user inquiries by significantly decreasing their amount.
-Version: 1.1.7
+Version: 1.2
 Author: http://web-dorado.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -1166,7 +1166,7 @@ jQuery(window).load(function(){expand_post_hits(1,<?php echo $faq->id ?>,<?php e
   border-color:<?php echo '#'.$stl->tbgcolor ?>!important;
 }
 #content<?php echo $faq->id ?>{
-width: <?php echo $stl->width.'px' ?>!important;
+width: <?php echo $stl->width.'px' ?>;
 }
 #post_title<?php echo $faq->id ?> {
 <?php if($stl->numbering==1)echo "padding:0px;"; ?>
@@ -1203,6 +1203,11 @@ vertical-align: middle;
 width: auto;
 }
 
+#tchangeimg<?php echo $faq->id ?> img{
+	
+
+max-width: none
+}
 
 #post_title<?php echo $faq->id ?> #tchangeimg<?php echo $faq->id ?> img{
 margin-left:<?php echo $stl->marginlimage1.'px' ?>;
@@ -1393,25 +1398,25 @@ outline: none;
 height: 24px !important;
 width:195px !important;
 border: none;
-display: block;
-position:absolute;
-right:6%;
-bottom: 40%;
+//display: block;
+//position:absolute;
+//right:6%;
+//bottom: 40%;
 padding-left:4px!important;
 }
 
 .searchform #srbuts<?php echo $faq->id ?>  {
-bottom: 40%;
-right:10% !important;
+//bottom: 40%;
+//right:10% !important;
 background-image: url('<?php  echo plugins_url( '',__FILE__);?>/images/search-faq.png') !important;
 width: 24px !important;
 height: 24px !important;
 background-size: 100% 100%;
-position:absolute;
+//position:absolute;
 background-repeat: no-repeat;
 border: 0px;
 cursor: pointer;
-margin-right: 4px !important;
+margin-right: 0px !important;
 margin-top:0px !important;
 margin-bottom:0px !important;
 outline: none !important;
@@ -1419,9 +1424,9 @@ padding:0px !important;
 background-color:transparent;
 }
 .searchform #srresbuts<?php echo $faq->id ?>  {
-bottom: 40%;
-right: 6% !important;
-position:absolute;
+//bottom: 40%;
+//right: 6% !important;
+//position:absolute;
 width:24px;
 height:24px;
 background-repeat: no-repeat;
@@ -1435,6 +1440,18 @@ margin-bottom:0px !important;
 padding:0px !important;
 background-color:transparent;
 }
+
+.sp_search_reset
+{
+	width: 51px;
+    float: right;
+    position: relative;
+    left: -56px;
+}
+
+
+
+
 #cattitle<?php echo $faq->id ?>	{
 <?php if($stl->ctbg == 0){
 	?>
@@ -1528,6 +1545,11 @@ color:<?php echo '#'.$stl->rmhovercolor ?> !important;
 text-decoration: none;
 cursor:pointer;
 }
+
+
+
+
+
 </style>
 
 	
@@ -1607,9 +1629,73 @@ setTimeout("changeall=true",400);
 </script>	
 		
 
+	<style>
+<?php 
+if($stl->width<$stl->twidth)
+{
+?>
+	#post_title<?php echo $faq->id ?>{
+		 width: 99%;
+		
+	}
+<?php } ?>	
+
+
+<?php 
+if($stl->width<$stl->awidth)
+{
+?>
+#post_content_wrapper<?php echo $faq->id ?>{
+		 width: 99%;
+		
+	}
+<?php } ?>	
+
+<?php 
+if ($stl->answidth==""  or $stl->answidth==0)
+	$ans_width =  $stl->awidth; 
+else 
+	$ans_width = $stl->answidth;
+
+
+if($stl->width<$ans_width)
+{
+?>
+#post_right<?php echo $faq->id ?>{
+		 width: 99%;
+		
+	}
+<?php } ?>	
+
+
+
+@media screen and (max-width: <?php echo $stl->width ?>px) {
+    #content<?php echo $faq->id ?> {
+        width: 99%;
+    }
+	
+	#post_title<?php echo $faq->id ?>{
+		 width: 99%;
+		
+	}
+	#post_content_wrapper<?php echo $faq->id ?>{
+		 width: 99%;
+		
+	}
+	#post_right<?php echo $faq->id ?>{
+		 width: 99%;
+		
+	}
+}
+
+</style>
+	 	
+
+	
+
 <body>
 		<div id="contentOuter"><div id="contentInner">
-  <div class="content" id="<?php echo 'content'.$faq->id ?>" >
+  <div class="faq_content" id="<?php echo 'content'.$faq->id ?>" >
   
 <ul class="posts" style="<?php if ($stl->background=="0") { ?> background-color:<?php echo '#'.$stl->bgcolor;  } else { if ($stl->background=="1") {  if ($stl->bgimage!="") { ?> background-image:url(<?php echo $stl->bgimage ?>) <?php } } }?> ">				                                                                             
 			<!-- Loop Starts -->
@@ -1620,17 +1706,19 @@ setTimeout("changeall=true",400);
 ?>		
 <form class="searchform" id="<?php echo 'searchform'.$faq->id ?>" action="<?php echo  $_SERVER['REQUEST_URI']; ?>" method="post">
 <div style="display: block;">
-<div style="position:relative;">
-<input id="<?php echo 'skey'.$faq->id ?>" name="search<?php echo $faq->id ?>"   value="<?php if(isset($_POST['search'.$faq->id]) && esc_html($_POST['search'.$faq->id])!="") { echo esc_html($_POST['search'.$faq->id]); } else echo "Search..." ;?>" onfocus="(this.value == 'Search...') &amp;&amp; (this.value = '')" onblur="(this.value == '') &amp;&amp; (this.value = 'Search...')">
+<div style="position:relative;    text-align: right;">
 
+<input id="<?php echo 'skey'.$faq->id ?>" name="search<?php echo $faq->id ?>"   value="<?php if(isset($_POST['search'.$faq->id]) && esc_html($_POST['search'.$faq->id])!="") { echo esc_html($_POST['search'.$faq->id]); } else echo "Search..." ;?>" onfocus="(this.value == 'Search...') &amp;&amp; (this.value = '')" onblur="(this.value == '') &amp;&amp; (this.value = 'Search...')">
+<div class="sp_search_reset">
 <input type="submit" value="" id="<?php echo 'srbuts'.$faq->id ?>" name="submit<?php echo $faq->id ?>" >
 	
 <input type="submit" value="" id="<?php echo 'srresbuts'.$faq->id ?>" name="reset<?php echo $faq->id ?>"  >
+
+</div>
 <br><br>
 </div>
 </div>	
-</form>
-<?php
+</form><?php
 } 
 echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/like_black.png">';
 echo '<img  style="display:none"  src="'.plugins_url( '',__FILE__).'/upload/ikon/like_white.png">';
@@ -1706,11 +1794,11 @@ if ($faq->standcat==0) {
 								  $like_hits_div='<div id="like_hits_div'.$row->id.'" class="like_hits'.$faq->id.'" >'.$likespan.'<span class="like_hits_span" style="width:50%;float:none;display:table-cell;"><span><span   '.$class.' >'.$imglike.$like.'</span><span>'.$imgunlike.$unlike.'</span></span>'.$hitsspan.'</span></div>';}
 								  else{$like_hits_div='';}
 						echo '</li><li id="post-1236" class="selected" style="margin-left:'.$stl->marginleft.'px !important"><div class="post_top">
-									  <div class="post_right" id="post_right'.$faq->id.'">
-										  <a href="#" class="post_ajax_title"><span id="post_span'.$row->id.$faq->id.'" onclick="faq_changesrc'.$faq->id.'('.$n.')"><h2 onclick="hits('.$row->id.','.$faq->id.','.$stl->id.');edit_title(1,'.$row->id.','.$faq->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')"  class="post_title" id="post_title'.$faq->id.'" style="padding: 5px;'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
-										  '.$number_div.''?><?php if($stl->imgpos==0){ if ($stl->tchangeimage1!=""){ echo'<div align="left" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>'  ?><?php } echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div></h2></span></a>
+									  <div class="post_right" >
+										  <a href="#" class="post_ajax_title"><span id="post_span'.$row->id.$faq->id.'" onclick="faq_changesrc'.$faq->id.'('.$n.')"><div onclick="hits('.$row->id.','.$faq->id.','.$stl->id.');edit_title(1,'.$row->id.','.$faq->id.',\''.$stl->tbgcolor.'\',\''.$stl->tbghovercolor.'\')"  class="post_title" id="post_title'.$faq->id.'" style="padding: 5px;'?><?php if($stl->titlebg==1) { if ($stl->tbgimage!="") { echo 'background-image:url('.$stl->tbgimage.')'?><?php } echo '">' ?><?php } else echo 'background-color:#'.$stl->tbgcolor.'">
+										  '.$number_div.''?><?php if($stl->imgpos==0){ if ($stl->tchangeimage1!=""){ echo'<div align="left" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>'  ?><?php } echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div></div></span></a>
 										</div>
-									</div>';}else{ echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div>'?><?php if ($stl->tchangeimage1!=""){ echo'<div align="right" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>' ?><?php } echo '</h2></span></a>
+									</div>';}else{ echo '<div class="ttext'.$faq->id.'" id="ttext'.$faq->id.'" >'.stripslashes($row->title).'</div>'?><?php if ($stl->tchangeimage1!=""){ echo'<div align="right" class="tchangeimg" id="tchangeimg'.$faq->id.'"  style="padding-right: 6px;padding-left: 5px;"><img src="'.$stl->tchangeimage1.'"  id="stl'.$faq->id.$n.'" style="box-shadow:none;padding:0px;vertical-align: middle;"/></div>' ?><?php } echo '</div></span></a>
 									</div></div>';}
 								if (strlen($row->fullarticle)>1){
 								echo '<div id="post_content'.$row->id.'" class="post_content" style="padding-left:'.$stl->ansmarginleft.'px !important;">
